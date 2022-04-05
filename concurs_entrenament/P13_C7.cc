@@ -15,7 +15,7 @@ bool dfs(int x, int c) {
     if (color[x] != -1)
         return color[x] == c;
 
-    // Pintem el node del color c (0 o 1) si encara no està pintat
+    // Pintem el node del color c si encara no està pintat
     color[x] = c;
 
     // Intentem pintar tots els veïns del color contrari
