@@ -28,13 +28,9 @@ for y in range(3):
 
 # Dibuixem els segments que composen el patró
 for p, q in zip(llista, llista[1:]):
-    px = (p - 1)%3
-    py = (p - 1)//3
-    qx = (q - 1)%3
-    qy = (q - 1)//3
     dib.line([
-        (42 + 65*px, 42 + 65*py),
-        (42 + 65*qx, 42 + 65*qy)
+        (42 + 65*((p - 1)%3), 42 + 65*((p - 1)//3)),
+        (42 + 65*((q - 1)%3), 42 + 65*((q - 1)//3))
     ], fill=a, width=3)
 
 # Guardem la imatge

@@ -18,8 +18,8 @@ eratostenes[0] = False
 eratostenes[1] = False
 
 # Actualizem la llista segons ens indica l'enunciat:
-# Iterem per cada j des de 2 fins a k,
-# i si j pertany a la llista, hi esborrem 2j, 3j, 4j, ...
+# Iterem per cada j des de 2 fins a k. Si j pertany a la llista,
+# hi esborrarem 2j, 3j, 4j, ...
 for j in range(2, k + 1):
     if eratostenes[j]:
         for i in range(2*j, N + 1, j):

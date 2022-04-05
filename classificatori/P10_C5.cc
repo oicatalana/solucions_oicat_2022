@@ -25,10 +25,10 @@ int backtracking(int x, int y, int salts) {
         return 1;
 
     // Marquem provisionalment la posició com a prohibida
-    // per no visitar-la de nou
+    // per a no visitar-la de nou
     mapa[x][y] = 'X';
 
-    // Ens desplacem a totes les caselles buides sense visitar a les que
+    // Ens desplacem a totes les caselles buides sense visitar a les quals
     // el cavall pot arribar des de (x, y) amb un sol salt,
     // i acumulem el nombre de solucions
     int solucions_trobades = 0;
@@ -46,7 +46,7 @@ int backtracking(int x, int y, int salts) {
 
 int main() {
     while (cin >> n >> m) {
-        // Fem que el mapa tingui n files i el llegim
+        // Llegim el mapa
         mapa.resize(n);
         for (string& s : mapa)
             cin >> s;

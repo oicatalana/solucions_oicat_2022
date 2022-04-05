@@ -1,7 +1,7 @@
 # SOLUCIÓ 1 (La bona):
-# Per a ser múltiple de 18 haurà de ser múltiple de 2 i de 9.
+# Per ser múltiple de 18 haurà de ser múltiple de 2 i de 9.
 # No importa com ordenem els dígits, el nombre resultant
-# sempre serà múltiple de 9 perquè la suma dels seus dígits serà
+# sempre serà múltiple de 9 ja que la suma dels seus dígits sempre serà
 # 1 + 2 + ... + 9 = 45, que és múltiple de 9.
 # Per a què sigui múltiple de 2, només cal que el darrer dígit sigui parell.
 # Per tant, tenim 4 opcions possibles per escollir l'últim dígit (2, 4, 6 i 8)
