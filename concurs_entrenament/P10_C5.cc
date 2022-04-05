@@ -10,6 +10,7 @@ typedef vector<Fila> Sudoku;
 
 // Retorna true si el subrectangle del sudoku s de mida h x w
 // amb cantonada superior esquerra a (x, y) és complet
+// (assumeix que el rectangle té exactament 9 elements)
 bool rectangle_complet(Sudoku& s, int x, int y, int h, int w) {
     vector<bool> v(10, false);      // v[k] és true si k apareix al subrectangle
     for (int i = x; i < x + h; ++i)
