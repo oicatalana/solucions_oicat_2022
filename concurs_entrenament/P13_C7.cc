@@ -10,11 +10,12 @@ VVI G;          // El graf
 VI color;       // color[x] val -1 si el node x encara no té color
 
 bool dfs(int x, int c) {
-    // Si el node està pintat, retornem si el color candidat és igual al color
+    // Si x està pintat, retornem si el color candidat és igual al color de x
+    // (si són diferents, el graf no podrà ser bipartit)
     if (color[x] != -1)
         return color[x] == c;
 
-    // Pintem el node del color c (que valdrà 0 o 1) si no està pintat
+    // Pintem el node del color c (0 o 1) si no està pintat
     color[x] = c;
 
     // Intentem pintar tots els veïns del color contrari
