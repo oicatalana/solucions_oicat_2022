@@ -7,7 +7,7 @@ typedef vector<int> VI;
 typedef vector<VI> VVI;
 
 VVI G;          // El graf
-VI color;       // color[x] val -1 si el node x encara no té color
+VI color;       // color[x] val 0 o 1, i -1 si el node x encara no té color
 
 bool dfs(int x, int c) {
     // Si x està pintat, retornem si el color candidat és igual al color de x
@@ -15,7 +15,7 @@ bool dfs(int x, int c) {
     if (color[x] != -1)
         return color[x] == c;
 
-    // Pintem el node del color c (0 o 1) si no està pintat
+    // Pintem el node del color c (0 o 1) si encara no està pintat
     color[x] = c;
 
     // Intentem pintar tots els veïns del color contrari
