@@ -36,6 +36,9 @@ En aquests casos, cal anar amb compte amb com inicialitzem les variables:
 volem que després de llegir el primer país aquest sigui el millor en tots tres!
 
 __Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```cpp
 #include <iostream>
 using namespace std;
@@ -73,6 +76,8 @@ int main() {
     cout << str_millora_mes_gran << " te la millora mes gran." << endl;
 }
 ```
+</details>
+
 
 ## [Problema G1. Dígits iguals](https://jutge.org/problems/P27390_ca) <a name="G1"/>
 
