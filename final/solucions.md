@@ -1,5 +1,7 @@
 # Solucions Final OICat 2022
 
+:warning: __AQUEST DOCUMENT ESTÀ INACABAT__
+
 ## Taula de continguts
 * [Problema Q1. Onze llibres](#Q1)
 * [Problema C1. Esperança de vida](#C1)
