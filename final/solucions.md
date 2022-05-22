@@ -24,6 +24,7 @@ del millor país segons els tres criteris diferents en la sortida.
 En aquests casos, cal anar amb compte amb com inicialitzem les variables:
 volem que després de llegir el primer país aquest sigui el millor en tots tres!
 
+__Codi__:
 ```cpp
 #include <iostream>
 using namespace std;
@@ -70,6 +71,7 @@ amb el color que toca. Si rebeu un _time limit exceeded_,
 i després només pintar els punts que toquin amb el color `c`, que serà
 el que aparegui de forma menys freqüent.
 
+__Codi__:
 ```py
 from PIL import Image, ImageDraw
 
@@ -100,6 +102,12 @@ una repetició de patrons de mida $100 \times 100$?
 
 # [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
 
+Sí, aquest problema està basat en fets reals. Es pot solucionar de diverses
+maneres, potser aquesta és la més intuïtiva: ordenem totes les notes,
+a continuació les anem posant en ordre en un vector, però fent dues passades:
+primer una amb les notes aprovades, i després una amb les suspeses.
+
+__Codi__:
 ```cpp
 #include <iostream>
 #include <vector>
@@ -142,6 +150,7 @@ int main() {
 }
 ```
 
+__Repte__: Intenteu entendre aquesta solució d'"una línia":
 ```py
 import sys
 
@@ -149,7 +158,12 @@ for line in sys.stdin:
     print(*sorted([int(s) for s in line.rstrip('\n').split()][1:], key=lambda x:(x < 500000, x)))
 ```
 
-# [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="C2"/>
+# [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
+
+Podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
+i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
+
+__Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[Repte](https://jutge.org/problems/P93780_ca)__):
 ```py
 NUM_PORTES = 473
 
