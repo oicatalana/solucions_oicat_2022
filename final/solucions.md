@@ -4,7 +4,16 @@
 * [Problema G1. Dígits iguals](#G1)
 * [Problema C2. Estudiant nefast](#C2)
 * [Problema Q2. Hotel Vela](#Q2)
-
+* [Problema G2. Paràbola](#G2)
+* [Problema C3. Eliminació per parells](#C3)
+* [Problema Q3. Octaedre](#Q3)
+* [Problema G3. Hipercub](#G3)
+* [Problema C4. Xor de tres](#C4)
+* [Problema G4. Pixel art](#G4)
+* [Problema C5. Mineria](#C5)
+* [Problema C6. Nombres de Bell](#C6)
+* [Problema C7. Avaries](#C7)
+* [Problema Q4. Raó àuria](#Q4)
 
 # [Problema Q1. Onze llibres](https://jutge.org/problems/P57678_ca) <a name="Q1"/>
 
@@ -177,4 +186,342 @@ for i in range(1, NUM_PORTES + 1):
 
 # Donem la suma dels índexos de les portes obertes
 print(sum(i for i in range(1, NUM_PORTES + 1) if portes[i]))
+```
+
+# [Problema G2. Paràbola](https://jutge.org/problems/P60526_ca) <a name="G2"/>
+Per resoldre'l no cal massa més que seguir al peu de la lletra el que diu
+l'enunciat, però cal tenir cautela amb els següents detalls:
+* L'eix de les `y`s va al revés aquí
+* Cal aplicar transformació vertical per tal que la imatge tingui els punts on toca
+* Només podem calcular la mida de la imatge un cop coneixem els punts
+* Cal dibuixar les línies en l'ordre adient
+
+A la nostra solució usem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing),
+us recomenem fer una ullada a aquests dos features de python perquè són molt comuns i útils.
+__Codi__:
+```python
+from PIL import Image, ImageDraw
+
+# Llegim l'entrada
+a = int(input())
+b = int(input())
+c = int(input())
+T = int(input())
+
+# Guardem la llista de punts (canviant els signe de la coordenada y)
+punts = [(c * t, -(b*t - a*t*t//2)) for t in range(T + 1)]
+
+# Mirem quin és el punt més alt i el més baix
+sorted_y_coords = sorted(y for _, y in punts)
+min_y, max_y = sorted_y_coords[0], sorted_y_coords[T]
+
+# Actualizem la llista de punts tal i com apareixeran a l'output 
+punts = [(x, y - min_y) for x, y in punts]
+
+# Creem la imatge
+img = Image.new('RGB', (c*T + 1, max_y - min_y + 1), 'SkyBlue')
+dib = ImageDraw.Draw(img)
+
+# Creem segments entre els parells de punts consecutius
+for p, q in zip(punts, punts[1:]):
+	dib.line([p, q], 'Red')
+
+# Guardem la imatge
+img.save("output.png")
+```
+
+# [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
+
+# [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
+
+# [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
+
+__Codi__:
+```python
+from PIL import Image, ImageDraw
+
+# Llegim l'entrada
+f = input()
+c = input()
+a = int(input())
+b = int(input())
+n = int(input())
+
+# Llegim els punts
+punts = [(int(input()), int(input())) for i in range(2**n)]
+
+# Creem la imatge
+img = Image.new('RGB', (a, b), f)
+dib = ImageDraw.Draw(img)
+
+# Dibuixem els punts
+for x, y in punts:
+	dib.ellipse((x - 2, y - 2, x + 2, y + 2), c)
+	
+# Funció per crear una línia del punt a al b
+def add_edge(a, b):
+	dib.line([punts[a], punts[b]], c)
+
+# Funció per canviar el r-èssim bit de x
+def canvia_bit(x, r):
+	# Si cal canviar l'últim bit, suma 1 si aquest és 0, resta 1 si aquest és 1
+	if r == 0:
+		if x % 2 == 0:
+			return x + 1
+		else:
+			return x - 1
+
+	# Solucionem recursivament 
+	return 2*canvia_bit(x // 2, r - 1) + (x % 2)
+
+# Connectem cada punt i a tots els punts j que difereixen en un bit (si i < j)
+for i in range(2**n):
+	for r in range(n):
+		j = canvia_bit(i, r)
+		if i < j:
+			add_edge(i, j)
+
+# Guardem la imatge
+img.save("output.png")
+```
+
+
+# [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
+
+Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
+* És commutativa: $x \oplus y = y \oplus x$.
+* És associativa: $(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis).
+* I la més important: $x \oplus x = 0$ per a tot $x$.
+
+D'aquí es deriva el següent: si $x \oplus y = z$, llavors $x \oplus y \oplus y = z \oplus y$, i per tant
+$x = y \oplus z$. En altres paraules, la condició que havíeu de trobar (hi ha 4 índexos diferents
+$i, j, k, l$ tals que $v_i \oplus v_j \oplus v_k = v_l$), podem trobar 4 índexos diferents
+$i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
+
+Per tant, l'únic que heu de fer, és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
+parar quan hagiu trobat un parell que ja hàgiu vist abans.
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <set>
+using namespace std;
+
+typedef long long int LL;
+
+bool solve(int n) {
+    // Llegim l'entrada
+    vector<LL> v(n);
+    for (LL& x : v)
+        cin >> x;
+
+    // Ordenem els valors
+    sort(v.begin(), v.end());
+
+    // Si tenim i, j, k, l diferents tals que v[i] == v[j] i v[k] == v[l]...
+    int reps = 0;
+    for (int i = 1; i < n; ++i)
+        if (v[i - 1] == v[i])
+            ++reps, ++i;
+
+    // ... resposta és sí
+    if (reps >= 2)
+        return true;
+    
+    // Ignorem les repeticions
+    v.erase(unique(v.begin(), v.end()), v.end());
+
+    // Mirem si hi ha dos parells amb el mateix XOR
+    set<LL> S;
+    for (int i = 0; i < v.size(); ++i)
+        for (int j = i + 1; j < v.size(); ++j)
+            if (!S.insert(v[i]^v[j]).second)
+                return true;
+
+    // Si no n'hem trobat cap, la resposta és NO
+    return false;
+}
+
+int main() {
+    int n;
+    while (cin >> n)
+        cout << (solve(n) ? "SI" : "NO") << endl; 
+}
+```
+# [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
+
+# [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
+
+# [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
+
+Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number),
+la més inuïtiva requereix una mica de programació dinàmica:
+
+En comptes de pensar com partir un conjunt de $n$ elements en diferents subconjunts
+d'elements no buits, podem pensar en com partir-los en exactament $k$ subconjunts
+no buits. Aquests valors es coneixen com a [nombres d'Stirling del segon tipus](https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind). A partir d'aquí, cal pensar com afegir un nou element
+en aquest partició. Ho expliquem amb més claretat en el __codi__ (usar C++ aquí no és bona idea
+ja que els valors de l'output superen els $2^64 - 1$: el màxim valor que pot tenir un
+`unsigned long long int`):
+```python
+from easyinput import read
+
+N = 400
+
+# dp[n][k] ens dirà les maneres de partir n elements en k grups no buits
+# (dp[n][k] representa un nombre d'Stirling del segon tipus)
+dp = [[0 for j in range(N + 1)] for i in range(N + 1)]
+
+# Donada una partició de n - 1 elements en k grups,
+# hi podem afegir un n-èssim element o bé posant-lo en
+# algun d'aquests k grups, o bé posant-lo aïllat en un (k + 1)-èssim grup
+for n in range(1, N + 1):
+    for k in range(1, n):
+        dp[n][k] += k*dp[n - 1][k] + dp[n - 1][k - 1]
+    dp[n][n] = 1        # Per raons òbvies
+
+# La solució per un cert n serà
+# bell[n] = dp[n][1] + dp[n][2] + ... + dp[n][n] 
+bell = [sum(v[1:n+1]) for v in dp]
+
+while True:
+    n = read(int)
+    if n is None:
+        break
+    print(bell[n])
+```
+
+# [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
+
+# [Problema Q4. Raó àuria](https://jutge.org/problems/P94346_ca) <a name="Q4"/>
+
+L'algoritme és "senzill". A cada pas, al busqueu el valor més gran $p$ tal que
+$n \geq \varphi^p$. Llavors, el $p$-èssim dígit ($p$ també pot ser negatiu)
+de $n$ en base $phi$ valdrà $1$. Repetiu el procediment amb $n - \varphi^p$ fins
+que el nombre restant sigui $0$.
+
+__Repte__: Us animem a que demostreu vosaltres mateixos que qualsevol enter $n$
+té una expressió única i amb finits decimals en base $\varphi$, i que es
+pot trobar mitjançant l'algorisme que acabem de mencionar. Pistes:
+
+1. Demostreu que l'algorisme mencionat funciona, és a dir, dóna una expressió de $n$ en base $\varphi$.
+2. Demostreu que tot natural $n$ es té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
+3. Demostreu que tot real es pot expressar d'una manera única en base $\varphi$ (amb excepció de
+$...1010101010...$ periòdic en base $\varphi$ (l'anàleg a $1 = 0.99999...$ en base $10$))
+4. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant l'expressió finita única
+de $n$ en base $\varphi$.
+
+Veureu que al codi usem el següent per evitar tractar amb reals:
+Tant un enter $k$ com $\varphi = \frac{1 + \sqrt{5}}{2}$ es poden escriure
+de la forma $\frac{a + b\sqrt{5}}{2^n}$, amb $a, b, n$ enters
+(per exemple, $k = \frac{4 * k + 0\sqrt{5}}{2^2}$, fixeu-vos
+que el mateix nombre té més d'una representació vàlida).
+Observeu a més que les sumes, restes i productes de nombres d'aquesta forma
+també donen nombres d'aquesta forma.
+
+__Codi__:
+```python
+# P o Q representen un nombre de la forma (a + b * sqrt(5))/2^n
+
+# Canvia la representació de P o Q per tal que tinguin el mateix denominador
+def iguala_denominador(P, Q):
+    a, b, n = P
+    A, B, N = Q
+    if n >= N:
+        A *= 2**(n - N)
+        B *= 2**(n - N)
+        N = n
+    else:
+        a *= 2**(N - n)
+        b *= 2**(N - n)
+        n = N
+
+    return (a, b, n), (A, B, N)
+
+# Retorna P - Q
+def resta(P, Q):
+    P, Q = iguala_denominador(P, Q)
+    a, b, n = P
+    A, B, N = Q
+    return (a - A, b - B, n)
+
+# Retorna P * Q
+def mult(P, Q):
+    a, b, n = P
+    A, B, N = Q
+    return (a * A + 5 * b * B, a * B + b * A, n + N)
+
+# Retorna True ssi P val zero
+def es_zero(P):
+    a, b, n = P
+    return a == 0 and b == 0
+
+# Retorna True ssi P és no-negatiu
+def nonegatiu(P):
+    a, b, n = P
+    if a >= 0 and b >= 0:
+        return True
+    if a <= 0 and b <= 0:
+        return False
+    if a >= 0 and b <= 0:
+        return a**2 >= 5*b**2
+    if a <= 0 and b >= 0:
+        return 5*b**2 >= a**2
+
+# Retorna True ssi P >= Q
+def majoroigual(P, Q):
+    return nonegatiu(resta(P, Q))
+
+# Constants:
+PHI = (1, 1, 1)         # φ
+INV_PHI = (-1, 1, 1)    # 1/φ
+
+# Retorna φ^n
+def phi_power(n):
+    if n == 0:
+        return (1, 0, 0)
+    elif n > 0:
+        return mult(PHI, phi_power(n - 1))
+    else:
+        return mult(INV_PHI, phi_power(n + 1))
+
+# Retorna el maxim p tal que cur >= φ^p
+def max_exponent(x):
+    p = 0
+    while True:
+        if not majoroigual(x, phi_power(p + 1)):
+            return p
+        p += 1
+
+# Retorna la llista dels índexos que valen 1 a la representació de x en base φ
+def llista_indexos(cur, pot):
+    indexos = []
+    while not es_zero(cur):
+        if majoroigual(cur, phi_power(pot)):
+            indexos.append(pot)
+            cur = resta(cur, phi_power(pot))
+        pot -= 1
+
+    return indexos
+
+# Passa de la llista de indexos a l'string format per les diferencies
+def indexos_to_string(llista):
+    llista_diferencies = [a - b - 1 for a, b in zip(llista, llista[1:])]
+    return ''.join(str(x) for x in llista_diferencies)
+
+# Passa de la llista de indexos a l'string format per les diferencies
+def to_string(indexos):
+    indexos_pos = [x for x in indexos if x >= 0] + [-1]
+    indexos_neg = [0] + [x for x in indexos if x < 0]
+    return indexos_to_string(indexos_pos) + '-' + indexos_to_string(indexos_neg)
+
+def resol(n):
+    cur = (n, 0, 0)
+    pot = max_exponent(cur)
+    indexos = llista_indexos(cur, pot)
+    return to_string(indexos)
+
+for n in [10, 201, 10**30]:
+    print(resol(n))
 ```
