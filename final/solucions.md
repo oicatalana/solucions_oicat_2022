@@ -78,7 +78,6 @@ int main() {
 ```
 </details>
 
-
 ## [Problema G1. Dígits iguals](https://jutge.org/problems/P27390_ca) <a name="G1"/>
 
 En tenim prou amb anar comprovant la condició per tots els punts i pintar-lo
@@ -88,6 +87,9 @@ i després només pintar els punts que toquin amb el color `c`, que serà
 el que aparegui de forma menys freqüent.
 
 __Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```py
 from PIL import Image, ImageDraw
 
@@ -112,6 +114,8 @@ for y in range(n):
 # Guardem la imatge
 img.save("output.png")
 ```
+</details>
+
 
 __Repte:__ Podríeu demostrar matemàticament que la imatge és
 una repetició de patrons de mida $100 \times 100$?
@@ -124,6 +128,9 @@ a continuació les anem posant en ordre en un vector, però fent dues passades:
 primer una amb les notes aprovades, i després una amb les suspeses.
 
 __Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -165,14 +172,19 @@ int main() {
     }   
 }
 ```
+</details>
 
 __Repte__: Intenteu entendre aquesta solució d'"una línia":
-```py
+<details>
+  <summary>Clica per veure la solució</summary>
+
+```python
 import sys
 
 for line in sys.stdin:
     print(*sorted([int(s) for s in line.rstrip('\n').split()][1:], key=lambda x:(x < 500000, x)))
 ```
+</details>
 
 ## [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
 
@@ -180,7 +192,10 @@ Podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
 
 __Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__):
-```py
+<details>
+  <summary>Clica per veure la solució</summary>
+
+```python
 NUM_PORTES = 473
 
 # portes[i] és True si i només si la porta de l'habitació i està oberta
@@ -194,6 +209,7 @@ for i in range(1, NUM_PORTES + 1):
 # Donem la suma dels índexos de les portes obertes
 print(sum(i for i in range(1, NUM_PORTES + 1) if portes[i]))
 ```
+</details>
 
 ## [Problema G2. Paràbola](https://jutge.org/problems/P60526_ca) <a name="G2"/>
 Per resoldre'l no cal massa més que seguir al peu de la lletra el que diu
@@ -205,7 +221,11 @@ l'enunciat, però cal tenir cautela amb els següents detalls:
 
 A la nostra solució usem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing),
 us recomenem fer una ullada a aquests dos features de python perquè són molt comuns i útils.
+
 __Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```python
 from PIL import Image, ImageDraw
 
@@ -236,6 +256,7 @@ for p, q in zip(punts, punts[1:]):
 # Guardem la imatge
 img.save("output.png")
 ```
+</details>
 
 ## [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
 
@@ -250,6 +271,9 @@ i fins i tot convertint el nombre a string i reconvertint-lo a enter
 si després de canviar-li el valor de la posició on toca.
 
 __Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```python
 from PIL import Image, ImageDraw
 
@@ -298,6 +322,7 @@ for i in range(2**n):
 # Guardem la imatge
 img.save("output.png")
 ```
+</details>
 
 ## [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
 
@@ -313,6 +338,9 @@ $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 
 Per tant, l'únic que heu de fer, és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
 parar quan hagiu trobat un parell que ja hàgiu vist abans.
+
+<details>
+  <summary>Clica per veure la solució</summary>
 
 ```cpp
 #include <iostream>
@@ -362,11 +390,16 @@ int main() {
         cout << (solve(n) ? "SI" : "NO") << endl; 
 }
 ```
+</details>
+
 ## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
 
 El problema ens demana buscar les com a molt $k$ components connexes més grans
 i pintar totes les caselles que les componen. Podem fer això fàcilment usant
 un algorisme de cerca com DFS o BFS.
+
+<details>
+  <summary>Clica per veure la solució</summary>
 
 ```python
 from PIL import Image, ImageDraw
@@ -433,6 +466,7 @@ for _, y, x in sorted(components_connexes, reverse=True)[:k]:
 # Guardem la imatge
 img.save('output.png')
 ```
+</details>
 
 ## [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
 
@@ -447,6 +481,10 @@ no buits. Aquests valors es coneixen com a [nombres d'Stirling del segon tipus](
 en aquest partició. Ho expliquem amb més claretat en el __codi__ (usar C++ aquí no és bona idea
 ja que els valors de l'output superen els $2^64 - 1$: el màxim valor que pot tenir un
 `unsigned long long int`):
+
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```python
 from easyinput import read
 
@@ -474,6 +512,7 @@ while True:
         break
     print(bell[n])
 ```
+</details>
 
 ## [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
 
@@ -504,6 +543,9 @@ Observeu a més que les sumes, restes i productes de nombres d'aquesta forma
 també donen nombres d'aquesta forma.
 
 __Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
 ```python
 # P o Q representen un nombre de la forma (a + b * sqrt(5))/2^n
 
@@ -608,3 +650,4 @@ def resol(n):
 for n in [10, 201, 10**30]:
     print(resol(n))
 ```
+</details>
