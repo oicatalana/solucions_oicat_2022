@@ -14,7 +14,7 @@ per tant només ens queda escollir on posem aquests 5.
 Com que ja estan separats pels llibres blaus, només ens cal escollir les 2 posicions
 d'aquestes 5 on hi posarem els llibres vermells (les altres 3 seran pels llibres grocs).
 
-Podem trobar aquesta quantitat a mà o fent una mica de [combinatòria bàsica](https://ca.wikipedia.org/wiki/Coeficient_binomial#Interpretaci%C3%B3_combinat%C3%B2ria).
+Podem trobar aquesta quantitat a mà o fent una mica de [combinatòria bàsica](https://ca.wikipedia.org/wiki/Coeficient_binomial#Interpretaci%C3%B3_combinat%C3%B2ria): $\binom{5}{2} = \boxed{10}$.
 
 # [Problema C1. Esperança de vida](https://jutge.org/problems/P12454_ca) <a name="C1"/>
 
