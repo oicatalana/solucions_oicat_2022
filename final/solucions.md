@@ -97,7 +97,7 @@ for y in range(n):
 img.save("output.png")
 ```
 
-__Repte:__ Podrieu demostrar que la matemàticament que la imatge és
+__Repte:__ Podríeu demostrar matemàticament que la imatge és
 una repetició de patrons de mida $100 \times 100$?
 
 # [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
@@ -163,7 +163,7 @@ for line in sys.stdin:
 Podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
 
-__Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[Repte](https://jutge.org/problems/P93780_ca)__):
+__Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__):
 ```py
 NUM_PORTES = 473
 
