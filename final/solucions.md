@@ -260,6 +260,112 @@ img.save("output.png")
 
 ## [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
 
+Sigui $T = C \setminus S$ el complementari de $S$ en $C$ (el que ens quedaria
+a $C$ si hi traiéssim els elements de $S$.
+
+Suposem que tenim una solució $(s_1, t_1), \ldots, (s_n, t_n)$ tal que
+per a tot $i$, $s_i$ i $t_i$ pertanyen a $S$ i $T$, respectivament,
+i tal que $s_i \leq t_i$ si $1 \leq i \leq k$, i $s_i \geq t_i$ si $k < i \leq n$.
+Suposem sense pèrdua de generalitat també que $s_1 \leq \ldots \leq s_k$ i que
+$s_{k + 1} \leq \ldots \leq s_n$.
+
+Si existeixen $i \leq k < j$ tals que $s_i > s_j$, intercanviant $s_i$ per $s_j$
+seguirem tenint una solució. D'aquí, deduïm que podem dur a terme aquesta mena
+d'intercanvis iterativaments fins que
+$s_1 \leq \ldots \leq s_k \leq s_{k + 1} \leq \ldots \leq s_n$,
+i seguirem tenint una solució vàlida.
+
+Podem fer tres observacions més parell d'observacions similars més:
+
+Si existeixen $i \leq k < j$ tals que $t_i < t_j$, intercanviant $t_i$ per $t_j$
+seguirem tenint una solució.
+
+Si existeixen $1 \leq i < j \leq k$ tals que $t_i > t_j$, intercanviant $t_i$ per $t_j$
+seguirem tenint una solució.
+
+Si existeixen $k < i < j \leq n$ tals que $t_i > t_j$, intercanviant $t_i$ per $t_j$
+seguirem tenint una solució.
+
+D'aquí, deduïm que, si $S = \{s_1, \ldots, s_k\}$ i $T = \{t_1, \ldots, t_k\}$,
+amb $s_1 \leq \ldots \leq s_k$ i $t_1 \leq \ldots \leq t_k$, llavors
+$(s_1, t_{n - k + 1}), \ldots, (s_k, t_n), (s_{k + 1}, t_1), \ldots, (s_n, t_{n - k})$
+ha de ser una solució.
+
+__Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+typedef vector<int> VI;
+typedef vector<pair<int, int>> VPII;
+
+int main() {
+    int n, k;
+    while (cin >> n >> k) {
+        // Llegim C i ordenem
+        VI C(2*n);
+        for (int& x : C)
+            cin >> x;
+        sort(C.begin(), C.end());
+
+        // Llegim S i ordenem
+        VI S(n);
+        for (int& x : S)
+            cin >> x;
+        sort(S.begin(), S.end());
+
+        // T serà el complementari de S en C (el que pertany a C però no a S)
+        // T també estarà ordenat
+        VI T;
+        int ps = 0;
+        for (int pc = 0; pc < 2*n; ++pc) {
+            if (ps == n or C[pc] != S[ps])
+                T.push_back(C[pc]);
+            else
+                ++ps;
+        }
+
+        // La solució, i si la podem obtenir
+        VPII sol;
+        bool ok = true;
+
+        // Ajuntem els k més petits de S amb els k més grans de T,
+        // seguint el mateix ordre
+        for (int i = 0; ok and i < k; ++i) {
+            if (S[i] > T[(n - k) + i])
+                ok = false;
+
+            sol.push_back({S[i], T[n - k + i]});
+        }
+
+        // Ajuntem els n - k més grans de S amb els n - k més petits de T,
+        // seguint el mateix ordre
+        for (int i = 0; ok and i < n - k; ++i) {
+            if (S[k + i] < T[i])
+                ok = false;
+
+            sol.push_back({S[k + i], T[i]});
+        }
+
+        // Responem en funció del que hem trobat
+        if (ok) {
+            cout << "SI";
+            for (auto [s, t] : sol)
+                cout << "  " << s << ' ' << t;
+            cout << endl;
+        }
+        else
+            cout << "NO" << endl;
+    }
+}
+```
+</details>
+
 ## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
 
 ## [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
@@ -479,7 +585,7 @@ En comptes de pensar com partir un conjunt de $n$ elements en diferents subconju
 d'elements no buits, podem pensar en com partir-los en exactament $k$ subconjunts
 no buits. Aquests valors es coneixen com a [nombres d'Stirling del segon tipus](https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind). A partir d'aquí, cal pensar com afegir un nou element
 en aquest partició. Ho expliquem amb més claretat en el __codi__ (usar C++ aquí no és bona idea
-ja que els valors de l'output superen els $2^64 - 1$: el màxim valor que pot tenir un
+ja que els valors de l'output superen els $2^{64} - 1$: el màxim valor que pot tenir un
 `unsigned long long int`):
 
 <details>
@@ -537,7 +643,7 @@ de $n$ en base $\varphi$.
 Veureu que al codi usem el següent per evitar tractar amb reals:
 Tant un enter $k$ com $\varphi = \frac{1 + \sqrt{5}}{2}$ es poden escriure
 de la forma $\frac{a + b\sqrt{5}}{2^n}$, amb $a, b, n$ enters
-(per exemple, $k = \frac{4 * k + 0\sqrt{5}}{2^2}$, fixeu-vos
+(per exemple, $k = \frac{4k + 0\sqrt{5}}{2^2}$, fixeu-vos
 que el mateix nombre té més d'una representació vàlida).
 Observeu a més que les sumes, restes i productes de nombres d'aquesta forma
 també donen nombres d'aquesta forma.
