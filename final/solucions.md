@@ -1,4 +1,6 @@
-# Problemes
+# Solucions Final OICat 2022
+
+## Taula de continguts
 * [Problema Q1. Onze llibres](#Q1)
 * [Problema C1. Esperança de vida](#C1)
 * [Problema G1. Dígits iguals](#G1)
@@ -15,7 +17,7 @@
 * [Problema C7. Avaries](#C7)
 * [Problema Q4. Raó àuria](#Q4)
 
-# [Problema Q1. Onze llibres](https://jutge.org/problems/P57678_ca) <a name="Q1"/>
+## [Problema Q1. Onze llibres](https://jutge.org/problems/P57678_ca) <a name="Q1"/>
 
 Clarament haurem de posar els 6 llibres blaus separats pels altres 5 llibres,
 per tant només ens queda escollir on posem aquests 5.
@@ -25,7 +27,7 @@ d'aquestes 5 on hi posarem els llibres vermells (les altres 3 seran pels llibres
 
 Podem trobar aquesta quantitat a mà o fent una mica de [combinatòria bàsica](https://ca.wikipedia.org/wiki/Coeficient_binomial#Interpretaci%C3%B3_combinat%C3%B2ria): $\binom{5}{2} = 10$.
 
-# [Problema C1. Esperança de vida](https://jutge.org/problems/P12454_ca) <a name="C1"/>
+## [Problema C1. Esperança de vida](https://jutge.org/problems/P12454_ca) <a name="C1"/>
 
 És suficient amb anar llegint les dades i anar actualitzant la informació
 del millor país segons els tres criteris diferents en la sortida.
@@ -72,7 +74,7 @@ int main() {
 }
 ```
 
-# [Problema G1. Dígits iguals](https://jutge.org/problems/P27390_ca) <a name="G1"/>
+## [Problema G1. Dígits iguals](https://jutge.org/problems/P27390_ca) <a name="G1"/>
 
 En tenim prou amb anar comprovant la condició per tots els punts i pintar-lo
 amb el color que toca. Si rebeu un _time limit exceeded_, 
@@ -109,7 +111,7 @@ img.save("output.png")
 __Repte:__ Podríeu demostrar matemàticament que la imatge és
 una repetició de patrons de mida $100 \times 100$?
 
-# [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
+## [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
 
 Sí, aquest problema està basat en fets reals. Es pot solucionar de diverses
 maneres, potser aquesta és la més intuïtiva: ordenem totes les notes,
@@ -167,7 +169,7 @@ for line in sys.stdin:
     print(*sorted([int(s) for s in line.rstrip('\n').split()][1:], key=lambda x:(x < 500000, x)))
 ```
 
-# [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
+## [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
 
 Podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
@@ -188,7 +190,7 @@ for i in range(1, NUM_PORTES + 1):
 print(sum(i for i in range(1, NUM_PORTES + 1) if portes[i]))
 ```
 
-# [Problema G2. Paràbola](https://jutge.org/problems/P60526_ca) <a name="G2"/>
+## [Problema G2. Paràbola](https://jutge.org/problems/P60526_ca) <a name="G2"/>
 Per resoldre'l no cal massa més que seguir al peu de la lletra el que diu
 l'enunciat, però cal tenir cautela amb els següents detalls:
 * L'eix de les `y`s va al revés aquí
@@ -230,11 +232,11 @@ for p, q in zip(punts, punts[1:]):
 img.save("output.png")
 ```
 
-# [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
+## [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
 
-# [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
+## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
 
-# [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
+## [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
 
 __Codi__:
 ```python
@@ -286,7 +288,7 @@ img.save("output.png")
 ```
 
 
-# [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
+## [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
 
 Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
 * És commutativa: $x \oplus y = y \oplus x$.
@@ -349,11 +351,11 @@ int main() {
         cout << (solve(n) ? "SI" : "NO") << endl; 
 }
 ```
-# [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
+## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
 
-# [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
+## [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
 
-# [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
+## [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
 
 Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number),
 la més inuïtiva requereix una mica de programació dinàmica:
@@ -392,9 +394,9 @@ while True:
     print(bell[n])
 ```
 
-# [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
+## [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
 
-# [Problema Q4. Raó àuria](https://jutge.org/problems/P94346_ca) <a name="Q4"/>
+## [Problema Q4. Raó àuria](https://jutge.org/problems/P94346_ca) <a name="Q4"/>
 
 L'algoritme és "senzill". A cada pas, al busqueu el valor més gran $p$ tal que
 $n \geq \varphi^p$. Llavors, el $p$-èssim dígit ($p$ també pot ser negatiu)
