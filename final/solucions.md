@@ -1,7 +1,7 @@
 # Problemes
-[Q1](#Q1)
-[C1](#C1)
-[G1](#G1)
+* [Problema Q1. Onze llibres](#Q1)
+* [Problema C1. Esperança de vida](#C1)
+* [Problema G1. Dígits iguals](#G1)
 
 # [Problema Q1. Onze llibres](https://jutge.org/problems/P57678_ca) <a name="Q1"/>
 
