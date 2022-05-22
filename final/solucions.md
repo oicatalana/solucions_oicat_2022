@@ -370,6 +370,56 @@ int main() {
 
 ## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
 
+__Codi__:
+<details>
+  <summary>Clica per veure la solució</summary>
+
+```python
+# Graf: Cada entrada representa un node i conté una llista: les arestes a les que és incident
+GRAF = [
+    [1, 2, 5, 6],
+    [1, 3, 4, 9],
+    [2, 3, 7, 8],
+    [4, 5, 10, 12],
+    [6, 7, 10, 11],
+    [8, 9, 11, 12],
+]
+
+## SOLUCIÓ 1: BACKTRACKING
+
+def backtracking(perm):
+    # Si ja hem afegit els 12 elements de la permutació, comprovem si és la resposta
+    if len(perm) == 12:
+        # Si per a cada node, la suma dels valors de les seves arestes és 26, hem trobat la solució
+        for L in GRAF:
+            if sum(perm[x - 1] for x in L) != 26:
+                return
+
+        # Si hem arribat aquí, la permutació que tenim és la solució
+        print('-'.join(str(x) for x in perm))
+        exit(0)
+
+    # Per a cada i, si encara no hem usat i, l'afegim recursivament a la permutació
+    for i in range(1, 13):
+        if i not in perm:
+            backtracking(perm + [i])
+
+# Cridem el backtracking
+backtracking([])
+
+## SOLUCIÓ 2: ITERTOOLS
+
+from itertools import permutations
+for perm in permutations(list(range(1, 13))):
+    for L in GRAF:
+        if sum(perm[x - 1] for x in L) != 26:
+            break
+    else:
+        print('-'.join(str(x) for x in perm))
+        break
+```
+</details>
+
 ## [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
 
 No cal gaire més que connectar els $2^n$ punts als seus $n$ veïns,
