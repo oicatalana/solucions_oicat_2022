@@ -2,6 +2,9 @@
 * [Problema Q1. Onze llibres](#Q1)
 * [Problema C1. Esperança de vida](#C1)
 * [Problema G1. Dígits iguals](#G1)
+* [Problema C2. Estudiant nefast](#C2)
+* [Problema Q2. Hotel Vela](#Q2)
+
 
 # [Problema Q1. Onze llibres](https://jutge.org/problems/P57678_ca) <a name="Q1"/>
 
@@ -94,3 +97,70 @@ img.save("output.png")
 
 __Repte:__ Podrieu demostrar que la matemàticament que la imatge és
 una repetició de patrons de mida $100 \times 100$?
+
+# [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    while (cin >> n) {
+        // Llegim les notes
+        vector<int> v(n);
+        for (int& x : v)
+            cin >> x;
+
+        // Ordenem de petit a gran
+        sort(v.begin(), v.end());
+        
+        // Notes ordenades amb el criteri demanat
+        vector<int> w;
+
+        // Posem primer els aprovats
+        for (int x : v)
+            if (x >= 500000)
+                w.push_back(x);
+
+        // Posem després els suspesos
+        for (int x : v)
+            if (x < 500000)
+                w.push_back(x);
+
+        // Escrivim la resposta
+        bool hem_escrit = false;
+        for (int i = 0; i < n; ++i) {
+            if (i > 0)
+                cout << ' ';
+            cout << v[i];
+        }
+        cout << endl;
+    }   
+}
+```
+
+```py
+import sys
+
+for line in sys.stdin:
+    print(*sorted([int(s) for s in line.rstrip('\n').split()][1:], key=lambda x:(x < 500000, x)))
+```
+
+# [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="C2"/>
+```py
+NUM_PORTES = 473
+
+# portes[i] és True si i només si la porta de l'habitació i està oberta
+portes = [False]*(NUM_PORTES + 1)
+
+# Simulem
+for i in range(1, NUM_PORTES + 1):
+    for j in range(i, NUM_PORTES + 1, i):
+        portes[j] = not portes[j]
+
+# Donem la suma dels índexos de les portes obertes
+print(sum(i for i in range(1, NUM_PORTES + 1) if portes[i]))
+```
