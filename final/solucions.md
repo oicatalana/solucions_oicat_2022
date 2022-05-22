@@ -238,6 +238,12 @@ img.save("output.png")
 
 ## [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
 
+No cal gaire més que connectar els $2^n$ punts als seus $n$ veïns,
+anant amb compte de posar l'aresta correcta. El problema més gran que pot
+sorgir és com canviar un bit concret. Ho podem fer amb XORs, amb recursivitat,
+i fins i tot convertint el nombre a string i reconvertint-lo a enter
+si després de canviar-li el valor de la posició on toca.
+
 __Codi__:
 ```python
 from PIL import Image, ImageDraw
@@ -258,42 +264,42 @@ dib = ImageDraw.Draw(img)
 
 # Dibuixem els punts
 for x, y in punts:
-	dib.ellipse((x - 2, y - 2, x + 2, y + 2), c)
-	
+    dib.ellipse((x - 2, y - 2, x + 2, y + 2), c)
+
 # Funció per crear una línia del punt a al b
 def add_edge(a, b):
-	dib.line([punts[a], punts[b]], c)
+    dib.line([punts[a], punts[b]], c)
 
 # Funció per canviar el r-èssim bit de x
 def canvia_bit(x, r):
-	# Si cal canviar l'últim bit, suma 1 si aquest és 0, resta 1 si aquest és 1
-	if r == 0:
-		if x % 2 == 0:
-			return x + 1
-		else:
-			return x - 1
+    # Si cal canviar l'últim bit, suma 1 si aquest és 0, resta 1 si aquest és 1
+    if r == 0:
+        if x % 2 == 0:
+            return x + 1
+        else:
+            return x - 1
 
-	# Solucionem recursivament 
-	return 2*canvia_bit(x // 2, r - 1) + (x % 2)
+        # Solucionem recursivament
+        return 2*canvia_bit(x // 2, r - 1) + (x % 2)
 
 # Connectem cada punt i a tots els punts j que difereixen en un bit (si i < j)
 for i in range(2**n):
-	for r in range(n):
-		j = canvia_bit(i, r)
-		if i < j:
-			add_edge(i, j)
+    for r in range(n):
+        # j = i ^ (2 ** r) també funciona, i sí "^" representa un XOR
+        j = canvia_bit(i, r)
+        if i < j:
+            add_edge(i, j)
 
 # Guardem la imatge
 img.save("output.png")
 ```
 
-
 ## [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
 
 Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
-* És commutativa: $x \oplus y = y \oplus x$.
-* És associativa: $(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis).
-* I la més important: $x \oplus x = 0$ per a tot $x$.
+És commutativa ($x \oplus y = y \oplus x$),
+és associativa ($(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis)),
+i la més important, $x \oplus x = 0$ per a tot $x$.
 
 D'aquí es deriva el següent: si $x \oplus y = z$, llavors $x \oplus y \oplus y = z \oplus y$, i per tant
 $x = y \oplus z$. En altres paraules, la condició que havíeu de trobar (hi ha 4 índexos diferents
@@ -352,6 +358,76 @@ int main() {
 }
 ```
 ## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
+
+El problema ens demana buscar les com a molt $k$ components connexes més grans
+i pintar totes les caselles que les componen. Podem fer això fàcilment usant
+un algorisme de cerca com DFS o BFS.
+
+```python
+from PIL import Image, ImageDraw
+
+# Llista de direccions en les que ens podem moure
+DIRECCIONS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+# Llegim l'entrada
+f = input()
+c = input()
+n = int(input())
+m = int(input())
+k = int(input())
+graella = [input() for i in range(n)]
+
+# Marquem totes les caselles com a no visitades
+visitat = [[False for x in range(m)] for y in range(n)]
+
+# Troba quantes caselles no visitades podem visitar des de (x, y)
+def dfs(y, x):
+    # Parem estem fora del mapa o la casella ja ha estat visitada
+    if not (0 <= y < n) or not (0 <= x < m) or graella[y][x] == '.' or visitat[y][x]:
+        return 0
+
+    # Marquem ara la casella com a visitada
+    visitat[y][x] = True
+
+    # Retornem a quantes caselles no visitades hi podem arribar
+    return sum(dfs(y + dy, x + dx) for dy, dx in DIRECCIONS) + 1
+
+# Guardem la llista de components connexes. Aquestes vindran donades per 3 nombres:
+# (mida, y, x), on `mida` és la mida de la component connexa, i (x, y) és un punt d'aquesta
+components_connexes = []
+for y in range(n):
+    for x in range(m):
+        if not visitat[y][x] and graella[y][x] == 'X':
+            components_connexes.append((dfs(y, x), y, x))
+
+# Creem la imatge
+img = Image.new('RGB', (m, n), f)
+dib = ImageDraw.Draw(img)
+
+# Marquem quins punts hem pintat
+pintat = [[False for x in range(m)] for y in range(n)]
+
+# Pintem la component connexa
+def pinta_dfs(y, x):
+    # Parem si estem fora del mapa, o si ja hem pintat la casella
+    if not (0 <= y < n) or not (0 <= x < m) or graella[y][x] == '.' or pintat[y][x]:
+        return
+
+    # Pintem el punt i el marquem com a pintat
+    dib.point((x, y), c)
+    pintat[y][x] = True
+
+    # Pintem recursivament els punts adjacents
+    for dy, dx in DIRECCIONS:
+        pinta_dfs(y + dy, x + dx)
+
+# Pintem les com a molt k components connexes més grans
+for _, y, x in sorted(components_connexes, reverse=True)[:k]:
+    pinta_dfs(y, x)
+
+# Guardem la imatge
+img.save('output.png')
+```
 
 ## [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
 
