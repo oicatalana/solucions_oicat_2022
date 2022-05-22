@@ -37,9 +37,8 @@ del millor país segons els tres criteris diferents en la sortida.
 En aquests casos, cal anar amb compte amb com inicialitzem les variables:
 volem que després de llegir el primer país aquest sigui el millor en tots tres!
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```cpp
 #include <iostream>
@@ -88,9 +87,8 @@ amb el color que toca. Si rebeu un _time limit exceeded_,
 i després només pintar els punts que toquin amb el color `c`, que serà
 el que aparegui de forma menys freqüent.
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```py
 from PIL import Image, ImageDraw
@@ -118,7 +116,6 @@ img.save("output.png")
 ```
 </details>
 
-
 __Repte:__ Podríeu demostrar matemàticament que la imatge és
 una repetició de patrons de mida $100 \times 100$?
 
@@ -129,9 +126,8 @@ maneres, potser aquesta és la més intuïtiva: ordenem totes les notes,
 a continuació les anem posant en ordre en un vector, però fent dues passades:
 primer una amb les notes aprovades, i després una amb les suspeses.
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```cpp
 #include <iostream>
@@ -176,9 +172,8 @@ int main() {
 ```
 </details>
 
-__Repte__: Intenteu entendre aquesta solució d'"una línia":
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Repte__: Intenteu entendre aquesta solució d'"una línia":</summary>
 
 ```python
 import sys
@@ -193,9 +188,9 @@ for line in sys.stdin:
 Podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
 
-__Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__):
+
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__)<summary>
 
 ```python
 NUM_PORTES = 473
@@ -224,9 +219,8 @@ l'enunciat, però cal tenir cautela amb els següents detalls:
 A la nostra solució usem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing),
 us recomenem fer una ullada a aquests dos features de python perquè són molt comuns i útils.
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```python
 from PIL import Image, ImageDraw
@@ -293,9 +287,8 @@ amb $s_1 \leq \ldots \leq s_k$ i $t_1 \leq \ldots \leq t_k$, llavors
 $(s_1, t_{n - k + 1}), \ldots, (s_k, t_n), (s_{k + 1}, t_1), \ldots, (s_n, t_{n - k})$
 ha de ser una solució.
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```cpp
 #include <iostream>
@@ -370,9 +363,8 @@ int main() {
 
 ## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```python
 # Graf: Cada entrada representa un node i conté una llista: les arestes a les que és incident
@@ -428,9 +420,8 @@ sorgir és com canviar un bit concret. Ho podem fer amb XORs, amb recursivitat,
 i fins i tot convertint el nombre a string i reconvertint-lo a enter
 si després de canviar-li el valor de la posició on toca.
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```python
 from PIL import Image, ImageDraw
@@ -636,12 +627,12 @@ la més inuïtiva requereix una mica de programació dinàmica:
 En comptes de pensar com partir un conjunt de $n$ elements en diferents subconjunts
 d'elements no buits, podem pensar en com partir-los en exactament $k$ subconjunts
 no buits. Aquests valors es coneixen com a [nombres d'Stirling del segon tipus](https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind). A partir d'aquí, cal pensar com afegir un nou element
-en aquest partició. Ho expliquem amb més claretat en el __codi__ (usar C++ aquí no és bona idea
+en aquest partició. Ho expliquem amb més claretat en el codi (usar C++ aquí no és bona idea
 ja que els valors de l'output superen els $2^{64} - 1$: el màxim valor que pot tenir un
 `unsigned long long int`):
 
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```python
 from easyinput import read
@@ -700,9 +691,8 @@ que el mateix nombre té més d'una representació vàlida).
 Observeu a més que les sumes, restes i productes de nombres d'aquesta forma
 també donen nombres d'aquesta forma.
 
-__Codi__:
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary>__Codi__</summary>
 
 ```python
 # P o Q representen un nombre de la forma (a + b * sqrt(5))/2^n
