@@ -38,7 +38,7 @@ En aquests casos, cal anar amb compte amb com inicialitzem les variables:
 volem que després de llegir el primer país aquest sigui el millor en tots tres!
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```cpp
 #include <iostream>
@@ -88,7 +88,7 @@ i després només pintar els punts que toquin amb el color `c`, que serà
 el que aparegui de forma menys freqüent.
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```py
 from PIL import Image, ImageDraw
@@ -127,7 +127,7 @@ a continuació les anem posant en ordre en un vector, però fent dues passades:
 primer una amb les notes aprovades, i després una amb les suspeses.
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```cpp
 #include <iostream>
@@ -173,7 +173,7 @@ int main() {
 </details>
 
 <details>
-  <summary>__Repte__: Intenteu entendre aquesta solució d'"una línia":</summary>
+  <summary><b>Repte:</b> Intenteu entendre aquesta solució d'"una línia":</summary>
 
 ```python
 import sys
@@ -190,7 +190,7 @@ i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
 
 
 <details>
-  <summary>__Codi__ (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__)<summary>
+  <summary><b>Codi</b> (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__)<summary>
 
 ```python
 NUM_PORTES = 473
@@ -220,7 +220,7 @@ A la nostra solució usem [`zip()`](https://docs.python.org/3/library/functions.
 us recomenem fer una ullada a aquests dos features de python perquè són molt comuns i útils.
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 from PIL import Image, ImageDraw
@@ -288,7 +288,7 @@ $(s_1, t_{n - k + 1}), \ldots, (s_k, t_n), (s_{k + 1}, t_1), \ldots, (s_n, t_{n 
 ha de ser una solució.
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```cpp
 #include <iostream>
@@ -364,7 +364,7 @@ int main() {
 ## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 # Graf: Cada entrada representa un node i conté una llista: les arestes a les que és incident
@@ -421,7 +421,7 @@ i fins i tot convertint el nombre a string i reconvertint-lo a enter
 si després de canviar-li el valor de la posició on toca.
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 from PIL import Image, ImageDraw
@@ -632,7 +632,7 @@ ja que els valors de l'output superen els $2^{64} - 1$: el màxim valor que pot 
 `unsigned long long int`):
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 from easyinput import read
@@ -692,7 +692,7 @@ Observeu a més que les sumes, restes i productes de nombres d'aquesta forma
 també donen nombres d'aquesta forma.
 
 <details>
-  <summary>__Codi__</summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 # P o Q representen un nombre de la forma (a + b * sqrt(5))/2^n
