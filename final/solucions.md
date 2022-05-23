@@ -430,10 +430,10 @@ for perm in permutations(list(range(1, 13))):
 
 ## [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
 
-No cal gaire més que connectar els $2^n$ punts als seus $n$ veïns,
+Només s'han de dibuixar els $2^n$ punts i connectar cadascun als seus $n$ veïns,
 anant amb compte de posar l'aresta correcta. El problema més gran que pot
-sorgir és com canviar un bit concret. Ho podem fer amb XORs, amb recursivitat,
-i fins i tot convertint el nombre a string i reconvertint-lo a enter després de canviar-li el valor de la posició on toca.
+sorgir és com canviar un bit concret d'un nombre. Ho podem fer amb XORs, amb recursivitat,
+o fins i tot convertint el nombre a string i reconvertint-lo a enter després de canviar-li el valor de la posició on toca.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -478,7 +478,7 @@ def canvia_bit(x, r):
 # Connectem cada punt i a tots els punts j que difereixen en un bit (si i < j)
 for i in range(2**n):
     for r in range(n):
-        # j = i ^ (2 ** r) també funciona (sí "^" representa un XOR)
+        # j = i ^ (2 ** r) també funciona (sí, "^" representa un XOR)
         j = canvia_bit(i, r)
         if i < j:
             add_edge(i, j)
@@ -497,11 +497,11 @@ i la més important, $x \oplus x = 0$ per a tot $x$.
 
 D'aquí es deriva el següent: si $x \oplus y = z$, llavors $x \oplus y \oplus y = z \oplus y$, i per tant
 $x = y \oplus z$. En altres paraules, la condició que havíeu de trobar (hi ha 4 índexos diferents
-$i, j, k, l$ tals que $v_i \oplus v_j \oplus v_k = v_l$), podem trobar 4 índexos diferents
+$i, j, k, l$ tals que $v_i \oplus v_j \oplus v_k = v_l$), és equivalent a trobar 4 índexos diferents
 $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 
-Per tant, l'únic que heu de fer, és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
-parar quan trobeu un resultat que ja hagueu vist abans.
+Per tant, l'únic que s'ha de fer és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
+parar quan trobeu un resultat que ja haguem vist abans. Utilitzant un *set*, podem comprovar si hem vist abans un resultat en temps $\mathcal{O}(\log(n^2)) = \mathcal{O}(\log(n))$. Per tant, la complexitat total és $\mathcal{O}(n^2\log n)$.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -530,7 +530,7 @@ bool solve(int n) {
         if (v[i - 1] == v[i])
             ++reps, ++i;
 
-    // ... resposta és sí
+    // ... la resposta és sí
     if (reps >= 2)
         return true;
 
