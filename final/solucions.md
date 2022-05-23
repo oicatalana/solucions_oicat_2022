@@ -194,9 +194,8 @@ $$ 1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
 Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviï l'estat de les portes per les que passa.
 
-
 <details>
-  <summary><b>Codi</b><summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 NUM_PORTES = 473
@@ -265,21 +264,23 @@ img.save("output.png")
 ## [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
 
 Sigui $T = C \setminus S$ el complementari de $S$ en $C$ (el que ens quedaria
-a $C$ si hi traiéssim els elements de $S$.
+a $C$ si hi traguéssim els elements de $S$). Sigui $S = \{s_1, \dots, s_n\}$ i $T = \{t_1, \dots, t_n\}$, i suposem que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots t_n$). Aleshores, en cas que existeixi solució, tenim que una solució vàlida és $(s_1, t_{n-k+1}),\, (s_2, t_{n-k+2}), \, \dots, \, (s_k, t_n), \, (s_{k+1}, t_1), \, (s_{k+2}, t_2), \, \dots, (s_n, t_{n-k})$.
 
-Suposem que tenim una solució $(s_1, t_1), \ldots, (s_n, t_n)$ tal que
+Intuitivament, la idea és que sempre és òptim emparellar els $k$ elements més petits de $S$ amb els $k$ més grans de $T$, i els $n-k$ més grans de $S$ amb els $n-k$ més petits de $T$. A continuació en donarem una demostració més rigurosa:  
+
+Suposem que tenim una solució $(s_1, t_1), \ldots, (s_n, t_n)$ tal que,
 per a tot $i$, $s_i$ i $t_i$ pertanyen a $S$ i $T$, respectivament,
-i tal que $s_i \leq t_i$ si $1 \leq i \leq k$, i $s_i \geq t_i$ si $k < i \leq n$.
+i tal que $s_i \leq t_i$ si $1 \leq i \leq k$, i $s_i \geq t_i$ si $k < i \leq n$ (observeu que ara els $s_i$ i els $t_i$ no suposem que estiguin ordenats creixentment).
 Suposem sense pèrdua de generalitat també que $s_1 \leq \ldots \leq s_k$ i que
 $s_{k + 1} \leq \ldots \leq s_n$.
 
 Si existeixen $i \leq k < j$ tals que $s_i > s_j$, intercanviant $s_i$ per $s_j$
-seguirem tenint una solució. D'aquí, deduïm que podem dur a terme aquesta mena
-d'intercanvis iterativaments fins que
+seguirem tenint una solució. D'aquí deduïm que podem dur a terme aquesta mena
+d'intercanvis iterativament tantes vegades com calgui fins que
 $s_1 \leq \ldots \leq s_k \leq s_{k + 1} \leq \ldots \leq s_n$,
 i seguirem tenint una solució vàlida.
 
-Podem fer tres observacions més parell d'observacions similars més:
+Podem fer tres observacions similars més:
 
 Si existeixen $i \leq k < j$ tals que $t_i < t_j$, intercanviant $t_i$ per $t_j$
 seguirem tenint una solució.
@@ -290,10 +291,7 @@ seguirem tenint una solució.
 Si existeixen $k < i < j \leq n$ tals que $t_i > t_j$, intercanviant $t_i$ per $t_j$
 seguirem tenint una solució.
 
-D'aquí, deduïm que, si $S = \{s_1, \ldots, s_k\}$ i $T = \{t_1, \ldots, t_k\}$,
-amb $s_1 \leq \ldots \leq s_k$ i $t_1 \leq \ldots \leq t_k$, llavors
-$(s_1, t_{n - k + 1}), \ldots, (s_k, t_n), (s_{k + 1}, t_1), \ldots, (s_n, t_{n - k})$
-ha de ser una solució.
+Novament, aplicant aquests canvis tantes vegades com calgui, acabem obtenint una solució on $s_1 \leq \dots \leq s_n$ i $t_{k+1} \leq \dots t_n \leq t_1 \leq \dots \leq t_{k}$. Es pot veure que això es correspon amb la construcció que havíem donat anteriorment.
 
 <details>
   <summary><b>Codi</b></summary>
