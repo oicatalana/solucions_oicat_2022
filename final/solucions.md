@@ -172,7 +172,7 @@ int main() {
 </details>
 
 <details>
-  <summary><b>Repte:</b> Intenteu entendre aquesta solució d'"una línia":</summary>
+  <summary><b>Repte:</b> Intenteu entendre aquesta solució "d'una línia":</summary>
 
 ```python
 import sys
@@ -184,7 +184,7 @@ for line in sys.stdin:
 
 ## [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
 
-Per una porta $x$ hi passen tantes persones com divisors tingui $x$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
+Per una porta $n$ hi passen tantes persones com divisors tingui $n$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
 
 Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa o utilitzar la fórmula:
 
@@ -192,11 +192,11 @@ $$ 1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
 
 
 Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
-i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
+i per cadascun d'aquests fem que canviï l'estat de les portes per les que passa.
 
 
 <details>
-  <summary><b>Codi</b> (si no enteneu el range() amb tres paràmetres, us deixem un <a href="https://jutge.org/problems/P93780_ca"><b>Repte</b></a>)<summary>
+  <summary><b>Codi</b><summary>
 
 ```python
 NUM_PORTES = 473
@@ -214,16 +214,18 @@ print(sum(i for i in range(1, NUM_PORTES + 1) if portes[i]))
 ```
 </details>
 
+__Repte:__ Si teniu dubtes de com funciona el `range()` amb 3 paràmetres del codi anterior, podeu provar de resoldre [aquest problema](https://jutge.org/problems/P93780_ca).
+
 ## [Problema G2. Paràbola](https://jutge.org/problems/P60526_ca) <a name="G2"/>
 Per resoldre'l no cal massa més que seguir al peu de la lletra el que diu
-l'enunciat, però cal tenir cautela amb els següents detalls:
-* L'eix de les `y`s va al revés aquí
-* Cal aplicar transformació vertical per tal que la imatge tingui els punts on toca
-* Només podem calcular la mida de la imatge un cop coneixem els punts
-* Cal dibuixar les línies en l'ordre adient
+l'enunciat, però cal anar amb compte amb els següents detalls:
+* L'eix `y` va al revés a l'enunciat del problema respecte a la imatge que dibuixem (a la llibreria `PIL` per defecte l'eix vertical augmenta de dalt a baix).
+* Si el punt final de la paràbola està per sota del punt inicial, caldrà traslladar la imatge verticalment.
+* Només sabrem quina mida ha de tenir la imatge un cop haguem calculat tots els punts.
+* Cal dibuixar les línies en l'ordre adient (altrament la imatge resultant pot ser lleugerament diferent).
 
-A la nostra solució usem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing),
-us recomenem fer una ullada a aquests dos features de python perquè són molt comuns i útils.
+A la nostra solució utilitzem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing),
+us recomenem fer una ullada a aquestes dues *features* de python perquè són molt comunes i útils.
 
 <details>
   <summary><b>Codi</b></summary>
