@@ -264,7 +264,7 @@ img.save("output.png")
 ## [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
 
 Sigui $T = C \setminus S$ el complementari de $S$ en $C$ (el que ens quedaria
-a $C$ si hi traguéssim els elements de $S$). Sigui $S = {s_1, \dots, s_n}$ i $T = {t_1, \dots, t_n}$, i suposem que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, en cas que existeixi solució, tenim que una solució vàlida és $(s_1, t_{n-k+1}),\, (s_2, t_{n-k+2}), \, \dots, \, (s_k, t_n), \, (s_{k+1}, t_1), \, (s_{k+2}, t_2), \, \dots, (s_n, t_{n-k})$.
+a $C$ si hi traguéssim els elements de $S$). Sigui $S = ${$s_1, \dots, s_n $} i $T =$ {$t_1, \dots, t_n$}, i suposem que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, en cas que existeixi solució, tenim que una solució vàlida és $(s_1, t_{n-k+1}), (s_2, t_{n-k+2}),  \dots,  (s_k, t_n),  (s_{k+1}, t_1),  (s_{k+2}, t_2),  \dots, (s_n, t_{n-k})$.
 
 Intuitivament, la idea és que sempre és òptim emparellar els $k$ elements més petits de $S$ amb els $k$ més grans de $T$, i els $n-k$ més grans de $S$ amb els $n-k$ més petits de $T$. A continuació en donarem una demostració més rigurosa:  
 
