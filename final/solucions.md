@@ -491,7 +491,7 @@ img.save("output.png")
 ## [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
 
 Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
-És commutativa ($x \oplus y = y \oplus x$),
+és commutativa ($x \oplus y = y \oplus x$),
 és associativa ($(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis)),
 i la més important, $x \oplus x = 0$ per a tot $x$.
 
@@ -501,7 +501,7 @@ $i, j, k, l$ tals que $v_i \oplus v_j \oplus v_k = v_l$), és equivalent a troba
 $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 
 Per tant, l'únic que s'ha de fer és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
-parar quan trobeu un resultat que ja haguem vist abans. Utilitzant un *set*, podem comprovar si hem vist abans un resultat en temps $\mathcal{O}(\log(n^2)) = \mathcal{O}(\log(n))$. Per tant, la complexitat total és $\mathcal{O}(n^2\log n)$.
+parar quan trobem un resultat que ja haguem vist abans. Utilitzant un *set*, podem comprovar si hem vist abans un resultat en temps $\mathcal{O}(\log(n^2)) = \mathcal{O}(\log(n))$. Per tant, la complexitat total és $\mathcal{O}(n^2\log n)$.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -558,12 +558,12 @@ int main() {
 
 ## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
 
-El problema ens demana buscar les com a molt $k$ components connexes més grans
+El problema ens demana buscar les $k$ components connexes més grans
 i pintar totes les caselles que les componen. Podem fer això fàcilment usant
-un algorisme de cerca com DFS o BFS.
+un algorisme de cerca en grafs com el DFS o el BFS.
 
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary><b>Codi</b></summary>
 
 ```python
 from PIL import Image, ImageDraw
