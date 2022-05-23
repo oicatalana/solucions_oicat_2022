@@ -35,7 +35,7 @@ Podem trobar aquesta quantitat a mà o fent una mica de [combinatòria bàsica](
 del millor país segons els tres criteris diferents en la sortida.
 
 En aquests casos, cal anar amb compte amb com inicialitzem les variables:
-volem que després de llegir el primer país aquest sigui el millor en tots tres!
+volem que després de llegir el primer país aquest sigui el millor en tots tres aspectes!
 
 <details>
   <summary><b>Codi</b></summary>
@@ -48,11 +48,11 @@ int main() {
     // Inicialitzem les variables
     string str_millor_1, str_millor_2, str_millora_mes_gran;
     double millor_1 = -1.0, millor_2 = -1.0, millora_mes_gran = -1e6;
-    
+
     // Llegim els anys
     int a1, a2;
     cin >> a1 >> a2;
-    
+
     // Anem llegint les dades de cada país i actualitzant les variables
     string s;
     double e1, e2;
@@ -82,7 +82,7 @@ int main() {
 ## [Problema G1. Dígits iguals](https://jutge.org/problems/P27390_ca) <a name="G1"/>
 
 En tenim prou amb anar comprovant la condició per tots els punts i pintar-lo
-amb el color que toca. Si rebeu un _time limit exceeded_, 
+amb el color que toca. Si rebeu un _time limit exceeded_,
 és una bona idea plantejar-se pintar tot del color de fons `f`,
 i després només pintar els punts que toquin amb el color `c`, que serà
 el que aparegui de forma menys freqüent.
@@ -107,8 +107,8 @@ dib = ImageDraw.Draw(img)
 for y in range(n):
     for x in range(m):
         digit_unitats_suma = (x + y)%10
-        digit_centenes_producte = ((x * y)//10)%10
-        if digit_unitats_suma == digit_centenes_producte:
+        digit_desenes_producte = ((x * y)//10)%10
+        if digit_unitats_suma == digit_desenes_producte:
             dib.point((x, y), c)
 
 # Guardem la imatge
@@ -145,7 +145,7 @@ int main() {
 
         // Ordenem de petit a gran
         sort(v.begin(), v.end());
-        
+
         // Notes ordenades amb el criteri demanat
         vector<int> w;
 
@@ -160,7 +160,6 @@ int main() {
                 w.push_back(x);
 
         // Escrivim la resposta
-        bool hem_escrit = false;
         for (int i = 0; i < n; ++i) {
             if (i > 0)
                 cout << ' ';
@@ -185,7 +184,14 @@ for line in sys.stdin:
 
 ## [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
 
-Podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
+Per una porta $x$ hi passen tantes persones com divisors tingui $x$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
+
+Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa o utilitzar la fórmula:
+
+$$ 1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
+
+
+Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
 
 
@@ -238,7 +244,7 @@ punts = [(c * t, -(b*t - a*t*t//2)) for t in range(T + 1)]
 sorted_y_coords = sorted(y for _, y in punts)
 min_y, max_y = sorted_y_coords[0], sorted_y_coords[T]
 
-# Actualizem la llista de punts tal i com apareixeran a l'output 
+# Actualizem la llista de punts tal i com apareixeran a l'output
 punts = [(x, y - min_y) for x, y in punts]
 
 # Creem la imatge
@@ -417,8 +423,7 @@ for perm in permutations(list(range(1, 13))):
 No cal gaire més que connectar els $2^n$ punts als seus $n$ veïns,
 anant amb compte de posar l'aresta correcta. El problema més gran que pot
 sorgir és com canviar un bit concret. Ho podem fer amb XORs, amb recursivitat,
-i fins i tot convertint el nombre a string i reconvertint-lo a enter
-si després de canviar-li el valor de la posició on toca.
+i fins i tot convertint el nombre a string i reconvertint-lo a enter després de canviar-li el valor de la posició on toca.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -463,7 +468,7 @@ def canvia_bit(x, r):
 # Connectem cada punt i a tots els punts j que difereixen en un bit (si i < j)
 for i in range(2**n):
     for r in range(n):
-        # j = i ^ (2 ** r) també funciona, i sí "^" representa un XOR
+        # j = i ^ (2 ** r) també funciona (sí "^" representa un XOR)
         j = canvia_bit(i, r)
         if i < j:
             add_edge(i, j)
@@ -486,10 +491,10 @@ $i, j, k, l$ tals que $v_i \oplus v_j \oplus v_k = v_l$), podem trobar 4 índexo
 $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 
 Per tant, l'únic que heu de fer, és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
-parar quan hagiu trobat un parell que ja hàgiu vist abans.
+parar quan trobeu un resultat que ja hagueu vist abans.
 
 <details>
-  <summary>Clica per veure la solució</summary>
+  <summary><b>Codi</b></summary>
 
 ```cpp
 #include <iostream>
@@ -518,7 +523,7 @@ bool solve(int n) {
     // ... resposta és sí
     if (reps >= 2)
         return true;
-    
+
     // Ignorem les repeticions
     v.erase(unique(v.begin(), v.end()), v.end());
 
@@ -536,7 +541,7 @@ bool solve(int n) {
 int main() {
     int n;
     while (cin >> n)
-        cout << (solve(n) ? "SI" : "NO") << endl; 
+        cout << (solve(n) ? "SI" : "NO") << endl;
 }
 ```
 </details>
@@ -622,12 +627,12 @@ img.save('output.png')
 ## [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
 
 Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number),
-la més inuïtiva requereix una mica de programació dinàmica:
+la més intuïtiva requereix una mica de programació dinàmica:
 
 En comptes de pensar com partir un conjunt de $n$ elements en diferents subconjunts
 d'elements no buits, podem pensar en com partir-los en exactament $k$ subconjunts
 no buits. Aquests valors es coneixen com a [nombres d'Stirling del segon tipus](https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind). A partir d'aquí, cal pensar com afegir un nou element
-en aquest partició. Ho expliquem amb més claretat en el codi (usar C++ aquí no és bona idea
+en aquest partició. Ho expliquem amb més claredat en el codi (utilitzar C++ aquí no és bona idea
 ja que els valors de l'output superen els $2^{64} - 1$: el màxim valor que pot tenir un
 `unsigned long long int`):
 
@@ -652,7 +657,7 @@ for n in range(1, N + 1):
     dp[n][n] = 1        # Per raons òbvies
 
 # La solució per un cert n serà
-# bell[n] = dp[n][1] + dp[n][2] + ... + dp[n][n] 
+# bell[n] = dp[n][1] + dp[n][2] + ... + dp[n][n]
 bell = [sum(v[1:n+1]) for v in dp]
 
 while True:
@@ -662,6 +667,10 @@ while True:
     print(bell[n])
 ```
 </details>
+
+Un truc típic en aquests problemes on la $n$ màxima és petita és precalcular-se tots els nombres de Bell localment amb el codi anterior en Python i llavors enviar un codi en C++ que tingui totes les respostes en un vector, i que per cada entrada retorni la resposta sense haver de calcular res.
+
+En aquest problema això no era necessari, però va bé tenir-ho en compte si teniu una solució que dona TLE i el nombre d'inputs diferents possibles és petit.
 
 ## [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
 
@@ -799,3 +808,11 @@ for n in [10, 201, 10**30]:
     print(resol(n))
 ```
 </details>
+
+Alternativament, en lloc d'expressar els nombres amb la forma $\frac{a + b\sqrt{5}}{2^n}$, també es podia expressar els nombres com $a + b \phi$, on $a$ i $b$ són enters. Utilitzant que $phi^2 = \phi + 1$, es pot comprovar que la suma, resta i producte dels nombres d'aquesta forma es poden expressar també en aquesta forma (per exemple, $(a + b \phi) \cdot (c + d\phi) = (ac + bd) + (ad + bc + bd)\phi$).
+
+Per comparar dos expressions d'aquest tipus, hem de veure si la seva resta és més gran que 0. Això es pot fer utilitzant que $a + b \phi > 0$ si es dona una de les següents condicions:
+
+- $a > 0$ i $b > 0$
+- $a > 0$, $b < 0$ i $(4a+b)^2 > 5b^2$
+- $a < 0$, $b > 0$ i $(4a+b)^2 < 5b^2$
