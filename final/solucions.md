@@ -196,7 +196,7 @@ i per cadascun d'aquests fem que canviïn l'estat de les portes que toquen.
 
 
 <details>
-  <summary><b>Codi</b> (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte](https://jutge.org/problems/P93780_ca)__)<summary>
+  <summary><b>Codi</b> (si no enteneu el `range()` amb tres paràmetres, us deixem un __[repte]__(https://jutge.org/problems/P93780_ca))<summary>
 
 ```python
 NUM_PORTES = 473
