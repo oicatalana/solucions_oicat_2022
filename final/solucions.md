@@ -369,6 +369,16 @@ int main() {
 
 ## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
 
+El primer pas per resoldre aquest problema és adonar-se que els valors de les arestes incidents a cada vèrtex han de sumar 26. Sabríeu justificar per què?
+<details>
+  <summary><b>Spoiler</b></summary>
+
+  Els nombres de l'1 al 12 sumen 78, i cada aresta és incident a dos vèrtexs, de manera que la suma per tots els vèrtexs de la suma dels valors de les arestes incidents és $2 \cdot 78 = 156$. Com que la suma a cada vèrtex ha de ser igual i tenim 6 vèrtexs, tenim que la suma a cada vèrtex és $156/6 = 26$.
+
+</details>
+
+Un cop tenim això, podem anar provant a mà els diferents casos possibles amb una mica de traça o fer un programa que ens comprovi cada possible assignació dels nombres d'1 a 12 a les arestes.
+
 <details>
   <summary><b>Codi</b></summary>
 
