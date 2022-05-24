@@ -634,6 +634,112 @@ img.save('output.png')
 
 ## [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
 
+Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
+
+<details>
+<summary><b>Spoiler</b></summary>
+
+Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$ més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
+</details>
+
+Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times (n+1)/2 + 1$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
+
+<details>
+  <summary><b>Solució recursiva</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+const ll INF = 1e18;
+int n;
+vector<int> b, p;
+vector<vector<ll>> memo;
+
+// Definim dp(pos, h) com el maxim benefici que podem
+// obtenir amb les columnes de 1 fins a `pos`, suposant
+// que a la columna `pos` hem excavat fins a profunditat `h`
+ll dp(int pos, int h) {
+	if(pos == 0) {
+		if(h == 0) return 0;
+		return -INF;
+	}
+	if(h > p[pos-1]) return -INF;
+
+	// A l'utilitzar el simbol `&`, aconseguim que si
+	// modifiquem la variable `ans`, tambe es modificara la
+	// variable `memo[pos][h]` automaticament.
+	ll& ans = memo[pos][h];
+	// Si ja hem calculat el resultat previament,
+	// el retornem directament
+	if(ans != -INF) return ans;
+	ans = dp(pos-1, h);
+	if(h > 0) ans = max(ans, dp(pos-1, h-1));
+	if(h < (n+1)/2) ans = max(ans, dp(pos-1, h+1));
+	ans += ll(h) * b[pos-1];
+	return ans;
+}
+
+int main() {
+	while(cin >> n) {
+		b = vector<int>(n);
+		for(int& x : b) cin >> x;
+		p = vector<int>(n);
+		for(int& x : p) cin >> x;
+		memo = vector<vector<ll>>(n+1, vector<ll>((n+1)/2 + 1, -INF));
+		cout << max(dp(n, 0), dp(n, 1)) << endl;
+	}
+}
+```
+</details>
+
+<details>
+  <summary><b>Solució iterativa</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+int main() {
+	int n;
+	while(cin >> n) {
+		vector<int> b(n); // benefici per casella excavada a cada columna
+		for(int& x : b) cin >> x;
+		vector<int> p(n); // profunditat maxima a cada columna
+		for(int& x : p) cin >> x;
+
+		const ll INF = 1e18;
+    // Definim `dp[pos][h]` com el maxim benefici que podem obtenir
+    // des de la columna 1 fins a la columna `pos`, suposant que a la
+    // columna `pos` hem excavat fins a profunditat `h`.
+    // Observem que la profunditat maxima que podem excavar es (n+1)/2
+		vector<vector<ll>> dp(n+1, vector<ll>((n+1)/2 + 1, -INF));
+		dp[0][0] = 0;
+		for(int pos = 1; pos <= n; ++pos) {
+			for(int h = 0; h <= (n+1)/2; ++h) {
+				if(h > p[pos-1]) break; // ens passem de profunditat
+				dp[pos][h] = dp[pos-1][h];
+				if(h > 0) {
+					dp[pos][h] = max(dp[pos][h], dp[pos-1][h-1]);
+				}
+				if(h < (n+1)/2) {
+					dp[pos][h] = max(dp[pos][h], dp[pos-1][h+1]);
+				}
+				dp[pos][h] += ll(h)*b[pos-1]; // afegim el benefici de la columna actual
+			}
+		}
+    // per tal que la solucio sigui valida, a la ultima columna hem
+    // d'haver excavat 0 o 1 casella.
+		cout << max(dp[n][0], dp[n][1]) << endl;
+	}
+}
+```
+</details>
+
 ## [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
 
 Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number),
