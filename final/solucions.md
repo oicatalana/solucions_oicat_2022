@@ -1107,4 +1107,4 @@ Les dues solucions anteriors es basaven en expressar les potències de $\phi$ en
 
 Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \phi^{-1} + \phi^{-2} = \phi + \phi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. A l'acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
 
-La gràcia d'aquesta solució és que es pot implementar directament en C++ sense haver d'utilitzar enters excessivament grans. No obstant això, el codi resultant és més complicat que els dos codis anteriors. 
+L'avantatge d'aquesta solució és que es pot implementar directament en C++ sense haver d'utilitzar enters excessivament grans. No obstant això, el codi resultant és més complicat que els dos codis anteriors.
