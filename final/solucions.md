@@ -792,7 +792,7 @@ En aquest problema això no era necessari, però va bé tenir-ho en compte si te
 
 Per cada vèrtex, hem de comptar el nombre de components connexos en que quedaria separat el graf si eliminéssim aquell vèrtex. Per tal de calcular-ho eficientment, modifiquem lleugerament l'algorisme clàssic per calcular *punts d'articulació* d'un graf (vegeu [aquest tutorial](https://cp-algorithms.com/graph/cutpoints.html)).
 
-Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (que definim de manera que `tin[a] > tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per tota back-edge des d'un descendent de $v$ en el DFS-tree).
+Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (que definim de manera que `tin[a] < tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per tota back-edge des d'un descendent de $v$ en el DFS-tree).
 
 Aleshores, és fàcil veure que $u$ formarà un component connex nou a l'eliminar $v$ si, i només si, `low[u] >= tin[v]` (és a dir, si no té cap connexió amb un antecessor de $v$).
 
@@ -806,10 +806,10 @@ using namespace std;
 vector<vector<int>> G;
 vector<int> tin; // temps d'entrada al vertex.
 vector<int> low; // minim entre el temps d'entrada i el temps
-				 // d'entrada dels vertexs accessibles des de
-				 // back-edges dels descendents.
+                 // d'entrada dels vertexs accessibles des de
+                 // back-edges dels descendents.
 vector<int> ans; // nombre de components connexes en que
-				 // es separa el graf.
+                 // es separa el graf.
 int curtime; // temps actual.
 const int INF = 1e9;
 
@@ -824,7 +824,7 @@ void dfs(int v, int pare) {
 		if(tin[u] == -1) {
 			dfs(u, v);
 			if(low[u] >= tin[v]) {
-				// al eliminar `v`, `u` formara un component connex nou
+                // a l'eliminar `v`, `u` formara un component connex nou
 				ans[v]++;
 			}
 			low[v] = min(low[v], low[u]);
@@ -872,19 +872,125 @@ té una expressió única i amb finits decimals en base $\varphi$, i que es
 pot trobar mitjançant l'algorisme que acabem de mencionar. Pistes:
 
 1. Demostreu que l'algorisme mencionat funciona, és a dir, dóna una expressió de $n$ en base $\varphi$.
-2. Demostreu que tot natural $n$ es té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
-3. Demostreu que tot real es pot expressar d'una manera única en base $\varphi$ (amb excepció de
+2. Demostreu que l'algorisme anterior no dona mai una expressió amb dos 1's seguits.
+3. Demostreu que tot natural $n$ es té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
+4. Demostreu que tot real es pot expressar d'una manera única en base $\varphi$ (amb excepció de
 $...1010101010...$ periòdic en base $\varphi$ (l'anàleg a $1 = 0.99999...$ en base $10$))
-4. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant l'expressió finita única
+5. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant l'expressió finita única
 de $n$ en base $\varphi$.
 
-Veureu que al codi usem el següent per evitar tractar amb reals:
-Tant un enter $k$ com $\varphi = \frac{1 + \sqrt{5}}{2}$ es poden escriure
-de la forma $\frac{a + b\sqrt{5}}{2^n}$, amb $a, b, n$ enters
-(per exemple, $k = \frac{4k + 0\sqrt{5}}{2^2}$, fixeu-vos
-que el mateix nombre té més d'una representació vàlida).
-Observeu a més que les sumes, restes i productes de nombres d'aquesta forma
-també donen nombres d'aquesta forma.
+Si implementeu directament aquest algorisme, probablement no obteniu la puntuació completa, ja que els floats o doubles no tenen suficients decimals com per donar la resposta exacta. Per evitar problemes de precisió, hem de buscar alguna manera de fer tot els càlculs amb nombres enters.
+
+__Solució 1:__
+
+La idea és expressar totes les potències de $\phi$ de la forma $a + b \phi$, on $a$ i $b$ són enters. Això sempre es pot aconseguir, ja que $\phi^2 = \phi + 1$, de manera que podem anar reduint totes les potències de $\phi$ fins a arribar a una expressió de la forma anterior.
+
+Per exemple:
+
+$$
+\phi^3 = \phi\cdot \phi^2 = \phi(\phi + 1) = \phi^2 + \phi = 2 \phi + 1 \\
+\phi^4 = \phi \cdot \phi^3 = \phi \cdot (2 \phi + 1) = 2 \phi^2 + \phi = 3 \phi + 2
+$$
+
+Per tal d'implementar-ho necessitem definir la suma, resta i multiplicació de nombres de la forma $a + b \phi$. La suma i la resta es fan terme a terme, i la multiplicació ve donada per
+
+$$
+(a + b \phi) \cdot (c + d\phi) = ac + (bc + ad)\phi + bd \phi^2 = (ac + bd) + (bc + ad + bd)\phi
+$$
+
+També hem de saber comparar dos nombres de la forma anterior. La idea és que $a + b \phi < c + d \phi$ si $a-d < (c-b)\phi$. Si els dos coeficients tenen signe diferent, la comparació és trivial. Si tenen el mateix signe, substituïm $\phi = (1 + \sqrt{5})/2$, aïllem $\sqrt{5}$ i elevem al quadrat els dos costats de la desigualtat. Així aconseguim trobar una condició que només utilitzi nombres enters.
+
+<details>
+<summary><b>Codi</b></summary>
+
+```python3
+# Calculem (a[0] + a[1]*phi) * (b[0] + b[1]*phi)
+def prod(a, b):
+	ans = [a[0]*b[0] + a[1]*b[1], a[0]*b[1] + a[1]*b[0] + a[1]*b[1]]
+	return ans
+
+def suma(a, b):
+	ans = [a[0] + b[0], a[1] + b[1]]
+	return ans
+
+def resta(a, b):
+	ans = [a[0] - b[0], a[1] - b[1]]
+	return ans
+
+# Calculem phi^e
+def binexp(e):
+	if e == 0: return [1, 0]
+	if e > 0:
+		ans = binexp(e//2)
+	else:
+		ans = binexp(-((-e)//2))
+	ans = prod(ans, ans)
+	if (abs(e))%2 == 1:
+		if e > 0:
+			ans = prod(ans, [0, 1])
+		else:
+			# utilitzem que 1/phi = -1 + phi
+			ans = prod(ans, [-1, 1])
+	return ans
+
+# retorna True si a[0] + a[1]*phi <= b[0] + b[1]*phi
+def leq(a, b):
+	x = a[0] - b[0]
+	y = b[1] - a[1]
+	lhs = 2*x - y
+	if lhs > 0 and y < 0: return False
+	if lhs < 0 and y > 0: return True
+	if lhs == 0: return y >= 0
+	if y == 0: return lhs <= 0
+	if lhs < 0:
+		return lhs*lhs >= 5*y*y
+	else:
+		return lhs*lhs <= 5*y*y
+
+# Retorna el maxim p tal que cur >= phi^p
+def max_exponent(x):
+    p = 0
+    while True:
+        if not leq(binexp(p + 1), x):
+            return p
+        p += 1
+
+# Retorna la llista dels índexos que valen 1 a la representació de x en base φ
+def llista_indexos(cur, pot):
+    indexos = []
+    while cur != [0,0]:
+        if leq(binexp(pot), cur):
+            indexos.append(pot)
+            cur = resta(cur, binexp(pot))
+        pot -= 1
+
+    return indexos
+
+# Passa de la llista de indexos a l'string format per les diferencies
+def indexos_to_string(llista):
+    llista_diferencies = [a - b - 1 for a, b in zip(llista, llista[1:])]
+    return ''.join(str(x) for x in llista_diferencies)
+
+# Passa de la llista de indexos a l'string format per les diferencies
+def to_string(indexos):
+    indexos_pos = [x for x in indexos if x >= 0] + [-1]
+    indexos_neg = [0] + [x for x in indexos if x < 0]
+    return indexos_to_string(indexos_pos) + '-' + indexos_to_string(indexos_neg)
+
+def resol(n):
+    cur = [n, 0]
+    pot = max_exponent(cur)
+    indexos = llista_indexos(cur, pot)
+    return to_string(indexos)
+
+for n in [10, 201, 10**30]:
+    print(resol(n))
+```
+</details>
+
+__Solució 2:__
+
+Similarment a la solució anterior, també podem expressar les potències de $\phi$ de la forma $(a + b \sqrt{5})/2^n$, on $a$, $b$ i $n$ són enters. Novament, tenim que les sumes, restes i potències de nombres d'aquesta forma es poden expressar també amb aquesta forma.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -995,10 +1101,10 @@ for n in [10, 201, 10**30]:
 ```
 </details>
 
-Alternativament, en lloc d'expressar els nombres amb la forma $\frac{a + b\sqrt{5}}{2^n}$, també es podia expressar els nombres com $a + b \phi$, on $a$ i $b$ són enters. Utilitzant que $phi^2 = \phi + 1$, es pot comprovar que la suma, resta i producte dels nombres d'aquesta forma es poden expressar també en aquesta forma (per exemple, $(a + b \phi) \cdot (c + d\phi) = (ac + bd) + (ad + bc + bd)\phi$).
+__Solució 3:__
 
-Per comparar dos expressions d'aquest tipus, hem de veure si la seva resta és més gran que 0. Això es pot fer utilitzant que $a + b \phi > 0$ si es dona una de les següents condicions:
+Les dues solucions anteriors es basaven en expressar les potències de $\phi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió $n = \dots + 0\cdot \phi^2 + 0 \cdot \phi + n \cdot 1 + 0 \cdot \phi^{-1} + \dots$ i, mentre tinguem coeficients més grans que 1, restem $2$ al coeficient de la posició $k$ i afegim $1$ a les posicions $k + 1$ i $k-2$.
 
-- $a > 0$ i $b > 0$
-- $a > 0$, $b < 0$ i $(4a+b)^2 > 5b^2$
-- $a < 0$, $b > 0$ i $(4a+b)^2 < 5b^2$
+Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \phi^{-1} + \phi^{-2} = \phi + \phi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. A l'acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
+
+La gràcia d'aquesta solució és que es pot implementar directament en C++ sense haver d'utilitzar enters excessivament grans. No obstant això, el codi resultant és més complicat que els dos codis anteriors. 
