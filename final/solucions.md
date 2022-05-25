@@ -677,53 +677,53 @@ img.save('output.png')
 
   No obstant això, continuem sotmesos a la restricció de no excavar més enllà de $p_i$ a la columna $i$, i no excavar fins a profunditat $j$ si a les posicions adjacents no s'ha excavat almenys fins a profunditat $j-1$.
 
-  Una manera de resoldre el problema seria començar per l'esquerra i anar excavant sempre a 1 més de profunditat que a la columna anterior. Si en algun moment ens trobem amb que volem excavar $j$ metres i la profunditat màxima $p_i$ és més petita, excavem només $p_i$ metres i tirem cap enrere, actualitzant totes les columnes anteriors per assegurar-nos de no excavar més de 1 metre més que en la columna de davant.
+  Una manera de resoldre el problema seria començar per l'esquerra i anar excavant sempre a 1 més de profunditat que a la columna anterior. Si en algun moment ens trobem amb que volem excavar $j$ metres i la profunditat màxima $p_i$ és més petita, excavem només $p_i$ metres i tirem cap enrere, actualitzant totes les columnes anteriors per assegurar-nos de no excavar més de 1 metre més que en la columna de la dreta.
 
-  Observeu que aquest algorisme té complexitat $\mathcal{O}(n^2)$ ja que, encara que haguem de tirar cap enrere en cada posició, com a molt ho farem $n$ vegades, i cada cop que tirem cap enrere visitarem com a molt $n$ caselles.
+  Observeu que aquest algorisme té complexitat $\mathcal{O}(n^2)$ ja que, encara que haguem de tirar cap enrere en cada posició, com a molt ho farem $n$ vegades, i cada cop que tirem cap enrere visitarem com a molt $n$ posicions.
 
   <details>
     <summary><b>Codi</b></summary>
 
-    ```cpp
-    #include<bits/stdc++.h>
-    using namespace std;
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
 
-    using ll = long long;
+using ll = long long;
 
-    int main() {
-    	int n;
-    	while(cin >> n) {
-    		vector<int> b(n);
-    		for(int& x : b) cin >> x;
-    		vector<int> p(n);
-    		for(int& x : p) cin >> x;
+int main() {
+	int n;
+	while(cin >> n) {
+		vector<int> b(n);
+		for(int& x : b) cin >> x;
+		vector<int> p(n);
+		for(int& x : p) cin >> x;
 
-    		vector<int> h(n);
-    		h[0] = min(1, p[0]);
-    		for(int i = 1; i < n; ++i) {
-    			h[i] = h[i-1] + 1;
-    			if(h[i] > p[i]) {
-    				h[i] = p[i];
-    				for(int j = i-1; j >= 0; --j) {
-    					h[j] = min(h[j], h[j+1]+1);
-    				}
-    			}
-    		}
-    		if(h[n-1] > 1) {
-    			h[n-1] = 1;
-    			for(int j = n-2; j >= 0; --j) {
-    				h[j] = min(h[j], h[j+1] + 1);
-    			}
-    		}
+		vector<int> h(n);
+		h[0] = min(1, p[0]);
+		for(int i = 1; i < n; ++i) {
+			h[i] = h[i-1] + 1;
+			if(h[i] > p[i]) {
+				h[i] = p[i];
+				for(int j = i-1; j >= 0; --j) {
+					h[j] = min(h[j], h[j+1]+1);
+				}
+			}
+		}
+		if(h[n-1] > 1) {
+			h[n-1] = 1;
+			for(int j = n-2; j >= 0; --j) {
+				h[j] = min(h[j], h[j+1] + 1);
+			}
+		}
 
-    		ll ans = 0;
-    		for(int i = 0; i < n; ++i) {
-    			ans += ll(b[i])*h[i];
-    		}
-    		cout << ans << endl;
-    	}
-    }
-    ```
+		ll ans = 0;
+		for(int i = 0; i < n; ++i) {
+			ans += ll(b[i])*h[i];
+		}
+		cout << ans << endl;
+	}
+}
+```
   </details>
 
   Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent. Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix en prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
@@ -731,40 +731,41 @@ img.save('output.png')
   <details>
     <summary><b>Codi</b></summary>
 
-    ```cpp
-    #include<bits/stdc++.h>
-    using namespace std;
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
 
-    using ll = long long;
+using ll = long long;
 
-    int main() {
-    	int n;
-    	while(cin >> n) {
-    		vector<int> b(n);
-    		for(int& x : b) cin >> x;
-    		vector<int> p(n);
-    		for(int& x : p) cin >> x;
+int main() {
+	int n;
+	while(cin >> n) {
+		vector<int> b(n);
+		for(int& x : b) cin >> x;
+		vector<int> p(n);
+		for(int& x : p) cin >> x;
 
-    		vector<int> esq(n);
-    		esq[0] = min(1, p[0]);
-    		for(int i = 1; i < n; ++i) {
-    			esq[i] = min(esq[i-1]+1, p[i]);
-    		}
-    		vector<int> dreta(n);
-    		dreta[n-1] = min(1, p[n-1]);
-    		for(int i = n-2; i >= 0; --i) {
-    			dreta[i] = min(dreta[i+1]+1, p[i]);
-    		}
-    		ll ans = 0;
-    		for(int i = 0; i < n; ++i) {
-    			int profunditat = min(esq[i], dreta[i]);
-    			ans += ll(b[i])*profunditat;
-    		}
-    		cout << ans << endl;
-    	}
-    }
-    ```
+		vector<int> esq(n);
+		esq[0] = min(1, p[0]);
+		for(int i = 1; i < n; ++i) {
+			esq[i] = min(esq[i-1]+1, p[i]);
+		}
+		vector<int> dreta(n);
+		dreta[n-1] = min(1, p[n-1]);
+		for(int i = n-2; i >= 0; --i) {
+			dreta[i] = min(dreta[i+1]+1, p[i]);
+		}
+		ll ans = 0;
+		for(int i = 0; i < n; ++i) {
+			int profunditat = min(esq[i], dreta[i]);
+			ans += ll(b[i])*profunditat;
+		}
+		cout << ans << endl;
+	}
+}
+```
   </details>
+  Passem ara a resoldre el cas general, on $b_i$ pot ser negativa. 
 </details>
 
 Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
