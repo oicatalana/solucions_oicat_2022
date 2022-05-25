@@ -1105,9 +1105,11 @@ for n in [10, 201, 10**30]:
 __Solució 3:__
 
 Les dues solucions anteriors es basaven en expressar les potències de $\varphi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió:
+
 $$
 n = \dots + 0\cdot \varphi^2 + 0 \cdot \varphi + n \cdot 1 + 0 \cdot \varphi^{-1} + \dots
 $$
+
 Llavors, mentre tinguem coeficients més grans que 1, restem $2$ al coeficient de la posició $k$ i afegim $1$ a les posicions $k + 1$ i $k-2$.
 
 Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \varphi^{-1} + \varphi^{-2} = \varphi + \varphi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. A l'acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
