@@ -725,8 +725,6 @@ img.save('output.png')
     }
     ```
   </details>
-</details>
-
 
   Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent. Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix en prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
 
@@ -767,6 +765,7 @@ img.save('output.png')
     }
     ```
   </details>
+</details>
 
 Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
 
