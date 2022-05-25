@@ -790,6 +790,76 @@ En aquest problema això no era necessari, però va bé tenir-ho en compte si te
 
 ## [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
 
+Per cada vèrtex, hem de comptar el nombre de components connexos en que quedaria separat el graf si eliminéssim aquell vèrtex. Per tal de calcular-ho eficientment, modifiquem lleugerament l'algorisme clàssic per calcular *punts d'articulació* d'un graf (vegeu [aquest tutorial](https://cp-algorithms.com/graph/cutpoints.html)).
+
+Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (`tin[a] > tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per tota back-edge des d'un descendent de $v$ en el DFS-tree).
+
+Aleshores, és fàcil veure que $u$ formarà un component connex nou a l'eliminar $v$ si, i només si, `low[u] >= tin[v]` (és a dir, si no té cap connexió amb un antecessor de $v$).
+
+<details>
+  <summary><b>Codi</b>
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> G;
+vector<int> tin; // temps d'entrada al vertex.
+vector<int> low; // minim entre el temps d'entrada i el temps
+				 // d'entrada dels vertexs accessibles des de
+				 // back-edges dels descendents.
+vector<int> ans; // nombre de components connexes en que
+				 // es separa el graf.
+int curtime; // temps actual.
+const int INF = 1e9;
+
+void dfs(int v, int pare) {
+	tin[v] = low[v] = curtime;
+	++curtime;
+	for(int u : G[v]) {
+		if(u == pare) {
+			ans[v]++;
+			continue;
+		}
+		if(tin[u] == -1) {
+			dfs(u, v);
+			if(low[u] >= tin[v]) {
+				// al eliminar `v`, `u` formara un component connex nou
+				ans[v]++;
+			}
+			low[v] = min(low[v], low[u]);
+		}
+		else {
+			low[v] = min(low[v], tin[u]);
+		}
+	}
+}
+
+int main() {
+	int n, m;
+	while(cin >> n >> m) {
+		G = vector<vector<int>>(n);
+		for(int i = 0; i < m; ++i) {
+			int x, y;
+			cin >> x >> y;
+			G[x].push_back(y);
+			G[y].push_back(x);
+		}
+		tin = vector<int>(n, -1);
+		low = vector<int>(n);
+		ans = vector<int>(n, 0);
+		curtime = 0;
+		dfs(0, -1);
+		for(int i = 0; i < n; ++i) {
+			cout << i << ": " << ans[i] << endl;
+		}
+		cout << string(10, '-') << endl;
+	}
+}
+```
+</details>
+
+
 ## [Problema Q4. Raó àuria](https://jutge.org/problems/P94346_ca) <a name="Q4"/>
 
 L'algoritme és "senzill". A cada pas, al busqueu el valor més gran $p$ tal que
