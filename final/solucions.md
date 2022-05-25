@@ -792,12 +792,12 @@ En aquest problema això no era necessari, però va bé tenir-ho en compte si te
 
 Per cada vèrtex, hem de comptar el nombre de components connexos en que quedaria separat el graf si eliminéssim aquell vèrtex. Per tal de calcular-ho eficientment, modifiquem lleugerament l'algorisme clàssic per calcular *punts d'articulació* d'un graf (vegeu [aquest tutorial](https://cp-algorithms.com/graph/cutpoints.html)).
 
-Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (`tin[a] > tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per tota back-edge des d'un descendent de $v$ en el DFS-tree).
+Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (que definim de manera que `tin[a] > tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per tota back-edge des d'un descendent de $v$ en el DFS-tree).
 
 Aleshores, és fàcil veure que $u$ formarà un component connex nou a l'eliminar $v$ si, i només si, `low[u] >= tin[v]` (és a dir, si no té cap connexió amb un antecessor de $v$).
 
 <details>
-  <summary><b>Codi</b>
+  <summary><b>Codi</b></summary>
 
 ```cpp
 #include<bits/stdc++.h>
