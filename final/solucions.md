@@ -639,7 +639,7 @@ Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 f
 <details>
 <summary><b>Spoiler</b></summary>
 
-Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$ més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
+Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$, més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
 </details>
 
 Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times (n+1)/2 + 1$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
@@ -1104,7 +1104,7 @@ for n in [10, 201, 10**30]:
 
 __Solució 3:__
 
-Les dues solucions anteriors es basaven en expressar les potències de $\varphi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió
+Les dues solucions anteriors es basaven en expressar les potències de $\varphi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió:
 $$
 n = \dots + 0\cdot \varphi^2 + 0 \cdot \varphi + n \cdot 1 + 0 \cdot \varphi^{-1} + \dots
 $$
