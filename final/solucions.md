@@ -725,6 +725,7 @@ img.save('output.png')
     }
     ```
   </details>
+</details>
 
 
   Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent. Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix en prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
