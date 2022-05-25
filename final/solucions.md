@@ -556,6 +556,8 @@ int main() {
 ```
 </details>
 
+Per obtenir la puntuació parcial, n'hi havia prou amb iterar per totes les possibles combinacions de 4 elements, comprovant si el seu XOR és 0 (observeu que $v_i \oplus v_j \oplus v_k = v_l \iff v_i \oplus v_j \oplus$)
+
 ## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
 
 El problema ens demana buscar les $k$ components connexes més grans
