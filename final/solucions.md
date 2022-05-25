@@ -887,10 +887,10 @@ La idea és expressar totes les potències de $\varphi$ de la forma $a + b \varp
 Per exemple:
 
 $$
-\varphi^3 = \varphi\cdot \varphi^2 = \varphi(\varphi + 1) = \varphi^2 + \varphi = 2 \varphi + 1
-$$
-$$
+\begin{gather}
+\varphi^3 = \varphi\cdot \varphi^2 = \varphi(\varphi + 1) = \varphi^2 + \varphi = 2 \varphi + 1 \\
 \varphi^4 = \varphi \cdot \varphi^3 = \varphi \cdot (2 \varphi + 1) = 2 \varphi^2 + \varphi = 3 \varphi + 2
+\end{gather}
 $$
 
 Per tal d'implementar-ho necessitem definir la suma, resta i multiplicació de nombres de la forma $a + b \varphi$. La suma i la resta es fan terme a terme, i la multiplicació ve donada per
