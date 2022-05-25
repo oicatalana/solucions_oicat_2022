@@ -1,6 +1,6 @@
 # Solucions Final OICat 2022
 
-:warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I CONTÉ ERRORS__
+<!-- :warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I CONTÉ ERRORS__ -->
 
 ## Taula de continguts
 * [Problema Q1. Onze llibres](#Q1)
