@@ -254,7 +254,7 @@ dib = ImageDraw.Draw(img)
 
 # Creem segments entre els parells de punts consecutius
 for p, q in zip(punts, punts[1:]):
-	dib.line([p, q], 'Red')
+  dib.line([p, q], 'Red')
 
 # Guardem la imatge
 img.save("output.png")
@@ -662,35 +662,35 @@ vector<vector<ll>> memo;
 // obtenir amb les columnes de 1 fins a `pos`, suposant
 // que a la columna `pos` hem excavat fins a profunditat `h`
 ll dp(int pos, int h) {
-	if(pos == 0) {
-		if(h == 0) return 0;
-		return -INF;
-	}
-	if(h > p[pos-1]) return -INF;
+  if(pos == 0) {
+    if(h == 0) return 0;
+    return -INF;
+  }
+  if(h > p[pos-1]) return -INF;
 
-	// A l'utilitzar el simbol `&`, aconseguim que si
-	// modifiquem la variable `ans`, tambe es modificara la
-	// variable `memo[pos][h]` automaticament.
-	ll& ans = memo[pos][h];
-	// Si ja hem calculat el resultat previament,
-	// el retornem directament
-	if(ans != -INF) return ans;
-	ans = dp(pos-1, h);
-	if(h > 0) ans = max(ans, dp(pos-1, h-1));
-	if(h < (n+1)/2) ans = max(ans, dp(pos-1, h+1));
-	ans += ll(h) * b[pos-1];
-	return ans;
+  // A l'utilitzar el simbol `&`, aconseguim que si
+  // modifiquem la variable `ans`, tambe es modificara la
+  // variable `memo[pos][h]` automaticament.
+  ll& ans = memo[pos][h];
+  // Si ja hem calculat el resultat previament,
+  // el retornem directament
+  if(ans != -INF) return ans;
+  ans = dp(pos-1, h);
+  if(h > 0) ans = max(ans, dp(pos-1, h-1));
+  if(h < (n+1)/2) ans = max(ans, dp(pos-1, h+1));
+  ans += ll(h) * b[pos-1];
+  return ans;
 }
 
 int main() {
-	while(cin >> n) {
-		b = vector<int>(n);
-		for(int& x : b) cin >> x;
-		p = vector<int>(n);
-		for(int& x : p) cin >> x;
-		memo = vector<vector<ll>>(n+1, vector<ll>((n+1)/2 + 1, -INF));
-		cout << max(dp(n, 0), dp(n, 1)) << endl;
-	}
+  while(cin >> n) {
+    b = vector<int>(n);
+    for(int& x : b) cin >> x;
+    p = vector<int>(n);
+    for(int& x : p) cin >> x;
+    memo = vector<vector<ll>>(n+1, vector<ll>((n+1)/2 + 1, -INF));
+    cout << max(dp(n, 0), dp(n, 1)) << endl;
+  }
 }
 ```
 </details>
@@ -705,37 +705,37 @@ using namespace std;
 using ll = long long;
 
 int main() {
-	int n;
-	while(cin >> n) {
-		vector<int> b(n); // benefici per casella excavada a cada columna
-		for(int& x : b) cin >> x;
-		vector<int> p(n); // profunditat maxima a cada columna
-		for(int& x : p) cin >> x;
+  int n;
+  while(cin >> n) {
+    vector<int> b(n); // benefici per casella excavada a cada columna
+    for(int& x : b) cin >> x;
+    vector<int> p(n); // profunditat maxima a cada columna
+    for(int& x : p) cin >> x;
 
-		const ll INF = 1e18;
+    const ll INF = 1e18;
     // Definim `dp[pos][h]` com el maxim benefici que podem obtenir
     // des de la columna 1 fins a la columna `pos`, suposant que a la
     // columna `pos` hem excavat fins a profunditat `h`.
     // Observem que la profunditat maxima que podem excavar es (n+1)/2
-		vector<vector<ll>> dp(n+1, vector<ll>((n+1)/2 + 1, -INF));
-		dp[0][0] = 0;
-		for(int pos = 1; pos <= n; ++pos) {
-			for(int h = 0; h <= (n+1)/2; ++h) {
-				if(h > p[pos-1]) break; // ens passem de profunditat
-				dp[pos][h] = dp[pos-1][h];
-				if(h > 0) {
-					dp[pos][h] = max(dp[pos][h], dp[pos-1][h-1]);
-				}
-				if(h < (n+1)/2) {
-					dp[pos][h] = max(dp[pos][h], dp[pos-1][h+1]);
-				}
-				dp[pos][h] += ll(h)*b[pos-1]; // afegim el benefici de la columna actual
-			}
-		}
+    vector<vector<ll>> dp(n+1, vector<ll>((n+1)/2 + 1, -INF));
+    dp[0][0] = 0;
+    for(int pos = 1; pos <= n; ++pos) {
+      for(int h = 0; h <= (n+1)/2; ++h) {
+        if(h > p[pos-1]) break; // ens passem de profunditat
+        dp[pos][h] = dp[pos-1][h];
+        if(h > 0) {
+          dp[pos][h] = max(dp[pos][h], dp[pos-1][h-1]);
+        }
+        if(h < (n+1)/2) {
+          dp[pos][h] = max(dp[pos][h], dp[pos-1][h+1]);
+        }
+        dp[pos][h] += ll(h)*b[pos-1]; // afegim el benefici de la columna actual
+      }
+    }
     // per tal que la solucio sigui valida, a la ultima columna hem
     // d'haver excavat 0 o 1 casella.
-		cout << max(dp[n][0], dp[n][1]) << endl;
-	}
+    cout << max(dp[n][0], dp[n][1]) << endl;
+  }
 }
 ```
 </details>
@@ -814,47 +814,47 @@ int curtime; // temps actual.
 const int INF = 1e9;
 
 void dfs(int v, int pare) {
-	tin[v] = low[v] = curtime;
-	++curtime;
-	for(int u : G[v]) {
-		if(u == pare) {
-			ans[v]++;
-			continue;
-		}
-		if(tin[u] == -1) {
-			dfs(u, v);
-			if(low[u] >= tin[v]) {
+  tin[v] = low[v] = curtime;
+  ++curtime;
+  for(int u : G[v]) {
+    if(u == pare) {
+      ans[v]++;
+      continue;
+    }
+    if(tin[u] == -1) {
+      dfs(u, v);
+      if(low[u] >= tin[v]) {
                 // a l'eliminar `v`, `u` formara un component connex nou
-				ans[v]++;
-			}
-			low[v] = min(low[v], low[u]);
-		}
-		else {
-			low[v] = min(low[v], tin[u]);
-		}
-	}
+        ans[v]++;
+      }
+      low[v] = min(low[v], low[u]);
+    }
+    else {
+      low[v] = min(low[v], tin[u]);
+    }
+  }
 }
 
 int main() {
-	int n, m;
-	while(cin >> n >> m) {
-		G = vector<vector<int>>(n);
-		for(int i = 0; i < m; ++i) {
-			int x, y;
-			cin >> x >> y;
-			G[x].push_back(y);
-			G[y].push_back(x);
-		}
-		tin = vector<int>(n, -1);
-		low = vector<int>(n);
-		ans = vector<int>(n, 0);
-		curtime = 0;
-		dfs(0, -1);
-		for(int i = 0; i < n; ++i) {
-			cout << i << ": " << ans[i] << endl;
-		}
-		cout << string(10, '-') << endl;
-	}
+  int n, m;
+  while(cin >> n >> m) {
+    G = vector<vector<int>>(n);
+    for(int i = 0; i < m; ++i) {
+      int x, y;
+      cin >> x >> y;
+      G[x].push_back(y);
+      G[y].push_back(x);
+    }
+    tin = vector<int>(n, -1);
+    low = vector<int>(n);
+    ans = vector<int>(n, 0);
+    curtime = 0;
+    dfs(0, -1);
+    for(int i = 0; i < n; ++i) {
+      cout << i << ": " << ans[i] << endl;
+    }
+    cout << string(10, '-') << endl;
+  }
 }
 ```
 </details>
@@ -862,43 +862,44 @@ int main() {
 
 ## [Problema Q4. Raó àuria](https://jutge.org/problems/P94346_ca) <a name="Q4"/>
 
-L'algoritme és "senzill". A cada pas, al busqueu el valor més gran $p$ tal que
-$n \geq \varphi^p$. Llavors, el $p$-èssim dígit ($p$ també pot ser negatiu)
-de $n$ en base $phi$ valdrà $1$. Repetiu el procediment amb $n - \varphi^p$ fins
+L'algoritme és "senzill". A cada pas, busquem el valor més gran $p$ tal que
+$n \geq \varphi^p$. Llavors, el $p$-èssim dígit (vigileu que $p$ també pot ser negatiu)
+de $n$ en base $\varphi$ valdrà $1$. Repetiu el procediment amb $n - \varphi^p$ fins
 que el nombre restant sigui $0$.
 
 __Repte__: Us animem a que demostreu vosaltres mateixos que qualsevol enter $n$
 té una expressió única i amb finits decimals en base $\varphi$, i que es
 pot trobar mitjançant l'algorisme que acabem de mencionar. Pistes:
 
-1. Demostreu que l'algorisme mencionat funciona, és a dir, dóna una expressió de $n$ en base $\varphi$.
+1. Demostreu que l'algorisme mencionat funciona, és a dir, que dóna una expressió de $n$ en base $\varphi$.
 2. Demostreu que l'algorisme anterior no dona mai una expressió amb dos 1's seguits.
-3. Demostreu que tot natural $n$ es té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
+3. Demostreu que tot natural $n$ té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
 4. Demostreu que tot real es pot expressar d'una manera única en base $\varphi$ (amb excepció de
 $...1010101010...$ periòdic en base $\varphi$ (l'anàleg a $1 = 0.99999...$ en base $10$))
-5. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant l'expressió finita única
-de $n$ en base $\varphi$.
+5. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant assolirà l'expressió finita única de $n$ en base $\varphi$.
 
-Si implementeu directament aquest algorisme, probablement no obteniu la puntuació completa, ja que els floats o doubles no tenen suficients decimals com per donar la resposta exacta. Per evitar problemes de precisió, hem de buscar alguna manera de fer tot els càlculs amb nombres enters.
+Si implementeu directament aquest algorisme, probablement no obtindreu la puntuació completa, ja que els floats o doubles no tenen suficients decimals com per donar la resposta exacta. Per evitar problemes de precisió, hem de buscar alguna manera de fer tot els càlculs amb nombres enters.
 
 __Solució 1:__
 
-La idea és expressar totes les potències de $\phi$ de la forma $a + b \phi$, on $a$ i $b$ són enters. Això sempre es pot aconseguir, ja que $\phi^2 = \phi + 1$, de manera que podem anar reduint totes les potències de $\phi$ fins a arribar a una expressió de la forma anterior.
+La idea és expressar totes les potències de $\varphi$ de la forma $a + b \varphi$, on $a$ i $b$ són enters. Això sempre es pot aconseguir, ja que $\varphi^2 = \varphi + 1$, de manera que podem anar reduint totes les potències de $\varphi$ fins a arribar a una expressió de la forma anterior.
 
 Per exemple:
 
 $$
-\phi^3 = \phi\cdot \phi^2 = \phi(\phi + 1) = \phi^2 + \phi = 2 \phi + 1 \\
-\phi^4 = \phi \cdot \phi^3 = \phi \cdot (2 \phi + 1) = 2 \phi^2 + \phi = 3 \phi + 2
+\varphi^3 = \varphi\cdot \varphi^2 = \varphi(\varphi + 1) = \varphi^2 + \varphi = 2 \varphi + 1
+$$
+$$
+\varphi^4 = \varphi \cdot \varphi^3 = \varphi \cdot (2 \varphi + 1) = 2 \varphi^2 + \varphi = 3 \varphi + 2
 $$
 
-Per tal d'implementar-ho necessitem definir la suma, resta i multiplicació de nombres de la forma $a + b \phi$. La suma i la resta es fan terme a terme, i la multiplicació ve donada per
+Per tal d'implementar-ho necessitem definir la suma, resta i multiplicació de nombres de la forma $a + b \varphi$. La suma i la resta es fan terme a terme, i la multiplicació ve donada per
 
 $$
-(a + b \phi) \cdot (c + d\phi) = ac + (bc + ad)\phi + bd \phi^2 = (ac + bd) + (bc + ad + bd)\phi
+(a + b \varphi) \cdot (c + d\varphi) = ac + (bc + ad)\varphi + bd \varphi^2 = (ac + bd) + (bc + ad + bd)\varphi
 $$
 
-També hem de saber comparar dos nombres de la forma anterior. La idea és que $a + b \phi < c + d \phi$ si $a-d < (c-b)\phi$. Si els dos coeficients tenen signe diferent, la comparació és trivial. Si tenen el mateix signe, substituïm $\phi = (1 + \sqrt{5})/2$, aïllem $\sqrt{5}$ i elevem al quadrat els dos costats de la desigualtat. Així aconseguim trobar una condició que només utilitzi nombres enters.
+També hem de saber comparar dos nombres de la forma anterior. La idea és que $a + b \varphi < c + d \varphi$ si $a-c < (d-b)\varphi$. Si els dos coeficients tenen signe diferent, la comparació és trivial. Si tenen el mateix signe, substituïm $\varphi = (1 + \sqrt{5})/2$, aïllem $\sqrt{5}$ i elevem al quadrat els dos costats de la desigualtat. Així aconseguim trobar una condició que només utilitzi nombres enters.
 
 <details>
 <summary><b>Codi</b></summary>
@@ -906,46 +907,46 @@ També hem de saber comparar dos nombres de la forma anterior. La idea és que $
 ```python3
 # Calculem (a[0] + a[1]*phi) * (b[0] + b[1]*phi)
 def prod(a, b):
-	ans = [a[0]*b[0] + a[1]*b[1], a[0]*b[1] + a[1]*b[0] + a[1]*b[1]]
-	return ans
+  ans = [a[0]*b[0] + a[1]*b[1], a[0]*b[1] + a[1]*b[0] + a[1]*b[1]]
+  return ans
 
 def suma(a, b):
-	ans = [a[0] + b[0], a[1] + b[1]]
-	return ans
+  ans = [a[0] + b[0], a[1] + b[1]]
+  return ans
 
 def resta(a, b):
-	ans = [a[0] - b[0], a[1] - b[1]]
-	return ans
+  ans = [a[0] - b[0], a[1] - b[1]]
+  return ans
 
 # Calculem phi^e
 def binexp(e):
-	if e == 0: return [1, 0]
-	if e > 0:
-		ans = binexp(e//2)
-	else:
-		ans = binexp(-((-e)//2))
-	ans = prod(ans, ans)
-	if (abs(e))%2 == 1:
-		if e > 0:
-			ans = prod(ans, [0, 1])
-		else:
-			# utilitzem que 1/phi = -1 + phi
-			ans = prod(ans, [-1, 1])
-	return ans
+  if e == 0: return [1, 0]
+  if e > 0:
+    ans = binexp(e//2)
+  else:
+    ans = binexp(-((-e)//2))
+  ans = prod(ans, ans)
+  if (abs(e))%2 == 1:
+    if e > 0:
+      ans = prod(ans, [0, 1])
+    else:
+      # utilitzem que 1/phi = -1 + phi
+      ans = prod(ans, [-1, 1])
+  return ans
 
 # retorna True si a[0] + a[1]*phi <= b[0] + b[1]*phi
 def leq(a, b):
-	x = a[0] - b[0]
-	y = b[1] - a[1]
-	lhs = 2*x - y
-	if lhs > 0 and y < 0: return False
-	if lhs < 0 and y > 0: return True
-	if lhs == 0: return y >= 0
-	if y == 0: return lhs <= 0
-	if lhs < 0:
-		return lhs*lhs >= 5*y*y
-	else:
-		return lhs*lhs <= 5*y*y
+  x = a[0] - b[0]
+  y = b[1] - a[1]
+  lhs = 2*x - y
+  if lhs > 0 and y < 0: return False
+  if lhs < 0 and y > 0: return True
+  if lhs == 0: return y >= 0
+  if y == 0: return lhs <= 0
+  if lhs < 0:
+    return lhs*lhs >= 5*y*y
+  else:
+    return lhs*lhs <= 5*y*y
 
 # Retorna el maxim p tal que cur >= phi^p
 def max_exponent(x):
@@ -990,7 +991,7 @@ for n in [10, 201, 10**30]:
 
 __Solució 2:__
 
-Similarment a la solució anterior, també podem expressar les potències de $\phi$ de la forma $(a + b \sqrt{5})/2^n$, on $a$, $b$ i $n$ són enters. Novament, tenim que les sumes, restes i potències de nombres d'aquesta forma es poden expressar també amb aquesta forma.
+Similarment a la solució anterior, també podem expressar les potències de $\varphi$ de la forma $(a + b \sqrt{5})/2^n$, on $a$, $b$ i $n$ són enters. Novament, tenim que les sumes, restes i potències de nombres d'aquesta forma es poden expressar també amb aquesta forma.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -1103,8 +1104,12 @@ for n in [10, 201, 10**30]:
 
 __Solució 3:__
 
-Les dues solucions anteriors es basaven en expressar les potències de $\phi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió $n = \dots + 0\cdot \phi^2 + 0 \cdot \phi + n \cdot 1 + 0 \cdot \phi^{-1} + \dots$ i, mentre tinguem coeficients més grans que 1, restem $2$ al coeficient de la posició $k$ i afegim $1$ a les posicions $k + 1$ i $k-2$.
+Les dues solucions anteriors es basaven en expressar les potències de $\varphi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió
+$$
+n = \dots + 0\cdot \varphi^2 + 0 \cdot \varphi + n \cdot 1 + 0 \cdot \varphi^{-1} + \dots
+$$
+Llavors, mentre tinguem coeficients més grans que 1, restem $2$ al coeficient de la posició $k$ i afegim $1$ a les posicions $k + 1$ i $k-2$.
 
-Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \phi^{-1} + \phi^{-2} = \phi + \phi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. A l'acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
+Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \varphi^{-1} + \varphi^{-2} = \varphi + \varphi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. A l'acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
 
 L'avantatge d'aquesta solució és que es pot implementar directament en C++ sense haver d'utilitzar enters excessivament grans. No obstant això, el codi resultant és més complicat que els dos codis anteriors.
