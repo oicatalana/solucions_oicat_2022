@@ -556,9 +556,41 @@ int main() {
 ```
 </details>
 
-Per obtenir la puntuació parcial, n'hi havia prou amb iterar per totes les possibles combinacions de 4 elements, comprovant si el seu XOR és 0 (observeu que $v_i \oplus v_j \oplus v_k = v_l \iff v_i \oplus v_j \oplus v_k \oplus v_l = v_l \oplus v_l = 0$).
+<details>
+  <summary><b>Solució parcial</b></summary>
 
-El cost computacional és $\mathcal{O}(n^4)$, però com $n \leq 50$ en aquest subcàs, aquesta complexitat és assumible.
+  Per obtenir la puntuació parcial, n'hi havia prou amb iterar per totes les possibles combinacions de 4 elements, comprovant si el seu XOR és 0 (observeu que $v_i \oplus v_j \oplus v_k = v_l \iff v_i \oplus v_j \oplus v_k \oplus v_l = v_l \oplus v_l = 0$).
+
+  El cost computacional és $\mathcal{O}(n^4)$, però com $n \leq 50$ en aquest subcàs, aquesta complexitat és assumible.
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+int main() {
+	int n;
+	while(cin >> n) {
+		vector<ll> v(n);
+		for(ll& x : v) cin >> x;
+		bool sol = false;
+		for(int i = 0; i < n and not sol; ++i) {
+			for(int j = i + 1; j < n and not sol; ++j) {
+				for(int k = j + 1; k < n and not sol; ++k) {
+					for(int l = k + 1; l < n and not sol; ++l) {
+						if((v[i]^v[j]^v[k]^v[l]) == 0) {
+							sol = true;
+						}
+					}
+				}
+			}
+		}
+		cout << (sol? "SI" : "NO") << endl;
+	}
+}
+```
+</details>
 
 ## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
 
