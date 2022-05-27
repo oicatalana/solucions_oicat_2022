@@ -138,7 +138,7 @@ una repetició de patrons de mida $100 \times 100$?
 <b>Primer AC:</b> Innokentiy Kaurov
 
 Sí, aquest problema està basat en fets reals. Es pot solucionar de diverses
-maneres, potser aquesta és la més intuïtiva: ordenem totes les notes,
+maneres. Potser aquesta és la més senzilla: ordenem totes les notes,
 a continuació les anem posant en ordre en un vector, però fent dues passades:
 primer una amb les notes aprovades, i després una amb les suspeses.
 
