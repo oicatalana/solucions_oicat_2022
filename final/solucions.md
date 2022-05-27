@@ -398,6 +398,7 @@ int main() {
 
 <details>
   <summary><b>Solució parcial</b></summary>
+
   Per obtenir la puntuació parcial havíem de resoldre el cas en que $k = 0$. Això vol dir que hem d'agrupar els nombres de $C$ en $n$ parelles de manera que els nombres més grans de cada parella formin $S$.
 
   Per tant, hem d'emparellar cada $s \in S$ amb un $t \in T$ que sigui més petit o igual que ell. En particular, observem que això vol dir que el nombre més gran de $S$ ha de ser més gran o igual que el nombre més gran de $T$ (altrament aquest nombre de $T$ no el podrem emparellar amb cap nombre de $S$), el segon nombre més gran de $S$ ha de ser més gran o igual que el segon nombre més gran de $T$, i així successivament.
@@ -405,7 +406,6 @@ int main() {
   Així doncs, podem ordenar els nombres de $S$ i de $T$ i comprovar simplement si $s_i \geq t_i$ per cada $i$ de 1 fins a $n$. En cas que no, no hi haurà solució. En cas que sí, una solució possible serà $\{(s_1, t_1), (s_2, t_2), \dots, (s_n, t_n)\}$.
 
   <details>
-
     <summary>Codi</summary>
 
 ```cpp
