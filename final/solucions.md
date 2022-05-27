@@ -21,15 +21,23 @@
 
 ## [Problema Q1. Onze llibres](https://jutge.org/problems/P57678_ca) <a name="Q1"/>
 
-Clarament haurem de posar els 6 llibres blaus separats pels altres 5 llibres,
+<b>Autor:</b> Marc Felipe <br>
+<b>Nombre de ACs:</b> 25 <br>
+<b>Primer AC:</b> Roger Lidón
+
+Clarament, haurem de posar els 6 llibres blaus separats pels altres 5 llibres,
 per tant només ens queda escollir on posem aquests 5.
 
 Com que ja estan separats pels llibres blaus, només ens cal escollir les 2 posicions
 d'aquestes 5 on hi posarem els llibres vermells (les altres 3 seran pels llibres grocs).
 
-Podem trobar aquesta quantitat a mà o fent una mica de [combinatòria bàsica](https://ca.wikipedia.org/wiki/Coeficient_binomial#Interpretaci%C3%B3_combinat%C3%B2ria): $\binom{5}{2} = 10$.
+Podem trobar aquesta quantitat a mà o amb una mica de [combinatòria](https://ca.wikipedia.org/wiki/Coeficient_binomial#Interpretaci%C3%B3_combinat%C3%B2ria): $\binom{5}{2} = 10$.
 
 ## [Problema C1. Esperança de vida](https://jutge.org/problems/P12454_ca) <a name="C1"/>
+
+<b>Autor:</b> Jorge Castro <br>
+<b>Nombre de ACs:</b> 23 <br>
+<b>Primer AC:</b> Alejandro Vivero
 
 És suficient amb anar llegint les dades i anar actualitzant la informació
 del millor país segons els tres criteris diferents en la sortida.
@@ -81,6 +89,10 @@ int main() {
 
 ## [Problema G1. Dígits iguals](https://jutge.org/problems/P27390_ca) <a name="G1"/>
 
+<b>Autor:</b> Xavier Povill <br>
+<b>Nombre de ACs:</b> 22 <br>
+<b>Primer AC:</b> Roger Lidón
+
 En tenim prou amb anar comprovant la condició per tots els punts i pintar-lo
 amb el color que toca. Si rebeu un _time limit exceeded_,
 és una bona idea plantejar-se pintar tot del color de fons `f`,
@@ -120,6 +132,10 @@ __Repte:__ Podríeu demostrar matemàticament que la imatge és
 una repetició de patrons de mida $100 \times 100$?
 
 ## [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
+
+<b>Autor:</b> Víctor Martín <br>
+<b>Nombre de ACs:</b> 26 <br>
+<b>Primer AC:</b> Innokentiy Kaurov
 
 Sí, aquest problema està basat en fets reals. Es pot solucionar de diverses
 maneres, potser aquesta és la més intuïtiva: ordenem totes les notes,
@@ -184,6 +200,10 @@ for line in sys.stdin:
 
 ## [Problema Q2. Hotel Vela](https://jutge.org/problems/P24906_ca) <a name="Q2"/>
 
+<b>Autor:</b> Xavier Povill <br>
+<b>Nombre de ACs:</b> 26 <br>
+<b>Primer AC:</b> Amal Dokkar
+
 Per una porta $n$ hi passen tantes persones com divisors tingui $n$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
 
 Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa o utilitzar la fórmula:
@@ -216,6 +236,11 @@ print(sum(i for i in range(1, NUM_PORTES + 1) if portes[i]))
 __Repte:__ Si teniu dubtes de com funciona el `range()` amb 3 paràmetres del codi anterior, podeu provar de resoldre [aquest problema](https://jutge.org/problems/P93780_ca).
 
 ## [Problema G2. Paràbola](https://jutge.org/problems/P60526_ca) <a name="G2"/>
+
+<b>Autor:</b> Max Balsells <br>
+<b>Nombre de ACs:</b> 7 <br>
+<b>Primer AC:</b> Innokentiy Kaurov
+
 Per resoldre'l no cal massa més que seguir al peu de la lletra el que diu
 l'enunciat, però cal anar amb compte amb els següents detalls:
 * L'eix `y` va al revés a l'enunciat del problema respecte a la imatge que dibuixem (a la llibreria `PIL` per defecte l'eix vertical augmenta de dalt a baix).
@@ -262,6 +287,10 @@ img.save("output.png")
 </details>
 
 ## [Problema C3. Eliminació per parells](https://jutge.org/problems/P84545_ca) <a name="C3"/>
+
+<b>Autor:</b> Salvador Roura <br>
+<b>Nombre de ACs:</b> 2 <br>
+<b>Primer AC:</b> Sergio Domínguez
 
 Sigui $T = C \setminus S$ el complementari de $S$ en $C$ (el que ens quedaria
 a $C$ si hi traguéssim els elements de $S$). Sigui $S = ${$s_1, \dots, s_n $} i $T =$ {$t_1, \dots, t_n$}, i suposem que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, en cas que existeixi solució, tenim que una solució vàlida és $(s_1, t_{n-k+1}), (s_2, t_{n-k+2}),  \dots,  (s_k, t_n),  (s_{k+1}, t_1),  (s_{k+2}, t_2),  \dots, (s_n, t_{n-k})$.
@@ -367,7 +396,86 @@ int main() {
 ```
 </details>
 
+<details>
+  <summary><b>Solució parcial</b></summary>
+  Per obtenir la puntuació parcial havíem de resoldre el cas en que $k = 0$. Això vol dir que hem d'agrupar els nombres de $C$ en $n$ parelles de manera que els nombres més grans de cada parella formin $S$.
+
+  Per tant, hem d'emparellar cada $s \in S$ amb un $t \in T$ que sigui més petit o igual que ell. En particular, observem que això vol dir que el nombre més gran de $S$ ha de ser més gran o igual que el nombre més gran de $T$ (altrament aquest nombre de $T$ no el podrem emparellar amb cap nombre de $S$), el segon nombre més gran de $S$ ha de ser més gran o igual que el segon nombre més gran de $T$, i així successivament.
+
+  Així doncs, podem ordenar els nombres de $S$ i de $T$ i comprovar simplement si $s_i \geq t_i$ per cada $i$ de 1 fins a $n$. En cas que no, no hi haurà solució. En cas que sí, una solució possible serà $\{(s_1, t_1), (s_2, t_2), \dots, (s_n, t_n)\}$.
+
+  <details>
+
+    <summary>Codi</summary>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+typedef vector<int> VI;
+typedef vector<pair<int, int>> VPII;
+
+int main() {
+    int n, k;
+    while (cin >> n >> k) {
+        // Llegim C i ordenem
+        VI C(2*n);
+        for (int& x : C)
+            cin >> x;
+        sort(C.begin(), C.end());
+
+        // Llegim S i ordenem
+        VI S(n);
+        for (int& x : S)
+            cin >> x;
+        sort(S.begin(), S.end());
+
+        // T serà el complementari de S en C (el que pertany a C però no a S)
+        // T també estarà ordenat
+        VI T;
+        int ps = 0;
+        for (int pc = 0; pc < 2*n; ++pc) {
+            if (ps == n or C[pc] != S[ps])
+                T.push_back(C[pc]);
+            else
+                ++ps;
+        }
+
+        // La solució, i si la podem obtenir
+        VPII sol;
+        bool ok = true;
+
+        for (int i = 0; ok and i < n; ++i) {
+            if (S[i] < T[i])
+                ok = false;
+
+            sol.push_back({S[i], T[i]});
+        }
+
+        // Responem en funció del que hem trobat
+        if (ok) {
+            cout << "SI";
+            for (auto [s, t] : sol)
+                cout << "  " << s << ' ' << t;
+            cout << endl;
+        }
+        else
+            cout << "NO" << endl;
+    }
+}
+```
+
+  </details>
+
+</details>
+
 ## [Problema Q3. Octaedre](https://jutge.org/problems/P84218_ca) <a name="Q3"/>
+
+<b>Autor:</b> Max Balsells <br>
+<b>Nombre de ACs:</b> 12 <br>
+<b>Primer AC:</b> Carles Melé
 
 El primer pas per resoldre aquest problema és adonar-se que els valors de les arestes incidents a cada vèrtex han de sumar 26. Sabríeu justificar per què?
 <details>
@@ -430,6 +538,10 @@ for perm in permutations(list(range(1, 13))):
 
 ## [Problema G3. Hipercub](https://jutge.org/problems/P20096_ca) <a name="G3"/>
 
+<b>Autor:</b> Víctor Martín <br>
+<b>Nombre de ACs:</b> 4 <br>
+<b>Primer AC:</b> Roger Lidón
+
 Només s'han de dibuixar els $2^n$ punts i connectar cadascun als seus $n$ veïns,
 anant amb compte de posar l'aresta correcta. El problema més gran que pot
 sorgir és com canviar un bit concret d'un nombre. Ho podem fer amb XORs, amb recursivitat,
@@ -489,6 +601,10 @@ img.save("output.png")
 </details>
 
 ## [Problema C4. Xor de tres](https://jutge.org/problems/P60779_ca) <a name="C4"/>
+
+<b>Autor:</b> Edgar Moreno <br>
+<b>Nombre de ACs:</b> 3 <br>
+<b>Primer AC:</b> Innokentiy Kaurov
 
 Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
 és commutativa ($x \oplus y = y \oplus x$),
@@ -594,6 +710,10 @@ int main() {
 
 ## [Problema G4. Pixel art](https://jutge.org/problems/P38156_ca) <a name="G4"/>
 
+<b>Autor:</b> Edgar Moreno <br>
+<b>Nombre de ACs:</b> 3 <br>
+<b>Primer AC:</b> Eloi Pagès
+
 El problema ens demana buscar les $k$ components connexes més grans
 i pintar totes les caselles que les componen. Podem fer això fàcilment usant
 un algorisme de cerca en grafs com el DFS o el BFS.
@@ -670,10 +790,14 @@ img.save('output.png')
 
 ## [Problema C5. Mineria](https://jutge.org/problems/P61019_ca) <a name="C5"/>
 
+<b>Autor:</b> Salvador Roura <br>
+<b>Nombre de ACs:</b> 0 <br>
+<b>Primer AC:</b> :-(
+
 <details>
   <summary><b>Solució parcial</b></summary>
 
-  Per obtenir la puntuació parcial, s'havia de resoldre el cas on cap $b_i$ és negativa. Observeu que aleshores sempre ens interessa excavar el màxim possible, ja que el cost d'excavar mai serà negatiu).
+  Per obtenir la puntuació parcial, s'havia de resoldre el cas on cap $b_i$ és negativa. Observeu que aleshores sempre ens interessa excavar el màxim possible (ja que el benefici d'excavar mai serà negatiu).
 
   No obstant això, continuem sotmesos a la restricció de no excavar més enllà de $p_i$ a la columna $i$, i no excavar fins a profunditat $j$ si a les posicions adjacents no s'ha excavat almenys fins a profunditat $j-1$.
 
@@ -765,7 +889,7 @@ int main() {
 }
 ```
   </details>
-  Passem ara a resoldre el cas general, on $b_i$ pot ser negativa. 
+  Passem ara a resoldre el cas general, on $b_i$ pot ser negativa.
 </details>
 
 Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
@@ -878,6 +1002,10 @@ int main() {
 
 ## [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
 
+<b>Autor:</b> Jordi Petit <br>
+<b>Nombre de ACs:</b> 2 <br>
+<b>Primer AC:</b> Sergio Domínguez
+
 Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number),
 la més intuïtiva requereix una mica de programació dinàmica:
 
@@ -925,6 +1053,10 @@ Un truc típic en aquests problemes on la $n$ màxima és petita és precalcular
 En aquest problema això no era necessari, però va bé tenir-ho en compte si teniu una solució que dona TLE i el nombre d'inputs diferents possibles és petit.
 
 ## [Problema C7. Avaries](https://jutge.org/problems/P67717_ca) <a name="C7"/>
+
+<b>Autor:</b> Xavier Povill <br>
+<b>Nombre de ACs:</b> 1 <br>
+<b>Primer AC:</b> Innokentiy Kaurov
 
 Per cada vèrtex, hem de comptar el nombre de components connexos en que quedaria separat el graf si eliminéssim aquell vèrtex. Per tal de calcular-ho eficientment, modifiquem lleugerament l'algorisme clàssic per calcular *punts d'articulació* d'un graf (vegeu [aquest tutorial](https://cp-algorithms.com/graph/cutpoints.html)).
 
@@ -995,8 +1127,84 @@ int main() {
 ```
 </details>
 
+<details>
+  <summary><b>Solució parcial</b></summary>
+
+  Per obtenir la puntuació parcial s'havien de resoldre els casos on el graf té com a molt un cicle.
+
+  En primer lloc, si el graf no té cicles sabem que serà un [arbre](https://ca.wikipedia.org/wiki/Arbre_(teoria_de_grafs)) (perquè és acíclic i connex). En aquest cas, si eliminem el vèrtex $v$, cada veí de $v$ formarà un component connex diferent. Per tant, el nombre de components connexos és simplement el *grau* de $v$ (és a dir, el seu nombre de veïns).
+
+  En cas que el graf tingui un únic cicle $C$, si $v \notin C$ continuem tenint que el nombre de components en que queda dividit el graf a l'eliminar $v$ és el grau de $v$. En canvi, si $v \in C$, els dos veïns de $v$ pertanyents al cicle estaran units per un camí i formaran part del mateix component connex. Així doncs, el nombre de components connexos és $\text{grau}(v)-1$.
+
+  Per tal de detectar quins vèrtexs estan al cicle, podem fer un DFS des d'un vèrtex arbitrari, guardant els pares de cada node. Si arribem a un vèrtex que ja hem visitat abans i que no és el nostre pare, voldrà dir que hem trobat un cicle. Per tal de trobar tots els vèrtexs del cicle, anem tirant enrere per la llista de pares fins a tornar al vèrtex original.
+
+  <details>
+    <summary><b>Codi</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> G;
+vector<int> pare; // guarda el pare de cada vertex en el DFS
+vector<bool> cicle; // true si el vertex esta al cicle
+vector<bool> vis; // true si ja hem visitat el vertex en el DFS
+bool cicle_trobat;
+
+void dfs(int v) {
+  vis[v] = true;
+  for(int u : G[v]) {
+  	if(cicle_trobat) return;
+  	if(u == pare[v]) continue;
+  	if(vis[u]) {
+  		cicle[v] = true;
+  		int x = pare[v];
+  		while(x != u) {
+  			cicle[x] = true;
+  			x = pare[x];
+  		}
+  		cicle[u] = true;
+  		cicle_trobat = true;
+  	}
+  	else {
+  		pare[u] = v;
+  		dfs(u);
+  	}
+  }
+}
+
+int main() {
+  int n, m;
+  while(cin >> n >> m) {
+    G = vector<vector<int>>(n);
+    for(int i = 0; i < m; ++i) {
+      int x, y;
+      cin >> x >> y;
+      G[x].push_back(y);
+      G[y].push_back(x);
+    }
+    pare = vector<int>(n, -1);
+    cicle = vector<bool>(n, false);
+    vis = vector<bool>(n, false);
+    cicle_trobat = false;
+    dfs(0);
+    for(int i = 0; i < n; ++i) {
+      cout << i << ": " << int(G[i].size()) - int(cicle[i]) << endl;
+    }
+    cout << string(10, '-') << endl;
+  }
+}
+```    
+  </details>
+
+</details>
+
 
 ## [Problema Q4. Raó àuria](https://jutge.org/problems/P94346_ca) <a name="Q4"/>
+
+<b>Autor:</b> Fèlix Moreno <br>
+<b>Nombre de ACs:</b> 0 <br>
+<b>Primer AC:</b> :-(
 
 L'algoritme és "senzill". A cada pas, busquem el valor més gran $p$ tal que
 $n \geq \varphi^p$. Llavors, el $p$-èssim dígit (vigileu que $p$ també pot ser negatiu)
