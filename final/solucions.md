@@ -1216,11 +1216,10 @@ té una expressió única i amb finits decimals en base $\varphi$, i que es
 pot trobar mitjançant l'algorisme que acabem de mencionar. Pistes:
 
 1. Demostreu que l'algorisme mencionat funciona, és a dir, que dóna una expressió de $n$ en base $\varphi$.
-2. Demostreu que l'algorisme anterior no dona mai una expressió amb dos 1's seguits.
-3. Demostreu que tot natural $n$ té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
-4. Demostreu que tot real es pot expressar d'una manera única en base $\varphi$ (amb excepció de
+2. Demostreu que tot natural $n$ té una expressió finita en base $\varphi$ (podeu fer-ho per inducció).
+3. Demostreu que tot real es pot expressar d'una manera única en base $\varphi$ (amb excepció de nombres acabats en
 $...1010101010...$ periòdic en base $\varphi$ (l'anàleg a $1 = 0.99999...$ en base $10$))
-5. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant assolirà l'expressió finita única de $n$ en base $\varphi$.
+4. Demostreu que l'algorisme no donarà mai $...1010101010...$ periòdic, i que per tant assolirà l'expressió finita única de $n$ en base $\varphi$.
 
 Si implementeu directament aquest algorisme, probablement no obtindreu la puntuació completa, ja que els floats o doubles no tenen suficients decimals com per donar la resposta exacta. Per evitar problemes de precisió, hem de buscar alguna manera de fer tot els càlculs amb nombres enters.
 
@@ -1249,64 +1248,62 @@ També hem de saber comparar dos nombres de la forma anterior. La idea és que $
 <summary><b>Codi</b></summary>
 
 ```python3
-# Calculem (a[0] + a[1]*phi) * (b[0] + b[1]*phi)
-def prod(a, b):
-  ans = [a[0]*b[0] + a[1]*b[1], a[0]*b[1] + a[1]*b[0] + a[1]*b[1]]
-  return ans
+## CONSTANTS
 
-def suma(a, b):
-  ans = [a[0] + b[0], a[1] + b[1]]
-  return ans
+ZERO = (0, 0)           # 0
+U = (1, 0)              # 1
+PHI = (0, 1)            # φ
+INV_PHI = (-1, 1)       # 1/φ (= φ - 1)
 
+## OPERACIONS
+
+# Retorna la resta (a[0] + a[1]*φ) - (b[0] + b[1]*φ)
 def resta(a, b):
-  ans = [a[0] - b[0], a[1] - b[1]]
-  return ans
+  return (a[0] - b[0], a[1] - b[1])
 
-# Calculem phi^e
-def binexp(e):
-  if e == 0: return [1, 0]
-  if e > 0:
-    ans = binexp(e//2)
-  else:
-    ans = binexp(-((-e)//2))
-  ans = prod(ans, ans)
-  if (abs(e))%2 == 1:
-    if e > 0:
-      ans = prod(ans, [0, 1])
-    else:
-      # utilitzem que 1/phi = -1 + phi
-      ans = prod(ans, [-1, 1])
-  return ans
+# Retorna el produte (a[0] + a[1]*φ) * (b[0] + b[1]*φ)
+def prod(a, b):
+  return (a[0]*b[0] + a[1]*b[1], a[0]*b[1] + a[1]*b[0] + a[1]*b[1])
 
-# retorna True si a[0] + a[1]*phi <= b[0] + b[1]*phi
+# Calcula x^b
+def power(x, b):
+    pot = U
+    for i in range(b):
+        pot = prod(pot, x)
+    return pot
+
+# Calculem φ^e
+def potencia_phi(e):
+    return power(PHI, e) if e >= 0 else power(INV_PHI, -e)
+
+# Retorna True si a[0] + a[1]*φ <= b[0] + b[1]*φ
+# Desenvolupant, això és equivalent a dir:
+# 2*(a[0] - b[0]) + a[1] - b[1] <= √5 (b[1] - a[1])
 def leq(a, b):
-  x = a[0] - b[0]
-  y = b[1] - a[1]
-  lhs = 2*x - y
-  if lhs > 0 and y < 0: return False
-  if lhs < 0 and y > 0: return True
-  if lhs == 0: return y >= 0
-  if y == 0: return lhs <= 0
-  if lhs < 0:
-    return lhs*lhs >= 5*y*y
-  else:
-    return lhs*lhs <= 5*y*y
+  lhs = 2*(a[0] - b[0]) + a[1] - b[1]
+  rhs = b[1] - a[1]
+  if lhs <= 0 and rhs >= 0: return True
+  if lhs >= 0 and rhs <= 0: return False
+  if lhs < 0 and rhs < 0: return lhs**2 >= 5*rhs**2
+  if lhs > 0 and rhs > 0: return lhs**2 <= 5*rhs**2
 
-# Retorna el maxim p tal que cur >= phi^p
+## SOLUCIÓ
+
+# Retorna el maxim p tal que cur >= φ^p
 def max_exponent(x):
     p = 0
     while True:
-        if not leq(binexp(p + 1), x):
+        if not leq(potencia_phi(p + 1), x):
             return p
         p += 1
 
 # Retorna la llista dels índexos que valen 1 a la representació de x en base φ
 def llista_indexos(cur, pot):
     indexos = []
-    while cur != [0,0]:
-        if leq(binexp(pot), cur):
+    while cur != ZERO:
+        if leq(potencia_phi(pot), cur):
             indexos.append(pot)
-            cur = resta(cur, binexp(pot))
+            cur = resta(cur, potencia_phi(pot))
         pot -= 1
 
     return indexos
@@ -1333,95 +1330,89 @@ for n in [10, 201, 10**30]:
 ```
 </details>
 
-__Solució 2:__
-
-Similarment a la solució anterior, també podem expressar les potències de $\varphi$ de la forma $(a + b \sqrt{5})/2^n$, on $a$, $b$ i $n$ són enters. Novament, tenim que les sumes, restes i potències de nombres d'aquesta forma es poden expressar també amb aquesta forma.
+Si voleu aprofitar per aprendre una mica de Python avançat, us deixem una solució
+alternativa usant classes i [operadors màgics](https://www.tutorialsteacher.com/python/magic-methods-in-python) de Python.
 
 <details>
-  <summary><b>Codi</b></summary>
+<summary><b>Codi</b></summary>
 
-```python
-# P o Q representen un nombre de la forma (a + b * sqrt(5))/2^n
+```python3
+# Representa nombres de l'estil a + bφ
+class RepresentacioPhi:
+    # Inicia la classe (donant els valors de a i b)
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
 
-# Canvia la representació de P o Q per tal que tinguin el mateix denominador
-def iguala_denominador(P, Q):
-    a, b, n = P
-    A, B, N = Q
-    if n >= N:
-        A *= 2**(n - N)
-        B *= 2**(n - N)
-        N = n
-    else:
-        a *= 2**(N - n)
-        b *= 2**(N - n)
-        n = N
+    # Operador -
+    def __sub__(self, other):
+        return RepresentacioPhi(self.a - other.a, self.b - other.b)
 
-    return (a, b, n), (A, B, N)
+    # Operador -=
+    def __isub__(self, other):
+        prod = self - other
+        self.a, self.b = prod.a, prod.b
+        return self
 
-# Retorna P - Q
-def resta(P, Q):
-    P, Q = iguala_denominador(P, Q)
-    a, b, n = P
-    A, B, N = Q
-    return (a - A, b - B, n)
+    # Operador *
+    def __mul__(self, other):
+        return RepresentacioPhi(self.a*other.a + self.b*other.b, self.a*other.b + self.b*other.a + self.b*other.b)
 
-# Retorna P * Q
-def mult(P, Q):
-    a, b, n = P
-    A, B, N = Q
-    return (a * A + 5 * b * B, a * B + b * A, n + N)
+    # Operador *=
+    def __imul__(self, other):
+        prod = self * other
+        self.a, self.b = prod.a, prod.b
+        return self
 
-# Retorna True ssi P val zero
-def es_zero(P):
-    a, b, n = P
-    return a == 0 and b == 0
+    # Operador **
+    def __pow__(self, e):
+        pot = RepresentacioPhi(1, 0)        # pot = 1
+        for i in range(e):
+            pot *= self
+        return pot
 
-# Retorna True ssi P és no-negatiu
-def nonegatiu(P):
-    a, b, n = P
-    if a >= 0 and b >= 0:
-        return True
-    if a <= 0 and b <= 0:
-        return False
-    if a >= 0 and b <= 0:
-        return a**2 >= 5*b**2
-    if a <= 0 and b >= 0:
-        return 5*b**2 >= a**2
+    # Operador <=
+    def __le__(self, other):
+        lhs = 2*(self.a - other.a) + self.b - other.b
+        rhs = other.b - self.b
+        if lhs <= 0 and rhs >= 0: return True
+        if lhs >= 0 and rhs <= 0: return False
+        if lhs < 0 and rhs < 0: return lhs**2 >= 5*rhs**2
+        if lhs > 0 and rhs > 0: return lhs**2 <= 5*rhs**2
 
-# Retorna True ssi P >= Q
-def majoroigual(P, Q):
-    return nonegatiu(resta(P, Q))
+    # Operador ==
+    def __eq__(self, other):
+        return self.a == other.a and self.b == other.b
 
-# Constants:
-PHI = (1, 1, 1)         # φ
-INV_PHI = (-1, 1, 1)    # 1/φ
+    # Operador !=
+    def __ne__(self, other):
+        return not (self == other)
 
-# Retorna φ^n
-def phi_power(n):
-    if n == 0:
-        return (1, 0, 0)
-    elif n > 0:
-        return mult(PHI, phi_power(n - 1))
-    else:
-        return mult(INV_PHI, phi_power(n + 1))
+## CONSTANTS
+ZERO = RepresentacioPhi(0, 0)           # 0
+PHI = RepresentacioPhi(0, 1)            # φ
+INV_PHI = RepresentacioPhi(-1, 1)       # 1/φ (= φ - 1)
+
+# Calculem φ^e
+def potencia_phi(e):
+    return PHI**e if e >= 0 else INV_PHI**(-e)
 
 # Retorna el maxim p tal que cur >= φ^p
 def max_exponent(x):
     p = 0
     while True:
-        if not majoroigual(x, phi_power(p + 1)):
+        if not PHI**(p + 1) <= x:
             return p
         p += 1
 
 # Retorna la llista dels índexos que valen 1 a la representació de x en base φ
 def llista_indexos(cur, pot):
     indexos = []
-    while not es_zero(cur):
-        if majoroigual(cur, phi_power(pot)):
+    while cur != ZERO:
+        if potencia_phi(pot) <= cur:
             indexos.append(pot)
-            cur = resta(cur, phi_power(pot))
+            cur -= potencia_phi(pot)
         pot -= 1
-
     return indexos
 
 # Passa de la llista de indexos a l'string format per les diferencies
@@ -1436,7 +1427,7 @@ def to_string(indexos):
     return indexos_to_string(indexos_pos) + '-' + indexos_to_string(indexos_neg)
 
 def resol(n):
-    cur = (n, 0, 0)
+    cur = RepresentacioPhi(n, 0)
     pot = max_exponent(cur)
     indexos = llista_indexos(cur, pot)
     return to_string(indexos)
@@ -1446,7 +1437,7 @@ for n in [10, 201, 10**30]:
 ```
 </details>
 
-__Solució 3:__
+__Solució 2:__
 
 Les dues solucions anteriors es basaven en expressar les potències de $\varphi$ en una forma *canònica* que ens permetés operar amb elles treballant només amb enters. Una altra forma d'enfocar el problema és partir de l'expressió:
 
