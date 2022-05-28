@@ -212,6 +212,8 @@ Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un program
 
 $$1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
 
+__Repte__: Podríeu demostrar aquesta fórmula? (Pista: useu el mètode d'inducció)
+	
 __Solució 2:__
 
 Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
