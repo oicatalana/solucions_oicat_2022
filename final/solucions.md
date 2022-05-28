@@ -204,12 +204,15 @@ for line in sys.stdin:
 <b>Nombre de ACs:</b> 26 <br>
 <b>Primer AC:</b> Amal Dokkar
 
+__Solució 1:__
+	
 Per una porta $n$ hi passen tantes persones com divisors tingui $n$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
 
 Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa o utilitzar la fórmula:
 
-$$ 1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
+$$1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
 
+__Solució 2:__
 
 Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
 i per cadascun d'aquests fem que canviï l'estat de les portes per les que passa.
