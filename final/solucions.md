@@ -1211,7 +1211,8 @@ $n \geq \varphi^p$. Llavors, el $p$-èssim dígit (vigileu que $p$ també pot se
 de $n$ en base $\varphi$ valdrà $1$. Repetiu el procediment amb $n - \varphi^p$ fins
 que el nombre restant sigui $0$.
 
-__Repte__: Us animem a que demostreu vosaltres mateixos que qualsevol enter $n$
+__Repte__: Us animem a que demostreu vosaltres mateixos (i si voleu, podeu enviar-nos la demostració)
+que qualsevol enter $n$
 té una expressió única i amb finits decimals en base $\varphi$, i que es
 pot trobar mitjançant l'algorisme que acabem de mencionar. Pistes:
 
@@ -1236,10 +1237,14 @@ $$
 \end{gather}
 $$
 
-Per tal d'implementar-ho necessitem definir la suma, resta i multiplicació de nombres de la forma $a + b \varphi$. La suma i la resta es fan terme a terme, i la multiplicació ve donada per
+Observeu que la suma, resta i multiplicació de nombres de la forma $a + b \varphi$ dona com a resultat nombres de la mateixa forma:
 
 $$
+\begin{gather}
+(a + b \varphi) + (c + d\varphi) = (a + c) + (b + d)\varphi \\
+(a + b \varphi) - (c + d\varphi) = (a + c) - (b + d)\varphi \\
 (a + b \varphi) \cdot (c + d\varphi) = ac + (bc + ad)\varphi + bd \varphi^2 = (ac + bd) + (bc + ad + bd)\varphi
+\end{gather}
 $$
 
 També hem de saber comparar dos nombres de la forma anterior. La idea és que $a + b \varphi < c + d \varphi$ si $a-c < (d-b)\varphi$. Si els dos coeficients tenen signe diferent, la comparació és trivial. Si tenen el mateix signe, substituïm $\varphi = (1 + \sqrt{5})/2$, aïllem $\sqrt{5}$ i elevem al quadrat els dos costats de la desigualtat. Així aconseguim trobar una condició que només utilitzi nombres enters.
@@ -1334,7 +1339,7 @@ Si voleu aprofitar per aprendre una mica de Python avançat, us deixem una soluc
 alternativa usant classes i [operadors màgics](https://www.tutorialsteacher.com/python/magic-methods-in-python) de Python.
 
 <details>
-<summary><b>Codi</b></summary>
+<summary><b>Codi</b> (usant operadors màgics)</summary>
 
 ```python3
 # Representa nombres de l'estil a + bφ
