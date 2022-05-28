@@ -606,10 +606,54 @@ img.save("output.png")
 <b>Nombre de ACs:</b> 3 <br>
 <b>Primer AC:</b> Innokentiy Kaurov
 
+### Solució parcial
+
+Per obtenir la puntuació parcial, n'hi havia prou amb iterar per totes les possibles combinacions de 4 elements, comprovant si el seu XOR és 0 (observeu que $v_i \oplus v_j \oplus v_k = v_l \iff v_i \oplus v_j \oplus v_k \oplus v_l = v_l \oplus v_l = 0$).
+
+  El cost computacional és $\mathcal{O}(n^4)$, però com $n \leq 50$ en aquest subcàs, aquesta complexitat és assumible.
+	  
+<details>
+  <summary><b>Codi</b></summary>
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+typedef long long int LL;
+
+bool resol(int n) {
+    // Llegim els nombres
+    vector<LL> v(n);
+    for (LL& x : v)
+        cin >> x;
+
+    // Retornem true si trobem i < j < k < l tals que v[i]^v[j]^v[k] == v[l]
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; ++j)
+            for (int k = j + 1; k < n; ++k)
+                for (int l = k + 1; l < n; ++l)
+                    if ((v[i]^v[j]^v[k]) == v[l])
+                        return true;
+
+    // Retornem false en cas contrari
+    return false;
+}
+
+int main() {
+    int n;
+    while (cin >> n)
+        cout << (resol(n) ? "SI" : "NO") << endl;
+}
+```
+</details>
+
+### Solució total
+	
 Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
-és commutativa ($x \oplus y = y \oplus x$),
-és associativa ($(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis)),
-i la més important, $x \oplus x = 0$ per a tot $x$.
+* És commutativa: $x \oplus y = y \oplus x$.
+* És associativa: $(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis).
+* La més important: $x \oplus x = 0$ per a tot $x$.
 
 D'aquí es deriva el següent: si $x \oplus y = z$, llavors $x \oplus y \oplus y = z \oplus y$, i per tant
 $x = y \oplus z$. En altres paraules, la condició que havíeu de trobar (hi ha 4 índexos diferents
@@ -618,6 +662,15 @@ $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 
 Per tant, l'únic que s'ha de fer és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
 parar quan trobem un resultat que ja haguem vist abans. Utilitzant un *set*, podem comprovar si hem vist abans un resultat en temps $\mathcal{O}(\log(n^2)) = \mathcal{O}(\log(n))$. Per tant, la complexitat total és $\mathcal{O}(n^2\log n)$.
+Un cop troben aquest duplicat, hauríem de parar la nostra cerca per tal d'evitar gastar temps de computació inútilment.
+	
+Ens cal un últim detall: Què passa si tenim índexos diferents $i, j$ tals que $v_i = v_j$? En aquest cas
+podríem cometre l'error de dir incorrectament que hem trobat dos parells: $(v_i, v_k)$, i $(v_j, v_k)$
+amb mateix XOR. En aquest cas, no es difícil demostrar el següent:
+										       
+__Repte__: Si $v_i \oplus v_j = v_k \oplus v_l$ i no tots els valors són diferents dos a dos,
+llavors hi ha dos nombres $x, y$ (potser iguals) tals que dos d'aquests índexos valen $x$ i els
+altres dos, $y$.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -646,18 +699,21 @@ bool solve(int n) {
         if (v[i - 1] == v[i])
             ++reps, ++i;
 
-    // ... la resposta és sí
+    // ... resposta és sí
     if (reps >= 2)
         return true;
-
-    // Ignorem les repeticions
-    v.erase(unique(v.begin(), v.end()), v.end());
+    
+    // Eliminem les repeticions
+    vector<LL> w;
+    for (int i = 0; i < n; ++i)
+        if (i == 0 or v[i] != v[i - 1])
+            w.push_back(v[i]);
 
     // Mirem si hi ha dos parells amb el mateix XOR
     set<LL> S;
-    for (int i = 0; i < v.size(); ++i)
-        for (int j = i + 1; j < v.size(); ++j)
-            if (!S.insert(v[i]^v[j]).second)
+    for (int i = 0; i < w.size(); ++i)
+        for (int j = i + 1; j < w.size(); ++j)
+            if (!S.insert(w[i]^w[j]).second)
                 return true;
 
     // Si no n'hem trobat cap, la resposta és NO
@@ -667,43 +723,7 @@ bool solve(int n) {
 int main() {
     int n;
     while (cin >> n)
-        cout << (solve(n) ? "SI" : "NO") << endl;
-}
-```
-</details>
-
-<details>
-  <summary><b>Solució parcial</b></summary>
-
-  Per obtenir la puntuació parcial, n'hi havia prou amb iterar per totes les possibles combinacions de 4 elements, comprovant si el seu XOR és 0 (observeu que $v_i \oplus v_j \oplus v_k = v_l \iff v_i \oplus v_j \oplus v_k \oplus v_l = v_l \oplus v_l = 0$).
-
-  El cost computacional és $\mathcal{O}(n^4)$, però com $n \leq 50$ en aquest subcàs, aquesta complexitat és assumible.
-
-```cpp
-#include<bits/stdc++.h>
-using namespace std;
-
-using ll = long long;
-
-int main() {
-	int n;
-	while(cin >> n) {
-		vector<ll> v(n);
-		for(ll& x : v) cin >> x;
-		bool sol = false;
-		for(int i = 0; i < n and not sol; ++i) {
-			for(int j = i + 1; j < n and not sol; ++j) {
-				for(int k = j + 1; k < n and not sol; ++k) {
-					for(int l = k + 1; l < n and not sol; ++l) {
-						if((v[i]^v[j]^v[k]^v[l]) == 0) {
-							sol = true;
-						}
-					}
-				}
-			}
-		}
-		cout << (sol? "SI" : "NO") << endl;
-	}
+        cout << (solve(n) ? "SI" : "NO") << endl; 
 }
 ```
 </details>
