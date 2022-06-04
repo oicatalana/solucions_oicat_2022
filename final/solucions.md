@@ -942,12 +942,10 @@ int main() {
 
   <details>
     <summary><b>Spoiler</b></summary>
-
     Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$, més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
-
   </details>
 
-  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times \big((n+1)/2 + 1 \big)$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
+  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times \big(\dfrac{n+1}{2} + 1 \big)$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
 
   <details>
     <summary><b>Solució recursiva</b></summary>
