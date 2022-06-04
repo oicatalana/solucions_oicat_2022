@@ -205,7 +205,7 @@ for line in sys.stdin:
 <b>Primer AC:</b> Amal Dokkar
 
 __Solució 1:__
-	
+
 Per una porta $n$ hi passen tantes persones com divisors tingui $n$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
 
 Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa o utilitzar la fórmula:
@@ -213,7 +213,7 @@ Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un program
 $$1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
 
 __Repte__: Podríeu demostrar aquesta fórmula? (Pista: useu el mètode d'inducció)
-	
+
 __Solució 2:__
 
 Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
@@ -298,12 +298,12 @@ img.save("output.png")
 <b>Primer AC:</b> Sergio Domínguez
 
 La solució d'aquest problema passa per adonar-se del següent:
-	
+
 Sigui $T = C \setminus S$ el complementari de $S$ en $C$ (el que ens quedaria
 a $C$ si hi traguéssim els elements de $S$). Sigui $S = ${$s_1, \dots, s_n $} i $T =$ {$t_1, \dots, t_n$}, de tal forma que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, existeix una solució si i només si $(s_1, t_{n-k+1}), (s_2, t_{n-k+2}),  \dots,  (s_k, t_n),  (s_{k+1}, t_1),  (s_{k+2}, t_2),  \dots, (s_n, t_{n-k})$ és solució.
 
 Intuïtivament, el que significa això és que sempre és òptim emparellar els $k$ elements més petits de $S$ amb els $k$ més grans de $T$, i els $n-k$ més grans de $S$ amb els $n-k$ més petits de $T$. A continuació us ho demostrem.
-	
+
 __Demostració:__
 
 Suposem que tenim una solució $(s_1, t_1), \ldots, (s_n, t_n)$ tal que,
@@ -311,7 +311,7 @@ per a tot $i$, $s_i$ i $t_i$ pertanyen a $S$ i $T$, respectivament,
 i tal que $s_i \leq t_i$ si $1 \leq i \leq k$, i $s_i \geq t_i$ si $k < i \leq n$ (observeu que ara estem indexant els elements diferentment i que per tant no suposem que estiguin ordenats creixentment).
 Suposem sense pèrdua de generalitat que $s_1 \leq \ldots \leq s_k$ i que
 $s_{k + 1} \leq \ldots \leq s_n$.
-									 
+
 Podem fer les següents observacions similars:
 
 * Si existeixen $i \leq k < j$ tals que $s_i > s_j$, intercanviant $s_i$ per $s_j$
@@ -617,7 +617,7 @@ img.save("output.png")
 Per obtenir la puntuació parcial, n'hi havia prou amb iterar per totes les possibles combinacions de 4 elements, comprovant si el seu XOR és 0 (observeu que $v_i \oplus v_j \oplus v_k = v_l \iff v_i \oplus v_j \oplus v_k \oplus v_l = v_l \oplus v_l = 0$).
 
   El cost computacional és $\mathcal{O}(n^4)$, però com $n \leq 50$ en aquest subcàs, aquesta complexitat és assumible.
-	  
+
 <details>
   <summary><b>Codi</b></summary>
 
@@ -655,7 +655,7 @@ int main() {
 </details>
 
 ### Solució total
-	
+
 Cal observar primer algunes de les propietats de l'operació XOR (aquí la representarem amb el símbol $\oplus$):
 * És commutativa: $x \oplus y = y \oplus x$.
 * És associativa: $(x \oplus y) \oplus z = x \oplus (y \oplus z)$ (i per tant no ens cal representar-la amb parèntesis).
@@ -669,11 +669,11 @@ $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 Per tant, l'únic que s'ha de fer és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
 parar quan trobem un resultat que ja haguem vist abans. Utilitzant un *set*, podem comprovar si hem vist abans un resultat en temps $\mathcal{O}(\log(n^2)) = \mathcal{O}(\log(n))$. Per tant, la complexitat total és $\mathcal{O}(n^2\log n)$.
 Un cop troben aquest duplicat, hauríem de parar la nostra cerca per tal d'evitar gastar temps de computació inútilment.
-	
+
 Ens cal un últim detall: Què passa si tenim índexos diferents $i, j$ tals que $v_i = v_j$? En aquest cas
 podríem cometre l'error de dir incorrectament que hem trobat dos parells: $(v_i, v_k)$, i $(v_j, v_k)$
 amb mateix XOR. En aquest cas, no es difícil demostrar el següent:
-										       
+
 __Repte__: Si $v_i \oplus v_j = v_k \oplus v_l$ i no tots els valors són diferents dos a dos,
 llavors hi ha dos nombres $x, y$ (potser iguals) tals que dos d'aquests índexos valen $x$ i els
 altres dos, $y$.
@@ -708,7 +708,7 @@ bool solve(int n) {
     // ... resposta és sí
     if (reps >= 2)
         return true;
-    
+
     // Eliminem les repeticions
     vector<LL> w;
     for (int i = 0; i < n; ++i)
@@ -729,7 +729,7 @@ bool solve(int n) {
 int main() {
     int n;
     while (cin >> n)
-        cout << (solve(n) ? "SI" : "NO") << endl; 
+        cout << (solve(n) ? "SI" : "NO") << endl;
 }
 ```
 </details>
@@ -841,42 +841,49 @@ using namespace std;
 using ll = long long;
 
 int main() {
-	int n;
-	while(cin >> n) {
-		vector<int> b(n);
-		for(int& x : b) cin >> x;
-		vector<int> p(n);
-		for(int& x : p) cin >> x;
+  int n;
+  while(cin >> n) {
+    vector<int> b(n); // benefici
+    for(int& x : b) cin >> x;
+    vector<int> p(n); // profunditat maxima
+    for(int& x : p) cin >> x;
 
-		vector<int> h(n);
-		h[0] = min(1, p[0]);
-		for(int i = 1; i < n; ++i) {
-			h[i] = h[i-1] + 1;
-			if(h[i] > p[i]) {
-				h[i] = p[i];
-				for(int j = i-1; j >= 0; --j) {
-					h[j] = min(h[j], h[j+1]+1);
-				}
-			}
-		}
-		if(h[n-1] > 1) {
-			h[n-1] = 1;
-			for(int j = n-2; j >= 0; --j) {
-				h[j] = min(h[j], h[j+1] + 1);
-			}
-		}
-
-		ll ans = 0;
-		for(int i = 0; i < n; ++i) {
-			ans += ll(b[i])*h[i];
-		}
-		cout << ans << endl;
-	}
+    vector<int> h(n); // profunditat que excavem
+    // A la primera columna, com a molt podem excavar 1 casella
+    h[0] = min(1, p[0]);
+    // Calculem h[i] per la resta de columnes:
+    for(int i = 1; i < n; ++i) {
+      h[i] = h[i-1] + 1;
+      if(h[i] > p[i]) {
+        // si la profunditat maxima es mes petita que la profunditat a la qualsevol
+        // voliem excavar, actualitzem el seu valor
+        h[i] = p[i];
+        // i propaguem el nou valor cap enrere, assegurant-nos de no excavar
+        // mes de una casella mes que a la columna de la nostra dreta
+        for(int j = i-1; j >= 0; --j) {
+          h[j] = min(h[j], h[j+1]+1);
+        }
+      }
+    }
+    // a la ultima columna com a molt podem excavar fins a profunditat 1
+    if(h[n-1] > 1) {
+      h[n-1] = 1;
+      for(int j = n-2; j >= 0; --j) {
+        h[j] = min(h[j], h[j+1] + 1);
+      }
+    }
+    // calculem el benefici total obtingut
+    ll ans = 0; // benefici total
+    for(int i = 0; i < n; ++i) {
+      ans += ll(b[i])*h[i];
+    }
+    cout << ans << endl;
+  }
 }
 ```
   </details>
 
-  Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent. Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix en prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
+  Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent: Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix en prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
 
   <details>
     <summary><b>Codi</b></summary>
@@ -888,48 +895,60 @@ using namespace std;
 using ll = long long;
 
 int main() {
-	int n;
-	while(cin >> n) {
-		vector<int> b(n);
-		for(int& x : b) cin >> x;
-		vector<int> p(n);
-		for(int& x : p) cin >> x;
+  int n;
+  while(cin >> n) {
+    vector<int> b(n); // benefici
+    for(int& x : b) cin >> x;
+    vector<int> p(n); // profunditat maxima
+    for(int& x : p) cin >> x;
 
-		vector<int> esq(n);
-		esq[0] = min(1, p[0]);
-		for(int i = 1; i < n; ++i) {
-			esq[i] = min(esq[i-1]+1, p[i]);
-		}
-		vector<int> dreta(n);
-		dreta[n-1] = min(1, p[n-1]);
-		for(int i = n-2; i >= 0; --i) {
-			dreta[i] = min(dreta[i+1]+1, p[i]);
-		}
-		ll ans = 0;
-		for(int i = 0; i < n; ++i) {
-			int profunditat = min(esq[i], dreta[i]);
-			ans += ll(b[i])*profunditat;
-		}
-		cout << ans << endl;
-	}
+    // Primer iterem d'esquerra a dreta, excavant el maxim possible sense passar-nos
+    // de profunditat (i excavant com a molt 1 mes que a la nostra esquerra)
+    vector<int> esquerra(n);
+    esquerra[0] = min(1, p[0]);
+    for(int i = 1; i < n; ++i) {
+      esquerra[i] = min(esquerra[i-1]+1, p[i]);
+    }
+
+    // Despres iterem de dreta a esquerra, excavant el maxim possible sense passar-nos
+    // de profunditat (i excavant com a molt 1 mes que a la nostra dreta)
+    vector<int> dreta(n);
+    dreta[n-1] = min(1, p[n-1]);
+    for(int i = n-2; i >= 0; --i) {
+      dreta[i] = min(dreta[i+1]+1, p[i]);
+    }
+
+    ll ans = 0; // benefici total
+    for(int i = 0; i < n; ++i) {
+      // A cada columna fa falta profunditat <= esquerra[i] (per no excavar 1 mes   
+      // que a la nostra esquerra) i profunditat <= dreta[i] (per no excavar 1  
+      // mes que a la nostra dreta)
+      int profunditat = min(esquerra[i], dreta[i]);
+      ans += ll(b[i])*profunditat;
+    }
+    cout << ans << endl;
+  }
 }
 ```
   </details>
+</details>
+
+<details>
+  <summary><b>Solució general</b></summary>
   Passem ara a resoldre el cas general, on $b_i$ pot ser negativa.
-</details>
 
-Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
+  Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
 
-<details>
-<summary><b>Spoiler</b></summary>
+  <details>
+    <summary><b>Spoiler</b></summary>
 
-Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$, més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
-</details>
+    Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$, més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
+  </details>
 
-Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times (n+1)/2 + 1$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
+  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times (n+1)/2 + 1$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
 
-<details>
-  <summary><b>Solució recursiva</b></summary>
+  <details>
+    <summary><b>Solució recursiva</b></summary>
 
 ```cpp
 #include<bits/stdc++.h>
@@ -940,47 +959,58 @@ using ll = long long;
 const ll INF = 1e18;
 int n;
 vector<int> b, p;
-vector<vector<ll>> memo;
+vector<vector<ll>> memoria; // aqui guardem els valors de 'dp' que anem calculant
 
 // Definim dp(pos, h) com el maxim benefici que podem
 // obtenir amb les columnes de 1 fins a `pos`, suposant
 // que a la columna `pos` hem excavat fins a profunditat `h`
-ll dp(int pos, int h) {
+ll dp(int col, int h) {
+  // Per simplificar la implementacio, considerem que la primera columna
+  // es la columna 1, i que a la columna 0 estem obligats a excavar a
+  // profunditat 0:
   if(pos == 0) {
     if(h == 0) return 0;
-    return -INF;
+    return -INF; // retornar un valor negatiu molt gran ens assegura que mai
+                 // escollirem aquesta opcio com a optima
   }
-  if(h > p[pos-1]) return -INF;
-
-  // A l'utilitzar el simbol `&`, aconseguim que si
-  // modifiquem la variable `ans`, tambe es modificara la
-  // variable `memo[pos][h]` automaticament.
-  ll& ans = memo[pos][h];
-  // Si ja hem calculat el resultat previament,
-  // el retornem directament
+  if(h > p[col-1]) return -INF; // p[pos-1] ens marca la profunditat maxima a la
+                                // qual podem excavar a la columna 'pos'
+  if(h < 0 or h > (n+1)/2) return -INF; // mai podem excavar mes de (n+1)/2
+  // A l'utilitzar el simbol '&', aconseguim que si modifiquem la variable
+  // 'ans', tambe es modificara la variable 'memoria[col][h]' automaticament.
+  // (internament, li estem passant l'adreça de la variable en lloc d'una copia)
+  // Per tant, el valor final que calculem quedara guardat a la matriu 'memoria'.
+  ll& ans = memoria[col][h];
+  // Si ja hem calculat el resultat previament, el retornem sense fer
+  // mes calculs:
   if(ans != -INF) return ans;
-  ans = dp(pos-1, h);
-  if(h > 0) ans = max(ans, dp(pos-1, h-1));
-  if(h < (n+1)/2) ans = max(ans, dp(pos-1, h+1));
-  ans += ll(h) * b[pos-1];
+  // La resposta sera el maxim entre dp(col-1, h), dp(col-1, h-1) i dp(col, h+1):
+  ans = max(dp(col-1, h), dp(col-1, h-1));
+  ans = max(ans, dp(col-1, h+1));
+  // Li afegim el benefici d'excavar fins 'h' a la columna 'col':
+  ans += ll(h) * b[col-1];
   return ans;
 }
 
 int main() {
   while(cin >> n) {
-    b = vector<int>(n);
+    b = vector<int>(n); // benefici
     for(int& x : b) cin >> x;
-    p = vector<int>(n);
+    p = vector<int>(n); // profunditat maxima
     for(int& x : p) cin >> x;
-    memo = vector<vector<ll>>(n+1, vector<ll>((n+1)/2 + 1, -INF));
+    // Inicialitzem la matriu on ens guardarem els valors que anem calculant
+    // de la funcio 'dp':
+    memoria = vector<vector<ll>>(n+1, vector<ll>((n+1)/2 + 1, -INF));
+    // A la ultima columna o be excavem 0 o 1, de manera que el benefici maxim
+    // sera el maxim entre els dos casos:
     cout << max(dp(n, 0), dp(n, 1)) << endl;
   }
 }
 ```
-</details>
+  </details>
 
-<details>
-  <summary><b>Solució iterativa</b></summary>
+  <details>
+    <summary><b>Solució iterativa</b></summary>
 
 ```cpp
 #include<bits/stdc++.h>
@@ -997,33 +1027,35 @@ int main() {
     for(int& x : p) cin >> x;
 
     const ll INF = 1e18;
-    // Definim `dp[pos][h]` com el maxim benefici que podem obtenir
-    // des de la columna 1 fins a la columna `pos`, suposant que a la
-    // columna `pos` hem excavat fins a profunditat `h`.
+    // Definim 'dp[col][h]' com el maxim benefici que podem obtenir
+    // des de la columna 1 fins a la columna 'pos', suposant que a la
+    // columna 'col' hem excavat fins a profunditat 'h'.
     // Observem que la profunditat maxima que podem excavar es (n+1)/2
     vector<vector<ll>> dp(n+1, vector<ll>((n+1)/2 + 1, -INF));
+    // Afegim una 'columna 0' a l'esquerra on estem obligats a excavar a
+    // profunditat 0. Aixi ens assegurem que a la columna 1 excavarem maxim 1
     dp[0][0] = 0;
-    for(int pos = 1; pos <= n; ++pos) {
+    for(int col = 1; col <= n; ++col) {
       for(int h = 0; h <= (n+1)/2; ++h) {
-        if(h > p[pos-1]) break; // ens passem de profunditat
-        dp[pos][h] = dp[pos-1][h];
-        if(h > 0) {
-          dp[pos][h] = max(dp[pos][h], dp[pos-1][h-1]);
+        if(h > p[col-1]) break; // ens passem de profunditat
+        dp[col][h] = dp[col-1][h];
+        if(h > 0) { // si h == 0 no comprovem el cas h-1
+          dp[col][h] = max(dp[col][h], dp[col-1][h-1]);
         }
-        if(h < (n+1)/2) {
-          dp[pos][h] = max(dp[pos][h], dp[pos-1][h+1]);
+        if(h < (n+1)/2) { // si h == (n+1)/2, no comprovem el cas h+1
+          dp[col][h] = max(dp[col][h], dp[col-1][h+1]);
         }
-        dp[pos][h] += ll(h)*b[pos-1]; // afegim el benefici de la columna actual
+        dp[col][h] += ll(h)*b[col-1]; // afegim el benefici de la columna actual
       }
     }
     // per tal que la solucio sigui valida, a la ultima columna hem
-    // d'haver excavat 0 o 1 casella.
+    // d'haver excavat a profunditat 0 o 1:
     cout << max(dp[n][0], dp[n][1]) << endl;
   }
 }
 ```
+  </details>
 </details>
-
 
 
 ## [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
@@ -1180,22 +1212,22 @@ bool cicle_trobat;
 void dfs(int v) {
   vis[v] = true;
   for(int u : G[v]) {
-  	if(cicle_trobat) return;
-  	if(u == pare[v]) continue;
-  	if(vis[u]) {
-  		cicle[v] = true;
-  		int x = pare[v];
-  		while(x != u) {
-  			cicle[x] = true;
-  			x = pare[x];
-  		}
-  		cicle[u] = true;
-  		cicle_trobat = true;
-  	}
-  	else {
-  		pare[u] = v;
-  		dfs(u);
-  	}
+    if(cicle_trobat) return;
+    if(u == pare[v]) continue;
+    if(vis[u]) {
+      cicle[v] = true;
+      int x = pare[v];
+      while(x != u) {
+        cicle[x] = true;
+        x = pare[x];
+      }
+      cicle[u] = true;
+      cicle_trobat = true;
+    }
+    else {
+      pare[u] = v;
+      dfs(u);
+    }
   }
 }
 
