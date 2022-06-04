@@ -842,39 +842,39 @@ using ll = long long;
 
 int main() {
   int n;
-  while(cin >> n) {
+  while (cin >> n) {
     vector<int> b(n); // benefici
-    for(int& x : b) cin >> x;
+    for (int& x : b) cin >> x;
     vector<int> p(n); // profunditat maxima
-    for(int& x : p) cin >> x;
+    for (int& x : p) cin >> x;
 
     vector<int> h(n); // profunditat que excavem
     // A la primera columna, com a molt podem excavar 1 casella
     h[0] = min(1, p[0]);
     // Calculem h[i] per la resta de columnes:
-    for(int i = 1; i < n; ++i) {
+    for (int i = 1; i < n; ++i) {
       h[i] = h[i-1] + 1;
-      if(h[i] > p[i]) {
+      if (h[i] > p[i]) {
         // si la profunditat maxima es mes petita que la profunditat a la que
         // voliem excavar, actualitzem el seu valor
         h[i] = p[i];
         // i propaguem el nou valor cap enrere, assegurant-nos de no excavar
         // mes d'una casella mes que a la columna de la nostra dreta
-        for(int j = i-1; j >= 0; --j) {
+        for (int j = i-1; j >= 0; --j) {
           h[j] = min(h[j], h[j+1]+1);
         }
       }
     }
     // a la ultima columna com a molt podem excavar fins a profunditat 1
-    if(h[n-1] > 1) {
+    if (h[n-1] > 1) {
       h[n-1] = 1;
-      for(int j = n-2; j >= 0; --j) {
+      for (int j = n-2; j >= 0; --j) {
         h[j] = min(h[j], h[j+1] + 1);
       }
     }
     // calculem el benefici total obtingut
     ll ans = 0; // benefici total
-    for(int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
       ans += ll(b[i])*h[i];
     }
     cout << ans << endl;
@@ -896,17 +896,17 @@ using ll = long long;
 
 int main() {
   int n;
-  while(cin >> n) {
+  while (cin >> n) {
     vector<int> b(n); // benefici
-    for(int& x : b) cin >> x;
+    for (int& x : b) cin >> x;
     vector<int> p(n); // profunditat maxima
-    for(int& x : p) cin >> x;
+    for (int& x : p) cin >> x;
 
     // Primer iterem d'esquerra a dreta, excavant el maxim possible sense passar-nos
     // de profunditat (i excavant com a molt 1 mes que a la nostra esquerra)
     vector<int> esquerra(n);
     esquerra[0] = min(1, p[0]);
-    for(int i = 1; i < n; ++i) {
+    for (int i = 1; i < n; ++i) {
       esquerra[i] = min(esquerra[i-1]+1, p[i]);
     }
 
@@ -914,12 +914,12 @@ int main() {
     // de profunditat (i excavant com a molt 1 mes que a la nostra dreta)
     vector<int> dreta(n);
     dreta[n-1] = min(1, p[n-1]);
-    for(int i = n-2; i >= 0; --i) {
+    for (int i = n-2; i >= 0; --i) {
       dreta[i] = min(dreta[i+1]+1, p[i]);
     }
 
     ll ans = 0; // benefici total
-    for(int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
       // A cada columna fa falta profunditat <= esquerra[i] (per no excavar 2 mes   
       // que a la nostra esquerra) i profunditat <= dreta[i] (per no excavar 2  
       // mes que a la nostra dreta)
@@ -968,14 +968,14 @@ ll dp(int col, int h) {
   // Per simplificar la implementacio, considerem que la primera columna
   // es la columna 1, i que a la columna 0 estem obligats a excavar a
   // profunditat 0:
-  if(col == 0) {
-    if(h == 0) return 0;
+  if (col == 0) {
+    if (h == 0) return 0;
     return -INF; // retornar un valor negatiu molt gran ens assegura que mai
                  // escollirem aquesta opcio com a optima
   }
-  if(h > p[col-1]) return -INF; // p[col-1] ens marca la profunditat maxima a la
+  if (h > p[col-1]) return -INF; // p[col-1] ens marca la profunditat maxima a la
                                 // qual podem excavar a la columna 'col'
-  if(h < 0 or h > (n+1)/2) return -INF;
+  if (h < 0 or h > (n+1)/2) return -INF;
   // A l'utilitzar el simbol '&', aconseguim que si modifiquem la variable
   // 'ans', tambe es modificara la variable 'memoria[col][h]' automaticament.
   // (internament, li estem passant l'adreça de la variable en lloc d'una copia)
@@ -983,7 +983,7 @@ ll dp(int col, int h) {
   ll& ans = memoria[col][h];
   // Si ja hem calculat el resultat previament, el retornem sense fer
   // mes calculs:
-  if(ans != -INF) return ans;
+  if (ans != -INF) return ans;
   // La resposta sera el maxim entre dp(col-1, h), dp(col-1, h-1) i dp(col, h+1):
   ans = max(dp(col-1, h), dp(col-1, h-1));
   ans = max(ans, dp(col-1, h+1));
@@ -993,11 +993,11 @@ ll dp(int col, int h) {
 }
 
 int main() {
-  while(cin >> n) {
+  while (cin >> n) {
     b = vector<int>(n); // benefici
-    for(int& x : b) cin >> x;
+    for (int& x : b) cin >> x;
     p = vector<int>(n); // profunditat maxima
-    for(int& x : p) cin >> x;
+    for (int& x : p) cin >> x;
     // Inicialitzem la matriu on ens guardarem els valors que anem calculant
     // de la funcio 'dp':
     memoria = vector<vector<ll>>(n+1, vector<ll>((n+1)/2 + 1, -INF));
@@ -1020,11 +1020,11 @@ using ll = long long;
 
 int main() {
   int n;
-  while(cin >> n) {
+  while (cin >> n) {
     vector<int> b(n); // benefici per casella excavada a cada columna
-    for(int& x : b) cin >> x;
+    for (int& x : b) cin >> x;
     vector<int> p(n); // profunditat maxima a cada columna
-    for(int& x : p) cin >> x;
+    for (int& x : p) cin >> x;
 
     const ll INF = 1e18;
     // Definim 'dp[col][h]' com el maxim benefici que podem obtenir
@@ -1035,14 +1035,14 @@ int main() {
     // Afegim una columna 0 a l'esquerra on estem obligats a excavar a
     // profunditat 0. Aixi ens assegurem que a la columna 1 excavarem maxim 1
     dp[0][0] = 0;
-    for(int col = 1; col <= n; ++col) {
-      for(int h = 0; h <= (n+1)/2; ++h) {
-        if(h > p[col-1]) break; // ens passem de profunditat
+    for (int col = 1; col <= n; ++col) {
+      for (int h = 0; h <= (n+1)/2; ++h) {
+        if (h > p[col-1]) break; // ens passem de profunditat
         dp[col][h] = dp[col-1][h];
-        if(h > 0) { // si h == 0 no comprovem el cas h-1
+        if (h > 0) { // si h == 0 no comprovem el cas h-1
           dp[col][h] = max(dp[col][h], dp[col-1][h-1]);
         }
-        if(h < (n+1)/2) { // si h == (n+1)/2, no comprovem el cas h+1
+        if (h < (n+1)/2) { // si h == (n+1)/2, no comprovem el cas h+1
           dp[col][h] = max(dp[col][h], dp[col-1][h+1]);
         }
         dp[col][h] += ll(h)*b[col-1]; // afegim el benefici de la columna actual
@@ -1142,14 +1142,14 @@ const int INF = 1e9;
 void dfs(int v, int pare) {
   tin[v] = low[v] = curtime;
   ++curtime;
-  for(int u : G[v]) {
-    if(u == pare) {
+  for (int u : G[v]) {
+    if (u == pare) {
       ans[v]++;
       continue;
     }
-    if(tin[u] == -1) {
+    if (tin[u] == -1) {
       dfs(u, v);
-      if(low[u] >= tin[v]) {
+      if (low[u] >= tin[v]) {
                 // a l'eliminar `v`, `u` formara un component connex nou
         ans[v]++;
       }
@@ -1163,9 +1163,9 @@ void dfs(int v, int pare) {
 
 int main() {
   int n, m;
-  while(cin >> n >> m) {
+  while (cin >> n >> m) {
     G = vector<vector<int>>(n);
-    for(int i = 0; i < m; ++i) {
+    for (int i = 0; i < m; ++i) {
       int x, y;
       cin >> x >> y;
       G[x].push_back(y);
@@ -1176,7 +1176,7 @@ int main() {
     ans = vector<int>(n, 0);
     curtime = 0;
     dfs(0, -1);
-    for(int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
       cout << i << ": " << ans[i] << endl;
     }
     cout << string(10, '-') << endl;
@@ -1211,13 +1211,13 @@ bool cicle_trobat;
 
 void dfs(int v) {
   vis[v] = true;
-  for(int u : G[v]) {
-    if(cicle_trobat) return;
-    if(u == pare[v]) continue;
-    if(vis[u]) {
+  for (int u : G[v]) {
+    if (cicle_trobat) return;
+    if (u == pare[v]) continue;
+    if (vis[u]) {
       cicle[v] = true;
       int x = pare[v];
-      while(x != u) {
+      while (x != u) {
         cicle[x] = true;
         x = pare[x];
       }
@@ -1233,9 +1233,9 @@ void dfs(int v) {
 
 int main() {
   int n, m;
-  while(cin >> n >> m) {
+  while (cin >> n >> m) {
     G = vector<vector<int>>(n);
-    for(int i = 0; i < m; ++i) {
+    for (int i = 0; i < m; ++i) {
       int x, y;
       cin >> x >> y;
       G[x].push_back(y);
@@ -1246,7 +1246,7 @@ int main() {
     vis = vector<bool>(n, false);
     cicle_trobat = false;
     dfs(0);
-    for(int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
       cout << i << ": " << int(G[i].size()) - int(cicle[i]) << endl;
     }
     cout << string(10, '-') << endl;
