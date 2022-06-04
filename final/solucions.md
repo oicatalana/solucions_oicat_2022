@@ -1131,27 +1131,34 @@ vector<int> low; // minim entre el temps d'entrada i el temps
                  // d'entrada dels vertexs accessibles des de
                  // back-edges dels descendents.
 vector<int> ans; // nombre de components connexes en que
-                 // es separa el graf.
+                 // es separa el graf al treure cada vertex
 int curtime; // temps actual.
 const int INF = 1e9;
 
 void dfs(int v, int pare) {
-  tin[v] = low[v] = curtime;
-  ++curtime;
+  tin[v] = low[v] = curtime; // marquem el temps d'entrada com el temps actual
+  ++curtime; // i incrementem el temps actual per no repetir valors
   for (int u : G[v]) {
     if (u == pare) {
+      // Si 'v' te un pare, aquest juntament amb tots els vertexs anteriors
+      // formara un component connex al treure 'v' del graf:
       ans[v]++;
       continue;
     }
     if (tin[u] == -1) {
+      // Si 'u' no es el pare i no esta visitat, continuem el dfs per 'u':
       dfs(u, v);
       if (low[u] >= tin[v]) {
-                // a l'eliminar `v`, `u` formara un component connex nou
+        // aquesta condicio ens indica que, a l'elimar 'v' del graf, 'u'
+        // formara un component connex nou, que no estara connectat amb el
+        // component del pare de 'v'
         ans[v]++;
       }
       low[v] = min(low[v], low[u]);
     }
     else {
+      // Si 'u' ja esta visitat, llavors l'aresta v -> u es una back-edge,
+      // i hem d'actualitzar 'low[v]':
       low[v] = min(low[v], tin[u]);
     }
   }
@@ -1160,17 +1167,24 @@ void dfs(int v, int pare) {
 int main() {
   int n, m;
   while (cin >> n >> m) {
+    // Ens guardem el graf com una llista d'adjacencia, es a dir, per cada
+    // vertex 'i' tenim un vector 'G[i]' amb els veins de 'i':
     G = vector<vector<int>>(n);
     for (int i = 0; i < m; ++i) {
       int x, y;
       cin >> x >> y;
+      // Com que el graf es no dirigit, hem d'afegir les arestes en les
+      // dues direccions
       G[x].push_back(y);
       G[y].push_back(x);
     }
+    // Inicialitzem els vectors globals que utilitzarem amb la mida que volem
     tin = vector<int>(n, -1);
     low = vector<int>(n);
     ans = vector<int>(n, 0);
+    // Inicialitzem el temps actual com a 0 (qualsevol valor valdria igualment)
     curtime = 0;
+    // Recorrem el graf des del vertex 0. Com que aquest no te pare, posem -1.
     dfs(0, -1);
     for (int i = 0; i < n; ++i) {
       cout << i << ": " << ans[i] << endl;
@@ -1206,21 +1220,27 @@ vector<bool> vis; // true si ja hem visitat el vertex en el DFS
 bool cicle_trobat;
 
 void dfs(int v) {
+  // Marquem v com a visitat
   vis[v] = true;
+  // Iterem per els veïns de v
   for (int u : G[v]) {
     if (cicle_trobat) return;
     if (u == pare[v]) continue;
     if (vis[u]) {
+      // Si ja hem visitat u i u != pare[v], aleshores hem trobat un cicle
       cicle[v] = true;
       int x = pare[v];
+      // Tirem enrere pel cicle fins a arribar a u de nou:
       while (x != u) {
         cicle[x] = true;
         x = pare[x];
       }
       cicle[u] = true;
+      // Ens apuntem que ja hem trobat el cicle per no continuar fent dfs
       cicle_trobat = true;
     }
     else {
+      // Si no hem visitat u, continuem el dfs des d'alla:
       pare[u] = v;
       dfs(u);
     }
@@ -1230,19 +1250,27 @@ void dfs(int v) {
 int main() {
   int n, m;
   while (cin >> n >> m) {
+    // Ens guardem el graf com una llista d'adjacencia, es a dir, per cada
+    // vertex 'i' tenim un vector 'G[i]' amb els veins de 'i':
     G = vector<vector<int>>(n);
     for (int i = 0; i < m; ++i) {
       int x, y;
       cin >> x >> y;
+      // Com que el graf es no dirigit, hem d'afegir les arestes en les
+      // dues direccions
       G[x].push_back(y);
       G[y].push_back(x);
     }
+    // Inicialitzem els vectors globals que utilitzarem amb la mida que volem
     pare = vector<int>(n, -1);
     cicle = vector<bool>(n, false);
     vis = vector<bool>(n, false);
     cicle_trobat = false;
+    // Recorrem el graf des del vertex 0. Com sabem que es connex, no importa
+    // des d'on comencem.
     dfs(0);
     for (int i = 0; i < n; ++i) {
+      // Per cada vertex, la solucio sera el seu grau (-1 si esta en el cicle)
       cout << i << ": " << int(G[i].size()) - int(cicle[i]) << endl;
     }
     cout << string(10, '-') << endl;
