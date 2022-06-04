@@ -855,11 +855,11 @@ int main() {
     for(int i = 1; i < n; ++i) {
       h[i] = h[i-1] + 1;
       if(h[i] > p[i]) {
-        // si la profunditat maxima es mes petita que la profunditat a la qualsevol
+        // si la profunditat maxima es mes petita que la profunditat a la que
         // voliem excavar, actualitzem el seu valor
         h[i] = p[i];
         // i propaguem el nou valor cap enrere, assegurant-nos de no excavar
-        // mes de una casella mes que a la columna de la nostra dreta
+        // mes d'una casella mes que a la columna de la nostra dreta
         for(int j = i-1; j >= 0; --j) {
           h[j] = min(h[j], h[j+1]+1);
         }
@@ -920,8 +920,8 @@ int main() {
 
     ll ans = 0; // benefici total
     for(int i = 0; i < n; ++i) {
-      // A cada columna fa falta profunditat <= esquerra[i] (per no excavar 1 mes   
-      // que a la nostra esquerra) i profunditat <= dreta[i] (per no excavar 1  
+      // A cada columna fa falta profunditat <= esquerra[i] (per no excavar 2 mes   
+      // que a la nostra esquerra) i profunditat <= dreta[i] (per no excavar 2  
       // mes que a la nostra dreta)
       int profunditat = min(esquerra[i], dreta[i]);
       ans += ll(b[i])*profunditat;
@@ -941,11 +941,10 @@ int main() {
 
   <details>
     <summary><b>Spoiler</b></summary>
-
     Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$, més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
   </details>
 
-  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times (n+1)/2 + 1$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
+  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times \big((n+1)/2 + 1 \big)$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
 
   <details>
     <summary><b>Solució recursiva</b></summary>
@@ -961,21 +960,21 @@ int n;
 vector<int> b, p;
 vector<vector<ll>> memoria; // aqui guardem els valors de 'dp' que anem calculant
 
-// Definim dp(pos, h) com el maxim benefici que podem
-// obtenir amb les columnes de 1 fins a `pos`, suposant
-// que a la columna `pos` hem excavat fins a profunditat `h`
+// Definim dp(col, h) com el maxim benefici que podem
+// obtenir amb les columnes de 1 fins a 'col', suposant
+// que a la columna 'col' hem excavat fins a profunditat 'h'
 ll dp(int col, int h) {
   // Per simplificar la implementacio, considerem que la primera columna
   // es la columna 1, i que a la columna 0 estem obligats a excavar a
   // profunditat 0:
-  if(pos == 0) {
+  if(col == 0) {
     if(h == 0) return 0;
     return -INF; // retornar un valor negatiu molt gran ens assegura que mai
                  // escollirem aquesta opcio com a optima
   }
-  if(h > p[col-1]) return -INF; // p[pos-1] ens marca la profunditat maxima a la
-                                // qual podem excavar a la columna 'pos'
-  if(h < 0 or h > (n+1)/2) return -INF; // mai podem excavar mes de (n+1)/2
+  if(h > p[col-1]) return -INF; // p[col-1] ens marca la profunditat maxima a la
+                                // qual podem excavar a la columna 'col'
+  if(h < 0 or h > (n+1)/2) return -INF;
   // A l'utilitzar el simbol '&', aconseguim que si modifiquem la variable
   // 'ans', tambe es modificara la variable 'memoria[col][h]' automaticament.
   // (internament, li estem passant l'adreça de la variable en lloc d'una copia)
@@ -1028,11 +1027,11 @@ int main() {
 
     const ll INF = 1e18;
     // Definim 'dp[col][h]' com el maxim benefici que podem obtenir
-    // des de la columna 1 fins a la columna 'pos', suposant que a la
+    // des de la columna 1 fins a la columna 'col', suposant que a la
     // columna 'col' hem excavat fins a profunditat 'h'.
     // Observem que la profunditat maxima que podem excavar es (n+1)/2
     vector<vector<ll>> dp(n+1, vector<ll>((n+1)/2 + 1, -INF));
-    // Afegim una 'columna 0' a l'esquerra on estem obligats a excavar a
+    // Afegim una columna 0 a l'esquerra on estem obligats a excavar a
     // profunditat 0. Aixi ens assegurem que a la columna 1 excavarem maxim 1
     dp[0][0] = 0;
     for(int col = 1; col <= n; ++col) {
