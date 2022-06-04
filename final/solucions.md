@@ -820,8 +820,7 @@ img.save('output.png')
 <b>Nombre de ACs:</b> 0 <br>
 <b>Primer AC:</b> :-(
 
-<details>
-  <summary><b>Solució parcial</b></summary>
+### Solució parcial
 
   Per obtenir la puntuació parcial, s'havia de resoldre el cas on cap $b_i$ és negativa. Observeu que aleshores sempre ens interessa excavar el màxim possible (ja que el benefici d'excavar mai serà negatiu).
 
@@ -931,10 +930,8 @@ int main() {
 }
 ```
   </details>
-</details>
 
-<details>
-  <summary><b>Solució general</b></summary>
+### Solució general
 
   Passem ara a resoldre el cas general, on $b_i$ pot ser negativa.
 
@@ -1055,7 +1052,6 @@ int main() {
 }
 ```
   </details>
-</details>
 
 
 ## [Problema C6. Nombres de Bell](https://jutge.org/problems/P70740_ca) <a name="C6"/>
