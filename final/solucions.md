@@ -1149,7 +1149,7 @@ void dfs(int v, int pare) {
       // Si 'u' no es el pare i no esta visitat, continuem el dfs per 'u':
       dfs(u, v);
       if (low[u] >= tin[v]) {
-        // aquesta condicio ens indica que, a l'elimar 'v' del graf, 'u'
+        // aquesta condicio ens indica que, a l'eliminar 'v' del graf, 'u'
         // formara un component connex nou, que no estara connectat amb el
         // component del pare de 'v'
         ans[v]++;
