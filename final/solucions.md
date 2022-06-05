@@ -484,11 +484,11 @@ El primer pas per resoldre aquest problema és adonar-se que els valors de les a
 <details>
   <summary><b>Spoiler</b></summary>
 
-  Els nombres de l'1 al 12 sumen 78, i cada aresta és incident a dos vèrtexs, de manera que la suma per tots els vèrtexs de la suma dels valors de les arestes incidents és $2 \cdot 78 = 156$. Com que la suma a cada vèrtex ha de ser igual i tenim 6 vèrtexs, tenim que la suma a cada vèrtex és $156/6 = 26$.
+  Els nombres de l'1 al 12 sumen 78, i cada aresta és incident a dos vèrtexs, de manera que la suma dels valors de les arestes incidents a tots els vèrtexs és $2 \cdot 78 = 156$. Com que les sumes a cada vèrtex han de ser iguals i tenim 6 vèrtexs, obtenim que la suma a cada vèrtex ha de ser $156/6 = 26$.
 
 </details>
 
-Un cop tenim això, podem anar provant a mà els diferents casos possibles amb una mica de traça o fer un programa que ens comprovi cada possible assignació dels nombres d'1 a 12 a les arestes.
+A partir d'aquí, podem anar provant a mà els diferents casos possibles amb una mica de traça, o fer un programa que ens comprovi cada possible assignació dels nombres d'1 a 12 a les arestes.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -665,16 +665,15 @@ $i, j, k, l$ tals que $v_i \oplus v_j = v_k \oplus v_l$.
 
 Per tant, l'únic que s'ha de fer és calcular tots els XORs $v_i \oplus v_j$ amb $i < j$ i
 parar quan trobem un resultat que ja haguem vist abans. Utilitzant un *set*, podem comprovar si hem vist abans un resultat en temps $\mathcal{O}(\log(n^2)) = \mathcal{O}(\log(n))$. Per tant, la complexitat total és $\mathcal{O}(n^2\log n)$.
-Un cop troben aquest duplicat, hauríem de parar la nostra cerca per tal d'evitar gastar temps de computació inútilment.
+Un cop trobem aquest duplicat, hauríem de parar la nostra cerca per tal d'evitar gastar temps de computació inútilment.
 
 Ens cal un últim detall: Què passa si tenim índexos diferents $i, j$ tals que $v_i = v_j$? En aquest cas
 podríem cometre l'error de dir incorrectament que hem trobat dos parells: $(v_i, v_k)$, i $(v_j, v_k)$
 amb mateix XOR. En aquest cas, no es difícil demostrar el següent:
 
-__Repte__: Si $v_i \oplus v_j = v_k \oplus v_l$ i no tots els valors són diferents dos a dos,
-llavors hi ha dos nombres $x, y$ (potser iguals) tals que dos d'aquests índexos valen $x$ i els
-altres dos, $y$.
-
+__Repte__: Si $v_i \oplus v_j = v_k \oplus v_l$ i algun dels quatre valors està repetit,
+llavors els quatre valors estan repetits (dues parelles o els quatre iguals).
+                                                                                       
 <details>
   <summary><b>Codi</b></summary>
 
@@ -737,8 +736,8 @@ int main() {
 <b>Nombre de ACs:</b> 3 <br>
 <b>Primer AC:</b> Eloi Pagès
 
-El problema ens demana buscar les $k$ components connexes més grans
-i pintar totes les caselles que les componen. Podem fer això fàcilment usant
+El problema ens demana buscar els $k$ components connexos més grans
+i pintar totes les caselles que els componen. Podem fer això fàcilment usant
 un algorisme de cerca en grafs com el DFS o el BFS.
 
 <details>
@@ -763,23 +762,23 @@ visitat = [[False for x in range(m)] for y in range(n)]
 
 # Troba quantes caselles no visitades podem visitar des de (x, y)
 def dfs(y, x):
-    # Parem estem fora del mapa o la casella ja ha estat visitada
+    # Parem si estem fora del mapa o la casella ja ha estat visitada
     if not (0 <= y < n) or not (0 <= x < m) or graella[y][x] == '.' or visitat[y][x]:
         return 0
 
     # Marquem ara la casella com a visitada
     visitat[y][x] = True
 
-    # Retornem a quantes caselles no visitades hi podem arribar
+    # Retornem a quantes caselles no visitades podem arribar
     return sum(dfs(y + dy, x + dx) for dy, dx in DIRECCIONS) + 1
 
-# Guardem la llista de components connexes. Aquestes vindran donades per 3 nombres:
-# (mida, y, x), on `mida` és la mida de la component connexa, i (x, y) és un punt d'aquesta
-components_connexes = []
+# Guardem la llista de components connexos. Aquests vindran donats per 3 nombres:
+# (mida, y, x), on `mida` és la mida del component connex, i (x, y) és un punt d'aquest
+components_connexos = []
 for y in range(n):
     for x in range(m):
         if not visitat[y][x] and graella[y][x] == 'X':
-            components_connexes.append((dfs(y, x), y, x))
+            components_connexos.append((dfs(y, x), y, x))
 
 # Creem la imatge
 img = Image.new('RGB', (m, n), f)
@@ -788,7 +787,7 @@ dib = ImageDraw.Draw(img)
 # Marquem quins punts hem pintat
 pintat = [[False for x in range(m)] for y in range(n)]
 
-# Pintem la component connexa
+# Pintem el component connex
 def pinta_dfs(y, x):
     # Parem si estem fora del mapa, o si ja hem pintat la casella
     if not (0 <= y < n) or not (0 <= x < m) or graella[y][x] == '.' or pintat[y][x]:
@@ -802,8 +801,8 @@ def pinta_dfs(y, x):
     for dy, dx in DIRECCIONS:
         pinta_dfs(y + dy, x + dx)
 
-# Pintem les com a molt k components connexes més grans
-for _, y, x in sorted(components_connexes, reverse=True)[:k]:
+# Pintem els com a molt k components connexos més grans
+for _, y, x in sorted(components_connexos, reverse=True)[:k]:
     pinta_dfs(y, x)
 
 # Guardem la imatge
@@ -879,7 +878,7 @@ int main() {
 ```
   </details>
 
-  Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent: Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix en prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
+  Una manera més ràpida i bonica (tot i que potser una mica menys intuïtiva) és la següent: Comencem des de l'esquerra, i seguim el procediment anterior, però sense tirar enrere si ens trobem amb què $p_i < j$. A continuació fem el mateix començant des de la dreta. Es pot comprovar que la solució òptima consisteix a prendre el mínim entre les dues profunditats (la que hem calculat començant des de l'esquerra i la que hem calculat començant des de la dreta).
 
   <details>
     <summary><b>Codi</b></summary>
@@ -932,14 +931,14 @@ int main() {
 
   Passem ara a resoldre el cas general, on $b_i$ pot ser negativa.
 
-  Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des de 1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per tot $h$ i per tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
+  Sigui $f(i, h)$ el màxim benefici que podem obtenir amb les columnes des d'1 fins a $i$, i suposant que a la columna $i$ hem excavat fins a profunditat $h$. Suposeu que hem calculat els valors de $f(j, h)$ per a tot $h$ i per a tot $j < i$. Com calcularíeu aleshores $f(i, h)$?
 
   <details>
     <summary><b>Spoiler</b></summary>
     Si a la columna $i$ hem excavat fins a profunditat $h$, aleshores a la columna $i-1$ hem d'haver excavat fins a profunditat $h-1$, $h$ o $h+1$. El benefici màxim per tant serà el màxim entre $f(i-1, h-1)$, $f(i-1, h)$ i $f(i-1,h+1)$, més el benefici corresponent a la columna $i$, que és $h \cdot b_i$.
   </details>
 
-  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times \big(\dfrac{n+1}{2} + 1 \big)$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que si no no pot arribar a la superfície per les dues bandes.
+  Amb l'expressió anterior, podem anar calculant els valors de $f(i, h)$ recursivament, tenint en compte que en tot moment necessitem que $h \leq p_i$. Per tal d'evitar repetir càlculs, ens construïm una matriu de mida $n \times \big(\dfrac{n+1}{2} + 1 \big)$ on anem guardant els valors de $f(i, h)$ que ja hem calculat (aquesta tècnica es coneix com a *programació dinàmica*). Observeu que tota solució vàlida no pot excavar més enllà de profunditat $(n+1)/2$, ja que no podria arribar a la superfície per les dues bandes.
 
   <details>
     <summary><b>Solució recursiva</b></summary>
@@ -970,7 +969,7 @@ ll dp(int col, int h) {
   if (h > p[col-1]) return -INF; // p[col-1] ens marca la profunditat maxima a la
                                 // qual podem excavar a la columna 'col'
   if (h < 0 or h > (n+1)/2) return -INF;
-  // A l'utilitzar el simbol '&', aconseguim que si modifiquem la variable
+  // En usar el simbol '&', aconseguim que si modifiquem la variable
   // 'ans', tambe es modificara la variable 'memoria[col][h]' automaticament.
   // (internament, li estem passant l'adreça de la variable en lloc d'una copia)
   // Per tant, el valor final que calculem quedara guardat a la matriu 'memoria'.
@@ -1057,13 +1056,13 @@ int main() {
 <b>Nombre de ACs:</b> 2 <br>
 <b>Primer AC:</b> Sergio Domínguez
 
-Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number),
-la més intuïtiva requereix una mica de programació dinàmica:
+Hi ha diferents maneres de calcular els [nombres de Bell](https://en.wikipedia.org/wiki/Bell_number).
+La més intuïtiva requereix una mica de programació dinàmica:
 
 En comptes de pensar com partir un conjunt de $n$ elements en diferents subconjunts
 d'elements no buits, podem pensar en com partir-los en exactament $k$ subconjunts
 no buits. Aquests valors es coneixen com a [nombres d'Stirling del segon tipus](https://en.wikipedia.org/wiki/Stirling_numbers_of_the_second_kind). A partir d'aquí, cal pensar com afegir un nou element
-en aquest partició. Ho expliquem amb més claredat en el codi (utilitzar C++ aquí no és bona idea
+en aquest partició. Ho expliquem amb més claredat en el codi (fer servir C++ aquí excepcionalment no és bona idea
 ja que els valors de l'output superen els $2^{64} - 1$: el màxim valor que pot tenir un
 `unsigned long long int`):
 
@@ -1087,7 +1086,7 @@ for n in range(1, N + 1):
         dp[n][k] += k*dp[n - 1][k] + dp[n - 1][k - 1]
     dp[n][n] = 1        # Per raons òbvies
 
-# La solució per un cert n serà
+# La solució per a un cert n serà
 # bell[n] = dp[n][1] + dp[n][2] + ... + dp[n][n]
 bell = [sum(v[1:n+1]) for v in dp]
 
@@ -1099,7 +1098,7 @@ while True:
 ```
 </details>
 
-Un truc típic en aquests problemes on la $n$ màxima és petita és precalcular-se tots els nombres de Bell localment amb el codi anterior en Python i llavors enviar un codi en C++ que tingui totes les respostes en un vector, i que per cada entrada retorni la resposta sense haver de calcular res.
+Un truc típic en aquests problemes on la $n$ màxima és petita és precalcular-se tots els nombres de Bell localment amb el codi anterior en Python i llavors enviar un codi en C++ que tingui totes les respostes en un vector, i que retorni la resposta de cada entrada sense haver de calcular res.
 
 En aquest problema això no era necessari, però va bé tenir-ho en compte si teniu una solució que dona TLE i el nombre d'inputs diferents possibles és petit.
 
@@ -1111,7 +1110,7 @@ En aquest problema això no era necessari, però va bé tenir-ho en compte si te
 
 Per cada vèrtex, hem de comptar el nombre de components connexos en que quedaria separat el graf si eliminéssim aquell vèrtex. Per tal de calcular-ho eficientment, modifiquem lleugerament l'algorisme clàssic per calcular *punts d'articulació* d'un graf (vegeu [aquest tutorial](https://cp-algorithms.com/graph/cutpoints.html)).
 
-Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (que definim de manera que `tin[a] < tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per tota back-edge des d'un descendent de $v$ en el DFS-tree).
+Al link anterior podeu trobar una explicació més detallada, però la idea general de l'algorisme és fer un DFS començant des d'un vèrtex arbitrari, i anar calculant per cada vèrtex el *temps d'entrada* `tin[v]` (que definim de manera que `tin[a] < tin[b]` si visitem `a` abans que `b` en el DFS) i un valor `low[v]` que és el mínim entre `tin[v]` i `tin[u]`, per a tot $u$ que estigui connectat directament amb un descendent de $v$ (és a dir, per a tota back-edge des d'un descendent de $v$ en el DFS-tree).
 
 Aleshores, és fàcil veure que $u$ formarà un component connex nou a l'eliminar $v$ si, i només si, `low[u] >= tin[v]` (és a dir, si no té cap connexió amb un antecessor de $v$).
 
@@ -1127,8 +1126,8 @@ vector<int> tin; // temps d'entrada al vertex.
 vector<int> low; // minim entre el temps d'entrada i el temps
                  // d'entrada dels vertexs accessibles des de
                  // back-edges dels descendents.
-vector<int> ans; // nombre de components connexes en que
-                 // es separa el graf al treure cada vertex
+vector<int> ans; // nombre de components connexos en que
+                 // se separa el graf en treure cada vertex
 int curtime; // temps actual.
 const int INF = 1e9;
 
@@ -1137,8 +1136,8 @@ void dfs(int v, int pare) {
   ++curtime; // i incrementem el temps actual per no repetir valors
   for (int u : G[v]) {
     if (u == pare) {
-      // Si 'v' te un pare, aquest juntament amb tots els vertexs anteriors
-      // formara un component connex al treure 'v' del graf:
+      // Si 'v' te un pare, aquest, juntament amb tots els vertexs anteriors,
+      // formara un component connex en treure 'v' del graf:
       ans[v]++;
       continue;
     }
@@ -1164,7 +1163,7 @@ void dfs(int v, int pare) {
 int main() {
   int n, m;
   while (cin >> n >> m) {
-    // Ens guardem el graf com una llista d'adjacencia, es a dir, per cada
+    // Ens guardem el graf com una llista d'adjacencia, es a dir, per a cada
     // vertex 'i' tenim un vector 'G[i]' amb els veins de 'i':
     G = vector<vector<int>>(n);
     for (int i = 0; i < m; ++i) {
@@ -1199,7 +1198,7 @@ int main() {
 
   En primer lloc, si el graf no té cicles sabem que serà un [arbre](https://ca.wikipedia.org/wiki/Arbre_(teoria_de_grafs)) (perquè és acíclic i connex). En aquest cas, si eliminem el vèrtex $v$, cada veí de $v$ formarà un component connex diferent. Per tant, el nombre de components connexos és simplement el *grau* de $v$ (és a dir, el seu nombre de veïns).
 
-  En cas que el graf tingui un únic cicle $C$, si $v \notin C$ continuem tenint que el nombre de components en que queda dividit el graf a l'eliminar $v$ és el grau de $v$. En canvi, si $v \in C$, els dos veïns de $v$ pertanyents al cicle estaran units per un camí i formaran part del mateix component connex. Així doncs, el nombre de components connexos és $\text{grau}(v)-1$.
+  En cas que el graf tingui un únic cicle $C$, si $v \notin C$ continuem tenint que el nombre de components en que queda dividit el graf en eliminar $v$ és el grau de $v$. En canvi, si $v \in C$, els dos veïns de $v$ pertanyents al cicle estaran units per un camí i formaran part del mateix component connex. Així doncs, el nombre de components connexos és $\text{grau}(v)-1$.
 
   Per tal de detectar quins vèrtexs estan al cicle, podem fer un DFS des d'un vèrtex arbitrari, guardant els pares de cada node. Si arribem a un vèrtex que ja hem visitat abans i que no és el nostre pare, voldrà dir que hem trobat un cicle. Per tal de trobar tots els vèrtexs del cicle, anem tirant enrere per la llista de pares fins a tornar al vèrtex original.
 
@@ -1267,7 +1266,7 @@ int main() {
     // des d'on comencem.
     dfs(0);
     for (int i = 0; i < n; ++i) {
-      // Per cada vertex, la solucio sera el seu grau (-1 si esta en el cicle)
+      // Per a cada vertex, la solucio sera el seu grau (-1 si esta en el cicle)
       cout << i << ": " << int(G[i].size()) - int(cicle[i]) << endl;
     }
     cout << string(10, '-') << endl;
@@ -1316,7 +1315,7 @@ $$
 \end{gather}
 $$
 
-Observeu que la suma, resta i multiplicació de nombres de la forma $a + b \varphi$ dona com a resultat nombres de la mateixa forma:
+Observeu que la suma, resta i multiplicació de nombres de la forma $a + b \varphi$ dóna com a resultat nombres de la mateixa forma:
 
 $$
 \begin{gather}
@@ -1326,7 +1325,7 @@ $$
 \end{gather}
 $$
 
-També hem de saber comparar dos nombres de la forma anterior. La idea és que $a + b \varphi < c + d \varphi$ si $a-c < (d-b)\varphi$. Si els dos coeficients tenen signe diferent, la comparació és trivial. Si tenen el mateix signe, substituïm $\varphi = (1 + \sqrt{5})/2$, aïllem $\sqrt{5}$ i elevem al quadrat els dos costats de la desigualtat. Així aconseguim trobar una condició que només utilitzi nombres enters.
+També hem de saber comparar dos nombres de la forma anterior. La idea és que $a + b \varphi < c + d \varphi$ si $a-c < (d-b)\varphi$. Si els dos coeficients tenen signe diferent, la comparació és trivial. Si tenen el mateix signe, substituïm $\varphi = (1 + \sqrt{5})/2$, aïllem $\sqrt{5}$ i elevem al quadrat els dos costats de la desigualtat. Així aconseguim trobar una condició que només usi nombres enters.
 
 <details>
 <summary><b>Codi</b></summary>
@@ -1531,6 +1530,6 @@ $$
 
 Llavors, mentre tinguem coeficients més grans que 1, restem $2$ al coeficient de la posició $k$ i afegim $1$ a les posicions $k + 1$ i $k-2$.
 
-Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \varphi^{-1} + \varphi^{-2} = \varphi + \varphi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. A l'acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
+Això no modifica el valor de l'expressió, ja que $2 = 1 + 1 = 1 + \varphi^{-1} + \varphi^{-2} = \varphi + \varphi^{-2}$, i es pot demostrar que amb un nombre finit d'aquestes operacions acabem obtenint una expressió amb només 0's i 1's. En acabar, per eliminar els 1's consecutius, substituïm un 1 a la posició $k$ i un 1 a la posició $k+1$ per un 1 a la posició $k + 2$ (i tornem a aplicar novament el procediment de reducció anterior).
 
-L'avantatge d'aquesta solució és que es pot implementar directament en C++ sense haver d'utilitzar enters excessivament grans. No obstant això, el codi resultant és més complicat que els dos codis anteriors.
+L'avantatge d'aquesta solució és que es pot implementar directament en C++ sense haver d'utilitzar enters excessivament grans. El codi resultant és més curt però potser més complicat que els dos codis anteriors.
