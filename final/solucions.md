@@ -139,7 +139,7 @@ una repetició de patrons de mida $100 \times 100$?
 
 Sí, aquest problema està basat en fets reals. Es pot solucionar de diverses
 maneres. Potser aquesta és la més senzilla: ordenem totes les notes,
-a continuació les anem posant en ordre en un vector, però fent dues passades:
+i a continuació les anem posant en ordre en un vector, però fent dues passades:
 primer una amb les notes aprovades, i després una amb les suspeses.
 
 <details>
@@ -206,9 +206,9 @@ for line in sys.stdin:
 
 __Solució 1:__
 
-Per una porta $n$ hi passen tantes persones com divisors tingui $n$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
+Per cada porta $n$ passen tantes persones com divisors tingui $n$. Per tant, les portes que quedin obertes seran aquelles amb un nombre senar de divisors. Observeu que, en general, podem agrupar els divisors d'un nombre $n$ en parelles que multiplicades donen $n$. Per exemple: $24 = 1 \cdot 24 = 2 \cdot 12 = 3 \cdot 8 = 4 \cdot 6$. L'únic cas en què no ho podrem fer és si el nombre és un quadrat perfecte. Per tant, els únics nombres amb un nombre senar de divisors són els quadrats perfectes.
 
-Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa o utilitzar la fórmula:
+Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa senzill o fer servir la fórmula:
 
 $$1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
 
@@ -216,8 +216,8 @@ __Repte__: Podríeu demostrar aquesta fórmula? (Pista: useu el mètode d'inducc
 
 __Solució 2:__
 
-Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per cada hoste,
-i per cadascun d'aquests fem que canviï l'estat de les portes per les que passa.
+Alternativament, podem simular el que ens diu l'enunciat: iterem en ordre per a cada hoste,
+i per a cadascun fem que canviï l'estat de les portes que passa.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -246,15 +246,15 @@ __Repte:__ Si teniu dubtes de com funciona el `range()` amb 3 paràmetres del co
 <b>Nombre de ACs:</b> 7 <br>
 <b>Primer AC:</b> Innokentiy Kaurov
 
-Per resoldre'l no cal massa més que seguir al peu de la lletra el que diu
-l'enunciat, però cal anar amb compte amb els següents detalls:
-* L'eix `y` va al revés a l'enunciat del problema respecte a la imatge que dibuixem (a la llibreria `PIL` per defecte l'eix vertical augmenta de dalt a baix).
+Per resoldre'l només cal seguir al peu de la lletra el que diu
+l'enunciat, però anant amb compte amb els detalls següents:
+* L'eix `y` va al revés a l'enunciat del problema respecte a la imatge que dibuixem (a la llibreria `PIL` l'eix vertical augmenta de dalt a baix).
 * Si el punt final de la paràbola està per sota del punt inicial, caldrà traslladar la imatge verticalment.
 * Només sabrem quina mida ha de tenir la imatge un cop haguem calculat tots els punts.
 * Cal dibuixar les línies en l'ordre adient (altrament la imatge resultant pot ser lleugerament diferent).
 
-A la nostra solució utilitzem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing),
-us recomenem fer una ullada a aquestes dues *features* de python perquè són molt comunes i útils.
+A la nostra solució usem [`zip()`](https://docs.python.org/3/library/functions.html#zip) i [slices](https://stackoverflow.com/questions/509211/understanding-slicing).
+Podeu fer una ullada a aquestes dues *features* de python, perquè són molt comunes i útils.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -297,26 +297,23 @@ img.save("output.png")
 <b>Nombre de ACs:</b> 2 <br>
 <b>Primer AC:</b> Sergio Domínguez
 
-La solució d'aquest problema passa per adonar-se del següent:
+definim $T = C \setminus S$ com el complementari d'$S$ en $C$ (el que ens quedaria
+a $C$ si hi treiéssim els elements d'$S$). Sigui $S = ${$s_1, \dots, s_n $} i $T =$ {$t_1, \dots, t_n$}, de tal forma que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, existeix una solució si i només si $(s_1, t_{n-k+1}), (s_2, t_{n-k+2}), \dots, (s_k, t_n), (s_{k+1}, t_1), (s_{k+2}, t_2), \dots, (s_n, t_{n-k})$ és solució.
 
-Sigui $T = C \setminus S$ el complementari de $S$ en $C$ (el que ens quedaria
-a $C$ si hi traguéssim els elements de $S$). Sigui $S = ${$s_1, \dots, s_n $} i $T =$ {$t_1, \dots, t_n$}, de tal forma que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, existeix una solució si i només si $(s_1, t_{n-k+1}), (s_2, t_{n-k+2}),  \dots,  (s_k, t_n),  (s_{k+1}, t_1),  (s_{k+2}, t_2),  \dots, (s_n, t_{n-k})$ és solució.
-
-Intuïtivament, el que significa això és que sempre és òptim emparellar els $k$ elements més petits de $S$ amb els $k$ més grans de $T$, i els $n-k$ més grans de $S$ amb els $n-k$ més petits de $T$. A continuació us ho demostrem.
+Intuïtivament, sempre és òptim emparellar els $k$ elements més petits d'$S$ amb els $k$ més grans de $T$, i els $n-k$ més grans d'$S$ amb els $n-k$ més petits de $T$. A continuació us ho demostrem.
 
 __Demostració:__
 
 Suposem que tenim una solució $(s_1, t_1), \ldots, (s_n, t_n)$ tal que,
 per a tot $i$, $s_i$ i $t_i$ pertanyen a $S$ i $T$, respectivament,
-i tal que $s_i \leq t_i$ si $1 \leq i \leq k$, i $s_i \geq t_i$ si $k < i \leq n$ (observeu que ara estem indexant els elements diferentment i que per tant no suposem que estiguin ordenats creixentment).
+i tal que $s_i \leq t_i$ si $1 \leq i \leq k$, i $s_i \geq t_i$ si $k < i \leq n$ (observeu que ara estem indexant els elements diferentment; per tant, no suposem que estiguin ordenats creixentment).
 Suposem sense pèrdua de generalitat que $s_1 \leq \ldots \leq s_k$ i que
 $s_{k + 1} \leq \ldots \leq s_n$.
 
-Podem fer les següents observacions similars:
+Podem fer les observacions següents:
 
 * Si existeixen $i \leq k < j$ tals que $s_i > s_j$, intercanviant $s_i$ per $s_j$
-seguirem tenint una solució. D'aquí deduïm que podem dur a terme aquesta mena
-d'intercanvis iterativament tantes vegades com calgui fins que
+seguirem tenint una solució. D'aquí deduïm que podem intercanviar iterativament tantes vegades com calgui fins que
 $s_1 \leq \ldots \leq s_k \leq s_{k + 1} \leq \ldots \leq s_n$,
 i seguirem tenint una solució vàlida.
 * Si existeixen $i \leq k < j$ tals que $t_i < t_j$, aleshores intercanviant $t_i$ per $t_j$
@@ -405,11 +402,11 @@ int main() {
 <details>
   <summary><b>Solució parcial</b></summary>
 
-  Per obtenir la puntuació parcial havíem de resoldre el cas en que $k = 0$. Això vol dir que hem d'agrupar els nombres de $C$ en $n$ parelles de manera que els nombres més grans de cada parella formin $S$.
+  Per obtenir la puntuació parcial havíem de resoldre el cas en que $k = 0$. ÉS a dir, hem d'agrupar els nombres de $C$ en $n$ parelles de manera que els nombres més grans de cada parella formin $S$.
 
-  Per tant, hem d'emparellar cada $s \in S$ amb un $t \in T$ que sigui més petit o igual que ell. En particular, observem que això vol dir que el nombre més gran de $S$ ha de ser més gran o igual que el nombre més gran de $T$ (altrament aquest nombre de $T$ no el podrem emparellar amb cap nombre de $S$), el segon nombre més gran de $S$ ha de ser més gran o igual que el segon nombre més gran de $T$, i així successivament.
+  Per tant, hem d'emparellar cada $s \in S$ amb un $t \in T$ que sigui més petit o igual que ell. En particular, observem que això vol dir que el nombre més gran d'$S$ ha de ser més gran o igual que el nombre més gran de $T$ (altrament aquest nombre de $T$ no el podrem emparellar amb cap nombre d'$S$), el segon nombre més gran d'$S$ ha de ser més gran o igual que el segon nombre més gran de $T$, i així successivament.
 
-  Així doncs, podem ordenar els nombres de $S$ i de $T$ i comprovar simplement si $s_i \geq t_i$ per cada $i$ de 1 fins a $n$. En cas que no, no hi haurà solució. En cas que sí, una solució possible serà $\{(s_1, t_1), (s_2, t_2), \dots, (s_n, t_n)\}$.
+  Així doncs, podem ordenar els nombres d'$S$ i de $T$ i comprovar simplement si $s_i \geq t_i$ per a cada $i$ de 1 fins a $n$. En cas que no, no hi haurà solució. En cas que sí, una solució possible serà $\{(s_1, t_1), (s_2, t_2), \dots, (s_n, t_n)\}$.
 
   <details>
     <summary>Codi</summary>
