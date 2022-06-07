@@ -129,7 +129,7 @@ img.save("output.png")
 </details>
 
 __Repte:__ Podríeu demostrar matemàticament que la imatge és
-una repetició de patrons de mida $100 \times 100$?
+la repetició d'un patró que té mida $100 \times 100$?
 
 ## [Problema C2. Estudiant nefast](https://jutge.org/problems/P81388_ca) <a name="C2"/>
 
@@ -210,7 +210,7 @@ Per cada porta $n$ passen tantes persones com divisors tingui $n$. Per tant, les
 
 Per trobar la suma dels quadrats perfectes fins a 473, podem escriure un programa senzill o fer servir la fórmula:
 
-$$1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$$
+$$1^2 + 2^2 + \dots + n^2 = \frac{n^3}{3} + \frac{n^2}{2} + \frac{n}{6} = \frac{n(n+1)(2n+1)}{6}$$
 
 __Repte__: Podríeu demostrar aquesta fórmula? (Pista: useu el mètode d'inducció)
 
@@ -297,10 +297,10 @@ img.save("output.png")
 <b>Nombre de ACs:</b> 2 <br>
 <b>Primer AC:</b> Sergio Domínguez
 
-definim $T = C \setminus S$ com el complementari d'$S$ en $C$ (el que ens quedaria
+Definim $T = C \setminus S$ com el complementari d'$S$ en $C$ (el que ens quedaria
 a $C$ si hi treiéssim els elements d'$S$). Sigui $S = ${$s_1, \dots, s_n $} i $T =$ {$t_1, \dots, t_n$}, de tal forma que els seus elements estan ordenats creixentment (és a dir, $s_1 \leq \dots \leq s_n$ i $t_1 \leq \dots \leq t_n$). Aleshores, existeix una solució si i només si $(s_1, t_{n-k+1}), (s_2, t_{n-k+2}), \dots, (s_k, t_n), (s_{k+1}, t_1), (s_{k+2}, t_2), \dots, (s_n, t_{n-k})$ és solució.
 
-Intuïtivament, sempre és òptim emparellar els $k$ elements més petits d'$S$ amb els $k$ més grans de $T$, i els $n-k$ més grans d'$S$ amb els $n-k$ més petits de $T$. A continuació us ho demostrem.
+Intuïtivament, sempre és òptim emparellar els $k$ elements més petits d'$S$ amb els $k$ més grans de $T$, i els $n-k$ més grans d'$S$ amb els $n-k$ més petits de $T$. A continuació us ho demostrem:
 
 __Demostració:__
 
@@ -672,7 +672,7 @@ podríem cometre l'error de dir incorrectament que hem trobat dos parells: $(v_i
 amb mateix XOR. En aquest cas, no es difícil demostrar el següent:
 
 __Repte__: Si $v_i \oplus v_j = v_k \oplus v_l$ i algun dels quatre valors està repetit,
-llavors els quatre valors estan repetits (dues parelles o els quatre iguals).
+llavors els quatre valors estan repetits (dues parelles d'igual valor o els quatre iguals).
                                                                                        
 <details>
   <summary><b>Codi</b></summary>
